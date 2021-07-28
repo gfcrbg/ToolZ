@@ -1,0 +1,141 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}<br><br>
+      Please select a Region: {DATATYPES.SHOW_DATATYPE.CLIENT_397_LEVEL_3_SELECTOR(SORT=NAME,FILTER=NAME|ne|all).INPUT}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+    
+    {|VANISHIF|DATATYPES.SHOW_DATATYPE.CLIENT_397_LEVEL_3_SELECTOR.ID}
+    	<div class='ui-state-highlight no-data'>You must select a region</div>
+    {/|VANISHIF|}
+    
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+
+    {|SHOWIF|DATATYPES.SHOW_DATATYPE.CLIENT_397_LEVEL_3_SELECTOR.ID}
+    <table class="data">
+
+# Pasted from the 30k report.  Need to modify for 10K.
+# JOBS_FOR_SURVEY_4590
+
+#/////////////////////////////////////////////////////////////
+#-------------------------------------------------------Q     
+# 
+#  
+# 
+#/////////////////////////////////////////////////////////////
+        
+#-------------------------------------------------------Q1531 - time template 
+# Time to Complete Service (hh:mm)
+# 11. How long were you told the service would take?  
+# Time Length
+        
+
+#-------------------------------------------------------Q1611   
+# Ask for an appointment?
+# 8. Ask for an appointment?  
+# Yes - No
+
+        
+#-------------------------------------------------------Q1521 - time template     
+# Service completed within 60 minutes?
+# 10. Were you told the service could be completed within 60 minutes?  
+# Yes - No
+        
+
+#-------------------------------------------------------Q1621    
+# Able to get in for service same or next day?
+# 13. Were you told that you could bring the vehicle in the same day or the next day for service?  
+# Yes - No
+
+
+#-------------------------------------------------------Q1631  
+# If not same or next day could get in within
+# If NO, how many business days until you could bring the vehicle in for service?  
+# Radio Button (Mult Choice) 
+
+        
+#-------------------------------------------------------Q1651    
+# Latest appointment time was within two hours of closing?
+# 15. Was the latest appointment time quoted within two hours of the Service Department's closing time?  
+# Yes - No 
+
+             
+#-------------------------------------------------------Q231 
+# Time to Connect to Service Department (mm:ss)
+# Time to Connect to Service: 
+# Time Length
+
+        
+#-------------------------------------------------------Q241    
+# Additional Time on Hold (mm:ss)
+# Length of Time Placed on Hold by Service Associate:  
+# Time Length
+
+
+#-------------------------------------------------------Q51  
+# Total Call Time (mm:ss)
+# Total Call time
+# Time Length 
+
+    
+#-------------------------------------------------------Q1421  
+# Did Service Associate thank the customer?
+# 9. Thank you?
+# Yes - No
+
+             
+#-------------------------------------------------------Q141
+# Did Service Associate identify Department?
+# 2. Identify the Service Department? 
+# Yes - No
+
+        
+#-------------------------------------------------------Q151
+# Did Service Associate provide their name?
+# 3. Provide their name without prompting?
+# Yes - No 
+        
+        
+#-------------------------------------------------------Q1561  
+# Ask if you have been there before?
+# 5. Ask if you have been to the dealership before?  
+# Yes - No 
+
+    
+#-------------------------------------------------------Q1431
+# Ask for your name?
+# 6. Ask for your name?
+# Yes - No 
+
+             
+#-------------------------------------------------------Q1441  
+# Ask for your contact information (phone or email address)?
+# 7. Ask for your contact information (phone or email address)? 
+# Yes - No  
+
+        
+#-------------------------------------------------------Q1701     
+# Mention replacing the engine oil and oil filter?
+# 17. Replacing the engine oil and oil filter?  
+# Yes - No
+
+
+#-------------------------------------------------------Q1711
+# Mention rotating the tires?
+# 18. Rotating the tires?
+# Yes - No 
+
+    
+#-------------------------------------------------------Q1721 
+# Mention inspecting and adjusting all fluid levels?
+# 19. Inspecting and adjusting all fluid levels? 
+# Yes - No 
+
+             
+#-------------------------------------------------------Q1731 
+# Mention a complimentary milti-point  inspection was included?
+# 20. A complimentary multi-point inspection is Included?
+# Yes - No  
+

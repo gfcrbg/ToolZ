@@ -238,7 +238,13 @@
     	{/|NESTED|}                   
     {/|LOOP|}  
 
+                
+#-------------------section 2
+                    
+                
+                    <tr><th colspan=2>Mystery Shop Detailed Summary</th></tr>
         
+                
 #-------------------------------------------------------Q1651    
 # Latest appointment time was within two hours of closing?
 # 15. Was the latest appointment time quoted within two hours of the Service Department's closing time?  

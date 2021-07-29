@@ -20,9 +20,30 @@
 # JOBS_FOR_SURVEY_4590
 
 #/////////////////////////////////////////////////////////////
+#-------------------------------------------------------topline       
+
         
-
-
+	{|NESTED|IGNORE_FILTERS=CLIENT_397_LEVEL_3_ID}                    
+        <thead>
+        <tr>
+            <th></th>
+            <th>National</th>
+	        {|LOOP|NESTED.CLIENT_397_LEVEL_3(SORT=NAME,FILTER=ID|eq||EVALTAG(DATATYPES.SHOW_DATATYPE.CLIENT_397_LEVEL_3_SELECTOR.ID)|)}
+    		   	<th>{CLIENT_397_LEVEL_3.NAME}</th>
+            	{|LOOP|CLIENT_397_LEVEL_3.CLIENT_397_LEVEL_2(SORT=NAME)}
+            		<th>{CLIENT_397_LEVEL_3.NAME} - {CLIENT_397_LEVEL_2.NAME}</th>
+            		{|LOOP|CLIENT_397_LEVEL_2(SORT=NAME)}
+					{/|LOOP|}
+            	{/|LOOP|}
+        </tr>
+        </thead>    
+        <tbody> 
+            <tr>
+                <th colspan=2>Mystery Shop Topline</th>
+            </tr>
+		{/|LOOP|}                    
+    {/|NESTED|} 
+            
         
 #-------------------------------------------------------Q1531 - time template 
 # Time to Complete Service (hh:mm)

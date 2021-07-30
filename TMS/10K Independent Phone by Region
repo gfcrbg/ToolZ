@@ -239,11 +239,6 @@
     {/|LOOP|}  
 
                 
-#-------------------section 2
-                    
-                
-                    <tr><th colspan=2>Mystery Shop Detailed Summary</th></tr>
-        
                 
 #-------------------------------------------------------Q1651    
 # Latest appointment time was within two hours of closing?
@@ -282,7 +277,13 @@
     	{/|NESTED|}                   
     {/|LOOP|}
 
-             
+            
+#-------------------section 2
+                    
+                
+                    <tr><th colspan=2>Mystery Shop Detailed Summary</th></tr>
+     
+            
 #-------------------------------------------------------Q231 - time template
 # Time to Connect to Service Department (mm:ss)
 # Time to Connect to Service: 
@@ -299,11 +300,11 @@
         <tbody>    
         	<tr>
                	<td>Time to Connect to Service Department (mm:ss)</td>     
-                <td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_4590_QUESTION_231_VALUE,OVERALL).FORMATTED(hh:mm)}</td>     
-            	<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_4590_QUESTION_231_VALUE,CLIENT_397_LEVEL_3).FORMATTED(hh:mm)}<br>
+                <td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_4590_QUESTION_231_VALUE,OVERALL).FORMATTED(mm:ss)}</td>     
+            	<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_4590_QUESTION_231_VALUE,CLIENT_397_LEVEL_3).FORMATTED(mm:ss)}<br>
                 </td>
                 {|LOOP|CLIENT_397_LEVEL_3.CLIENT_397_LEVEL_2}
-            	<td>{AVG(CLIENT_397_LEVEL_2.CLIENT_397_SURVEY_4590_QUESTION_231_VALUE).FORMATTED(hh:mm)}<br>
+            	<td>{AVG(CLIENT_397_LEVEL_2.CLIENT_397_SURVEY_4590_QUESTION_231_VALUE).FORMATTED(mm:ss)}<br>
                 </td>
             {/|LOOP|}
         </tr>
@@ -328,11 +329,11 @@
         <tbody>    
         	<tr>
                	<td>Additional Time on Hold (mm:ss)</td>     
-                <td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_4590_QUESTION_241_VALUE,OVERALL).FORMATTED(hh:mm)}</td>     
-            	<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_4590_QUESTION_241_VALUE,CLIENT_397_LEVEL_3).FORMATTED(hh:mm)}<br>
+                <td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_4590_QUESTION_241_VALUE,OVERALL).FORMATTED(mm:ss)}</td>     
+            	<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_4590_QUESTION_241_VALUE,CLIENT_397_LEVEL_3).FORMATTED(mm:ss)}<br>
                 </td>
                 {|LOOP|CLIENT_397_LEVEL_3.CLIENT_397_LEVEL_2}
-            	<td>{AVG(CLIENT_397_LEVEL_2.CLIENT_397_SURVEY_4590_QUESTION_241_VALUE).FORMATTED(hh:mm)}<br>
+            	<td>{AVG(CLIENT_397_LEVEL_2.CLIENT_397_SURVEY_4590_QUESTION_241_VALUE).FORMATTED(mm:ss)}<br>
                 </td>
             {/|LOOP|}
         </tr>
@@ -357,11 +358,11 @@
         <tbody>    
         	<tr>
                	<td>Total Call Time (mm:ss)</td>     
-                <td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_4590_QUESTION_51_VALUE,OVERALL).FORMATTED(hh:mm)}</td>     
-            	<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_4590_QUESTION_51_VALUE,CLIENT_397_LEVEL_3).FORMATTED(hh:mm)}<br>
+                <td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_4590_QUESTION_51_VALUE,OVERALL).FORMATTED(mm:ss)}</td>     
+            	<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_4590_QUESTION_51_VALUE,CLIENT_397_LEVEL_3).FORMATTED(mm:ss)}<br>
                 </td>
                 {|LOOP|CLIENT_397_LEVEL_3.CLIENT_397_LEVEL_2}
-            	<td>{AVG(CLIENT_397_LEVEL_2.CLIENT_397_SURVEY_4590_QUESTION_51_VALUE).FORMATTED(hh:mm)}<br>
+            	<td>{AVG(CLIENT_397_LEVEL_2.CLIENT_397_SURVEY_4590_QUESTION_51_VALUE).FORMATTED(mm:ss)}<br>
                 </td>
             {/|LOOP|}
         </tr>

@@ -1,0 +1,2086 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+  {DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+  {|VANISHIF|DATATYPES.SHOW_DATATYPE.TOTAL_COUNT}
+    <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+  {/|VANISHIF|}
+  
+  {|SHOWIF|DATATYPES.SHOW_DATATYPE.TOTAL_COUNT}
+  
+
+# 10K Independent Phone National
+# JOBS_FOR_SURVEY_4590
+
+#/////////////////////////////////////////////////////////////
+#-------------------------------------------------------topline - good
+    
+    
+	{|CROSSTAB|}  
+	  <table class="data">  
+		<thead>
+       	  <tr>
+            
+          	<th colspan=2>Division</th>
+          	{|LOOP|DATATYPES.SHOW_DATATYPE.CLIENT_783_LEVEL_3.MEMBERS(SORT=NAME|DESC)}
+            	<th colspan=4>{MEMBERS.NAME}</th>              	
+            {/|LOOP|}
+            
+          </tr>
+          <tr>
+            
+          	<th colspan=2>District</th>
+          	{|LOOP|DATATYPES.SHOW_DATATYPE.CLIENT_783_LEVEL_2.MEMBERS(SORT=NAME,CROSSTAB_FILTER=WITH_BLANKS)}
+            	<th>{MEMBERS.NAME}</th>
+            {/|LOOP|}
+              <th>Grand Total</th>
+          </tr>
+
+        </thead>
+        <tbody>
+            
+            <tr>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_2(SORT=NAME,CROSSTAB_FILTER=WITH_BLANKS)}                 
+					{|SHOWIF|LOOP.ISFIRST}
+                    {/|SHOWIF|}
+            	{/|LOOP|}
+            </tr>
+    {/|CROSSTAB|}
+            
+            
+#-------------------------------------------------------- good
+# Overall Shop Count
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+            {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_81)}
+        	<tr> 
+#Display Question Text
+                <th colspan=2>Number of Surveys</th>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<th>{COUNT(CLIENT_783_LEVEL_2)}</th>
+                    {/|LOOP|}                           
+#Count for National      		
+                    <th>{COUNT(DYNAMIC_GROUP,OVERALL)}</th>                       
+            </tr>
+            <tr><th colspan=2>Overall Score</th>
+                {|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+						<td class="{AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">                                        
+                            #{CLIENT_783_LEVEL_2.NAME} - 
+                            {AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                #- {PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(CLIENT_783_LEVEL_2,OVERALL)).ROUND(1).NUMBERFORMAT(1)}%</td>
+                {/|LOOP|}       
+                <td class="{AVG(DYNAMIC_GROUP.PERCENT_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(DYNAMIC_GROUP.PERCENT_SCORE,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.PERCENT_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(DYNAMIC_GROUP.PERCENT_SCORE,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.PERCENT_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(DYNAMIC_GROUP.PERCENT_SCORE,OVERALL).ROUND(1)>=90?green:}"> 
+                    {AVG(DYNAMIC_GROUP.PERCENT_SCORE,OVERALL).ROUND(1)}%</td>
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}               
+
+          
+          
+#-------------------------------------------------------SECTION 1 SCORE---GOOD
+# Sec 1(score): I. Store Environment 	
+# Sec 1(score): I. Store Environment	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>I. Store Environment</th>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_3(SORT=NAME,LIMIT=1)}
+                	{|LOOP|CLIENT_783_LEVEL_3.CLIENT_783_LEVEL_2(SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">  
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                	{/|LOOP|}
+                       	<td class="{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_1_SCORE,OVERALL).ROUND(1)}%</td> 
+                {/|LOOP|}       
+                                     
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}  
+          
+#-------------------------------------------------------Q81   
+# Were the parking lot and store exterior clean?
+# 1. Were the parking lot and store exterior clean?  
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_81)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>1. Were the parking lot and store exterior clean?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_81_PERCENT,OVERALL).ROUND(1)}%
+                </td>
+                #       -old-{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(1).NUMBERFORMAT(1)}%</td>
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}
+          
+          
+          
+#-------------------------------------------------------Q1271 - HIDDEN QUESTION ON FOOD CITY   
+# Were any Super Dollar associates smoking on the front of the sidewalk?
+# 2. Were any Super Dollar associates smoking on the front of the sidewalk?
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_1271)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>2. Were any Super Dollar associates smoking on the front of the sidewalk?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                                        
+                           			{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,CLIENT_783_LEVEL_2)=|EVALCONST(NULL)|?-:|EVALTAG(AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,CLIENT_783_LEVEL_2).ROUND(1))|}
+                                    {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,CLIENT_783_LEVEL_2)=|EVALCONST(NULL)|?:%}
+                                        </td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1271_PERCENT,OVERALL).ROUND(1)}%</td>
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}  
+          
+#-------------------------------------------------------Q101   
+# Was the lobby/entrance/cart area of the store clean? 	
+# 2. Was the lobby/entrance/cart area of the store clean? 	  
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_101)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>2. Was the lobby/entrance/cart area of the store clean?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_101_PERCENT,OVERALL).ROUND(1)}%</td>
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}      
+  
+  
+#-------------------------------------------------------Q111   
+# Was the interior of the store clean? (This includes the floors and the shelves.)  	
+# 3. Was the interior of the store clean? (This includes the floors and the shelves.)	  
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_111)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>3. Was the interior of the store clean? (This includes the floors and the shelves.) </td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_111_PERCENT,OVERALL).ROUND(1)}%</td>    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}   
+  
+  
+#-------------------------------------------------------Q121   
+# Were the aisles clear of debris and loose merchandise? 	
+# 4. Were the aisles clear of debris and loose merchandise? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_121)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>4. Were the aisles clear of debris and loose merchandise?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_121_PERCENT,OVERALL).ROUND(1)}%</td>                           
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}    
+          
+          
+#-------------------------------------------------------Q1281   
+# Were the carts/baskets clean and free of debris?  	
+# 4. Were the carts/baskets clean and free of debris? 
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_1281)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>4. Were the carts/baskets clean and free of debris?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            		
+                                    {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,CLIENT_783_LEVEL_2)=|EVALCONST(NULL)|?-:|EVALTAG(AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1))|}
+                                    {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,CLIENT_783_LEVEL_2)=|EVALCONST(NULL)|?:%}
+                                    </td>
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1281_PERCENT,OVERALL).ROUND(1)}%</td>                           
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}          
+          
+
+#-------------------------------------------------------SECTION 2 SCORE--GOOD    
+# Sec 2(score): II. Restrooms
+# Sec 2(score): II. Restrooms
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>II. Restrooms</th>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_3(SORT=NAME,LIMIT=1)}
+                	{|LOOP|CLIENT_783_LEVEL_3.CLIENT_783_LEVEL_2(SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            #{CLIENT_783_LEVEL_2.NAME} - 
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                	{/|LOOP|}
+                <td class="{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_2_SCORE,OVERALL).ROUND(1)}%</td>
+                       	
+                {/|LOOP|}       
+                                     
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}            
+		  
+  
+  
+#-------------------------------------------------------Q181   
+# Were the soap dispensers stocked? 		
+# 2. Were the soap dispensers stocked? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_181)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>2. Were the soap dispensers stocked?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_181_PERCENT,OVERALL).ROUND(1)}%</td>                    
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+  
+#-------------------------------------------------------Q191   
+# Were paper towels or a working hand dryer available? 	 		
+# 3. Were paper towels or a working hand dryer available? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_191)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>3. Were paper towels or a working hand dryer available?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_191_PERCENT,OVERALL).ROUND(1)}%</td>                 
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+  
+  
+#-------------------------------------------------------Q201  
+# Was the stall stocked with toilet paper? 	 		
+# 4. Was the stall stocked with toilet paper? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_201)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>4. Was the stall stocked with toilet paper?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_201_PERCENT,OVERALL).ROUND(1)}%</td>                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+  
+#-------------------------------------------------------Q211  
+# Were the floors and fixtures clean and in working order? 	
+# 5. Were the floors and fixtures clean and in working order? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_211)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>5. Were the floors and fixtures clean and in working order?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)}%</td>             
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+  
+          
+          
+          
+#-------------------------------------------------------SECTION 3 SCORE--GOOD    
+# Sec 3(score): III. Merchandising
+# Sec 3(score): III. Merchandising
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>III. Merchandising</th>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_3(SORT=NAME,LIMIT=1)}
+                	{|LOOP|CLIENT_783_LEVEL_3.CLIENT_783_LEVEL_2(SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            #{CLIENT_783_LEVEL_2.NAME} - 
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                	{/|LOOP|}
+                <td class="{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_3_SCORE,OVERALL).ROUND(1)}%</td>                       	                       
+                {/|LOOP|}       
+                                     
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}           
+          
+#-------------------------------------------------------Q241   
+# Were ad items in stock? 
+# 1. Were ad items in stock? 	
+# Yes - No
+            
+            
+#  {|CROSSTAB|}  
+#        <tbody>
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_241)}
+#        	<tr> 
+#Display Question Text
+#                <td colspan=2>1. Were ad items in stock?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+#	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+#                                       BROKEN
+                            #{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+#                    {/|LOOP|}                           
+#Scores for National
+                
+#                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)<70?red:} 
+#								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)<80?orange:}
+#								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+#								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+ #                               {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_211_PERCENT,OVERALL).ROUND(1)}%</td> 
+  #                  
+
+   #         </tr>
+    #      		{/|LOOP|}
+     #     	{/|LOOP|}
+      #    </tbody>
+  #{/|CROSSTAB|} 
+  
+#-------------------------------------------------------Q251  
+# Were all products, including meat and produce items, fresh in appearance? 	
+# 2. Were all products, including meat and produce items, fresh in appearance? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_251)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>2. Were all products, including meat and produce items, fresh in appearance?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_251_PERCENT,OVERALL).ROUND(1)}%</td> 
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+    
+#-------------------------------------------------------Q281  
+# Were Dairy and other products within their "Sell By Date"?  	
+# 3. Were Dairy and other products within their "Sell By Date"?  	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_281)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>3. Were Dairy and other products within their "Sell By Date"?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_281_PERCENT,OVERALL).ROUND(1)}%</td> 
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}
+          
+          
+          
+          
+          
+#-------------------------------------------------------SECTION 4 SCORE--GOOD    
+# Sec 4(score): IV. Employee Appearance and Conduct
+# Sec 4(score): IV. Employee Appearance and Conduct
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>IV. Employee Appearance and Conduct</th>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_3(SORT=NAME,LIMIT=1)}
+                	{|LOOP|CLIENT_783_LEVEL_3.CLIENT_783_LEVEL_2(SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            #{CLIENT_783_LEVEL_2.NAME} - 
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                	{/|LOOP|}
+                <td class="{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_4_SCORE,OVERALL).ROUND(1)}%</td>
+                {/|LOOP|}       
+                                     
+            </tr>
+		</tbody>
+  {/|CROSSTAB|} 
+          
+#-------------------------------------------------------Q301   
+# Were all associates neat and dressed appropriately in Food City t-shirts, uniforms and/or dress clothes? 	
+# 1. Were all associates neat and dressed appropriately in Food City t-shirts, uniforms and/or dress clothes? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_301)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>1. Were all associates neat and dressed appropriately in Food City/Super Dollar t-shirts, uniforms and/or dress clothes?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_301_PERCENT,OVERALL).ROUND(1)}%</td> 
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}  
+	  
+	  
+#-------------------------------------------------------Q331  
+# Were associate name tags in plain view?  	
+# 2. Were associate name tags in plain view?  	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_331)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>2. Were associate name tags in plain view?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_331_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+  
+#-------------------------------------------------------Q351  
+# Were you greeted OR offered assistance by any associate on the sales floor while shopping? 	
+# 3. Were you greeted OR offered assistance by any associate on the sales floor while shopping? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_351)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>3. Were you greeted OR offered assistance by any associate on the sales floor while shopping?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_351_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+  
+  
+#-------------------------------------------------------Q401  
+# Did all floor and department associates provide full attention to customers while on duty, by avoiding personal conversation with co-workers and friends, and any use of personal cell phones? 	
+# 4. Did all floor and department associates provide full attention to customers while on duty, by avoiding personal conversation with co-workers and friends, and any use of personal cell phones? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_401)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>4. Did all floor and department associates provide full attention to customers while on duty, by avoiding personal conversation with co-workers and friends, and any use of personal cell phones?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+
+          
+          
+#-------------------------------------------------------SECTION 5 SCORE--WORKIN ON IT    
+# Sec 5(score): V. Departments
+# Sec 5(score): V. Departments
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>V. Departments</th>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_3(SORT=NAME,LIMIT=1)}
+                	{|LOOP|CLIENT_783_LEVEL_3.CLIENT_783_LEVEL_2(SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            #{CLIENT_783_LEVEL_2.NAME} - 
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                	{/|LOOP|}
+                <td class="{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_5_SCORE,OVERALL).ROUND(1)}%</td>
+                       	                       
+                {/|LOOP|}       
+                                     
+            </tr>
+		</tbody>
+  {/|CROSSTAB|} 
+          
+          
+
+#-------------------------------------------------------PRODUCE SUBSECTION SCORE    
+# Sec 11(score): Produce
+# Sec 11(score): Produce
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>Produce</th>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_3(SORT=NAME,LIMIT=1)}
+                	{|LOOP|CLIENT_783_LEVEL_3.CLIENT_783_LEVEL_2(SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            #{CLIENT_783_LEVEL_2.NAME} - 
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                	{/|LOOP|}
+                <td class="{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_11_SCORE,OVERALL).ROUND(1)}%</td>
+                       	
+                {/|LOOP|}       
+                                     
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}           
+          
+#-------------------------------------------------------Q1191   
+# Was an associate available in the Produce Department?
+# 1. Was an associate available in the Produce Department?
+# Yes - No
+            
+            
+#  {|CROSSTAB|}  
+#        <tbody>
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_1191)}
+#       	<tr> 
+#Display Question Text
+#                <td colspan=2>1. Was an associate available in the Produce Department?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	#<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">BROKEN
+ #                           {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+  #                  {/|LOOP|}                           
+#Scores for National
+                
+   #                 <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)<70?red:} 
+	#							{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)<80?orange:}
+	#							{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+	#							{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+     #                           {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_401_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+      #      </tr>
+       #   		{/|LOOP|}
+        #  	{/|LOOP|}
+#          </tbody>
+ # {/|CROSSTAB|}  
+  
+  
+#-------------------------------------------------------Q481  
+# Did the Produce associate greet you? 	
+# 6. Did the Produce associate greet you? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_481)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>6. Did the Produce associate greet you?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_481_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+  
+    
+#-------------------------------------------------------Q491  
+# Did the Produce associate know the department's ad specials when asked? 		
+# 7. Did the Produce associate know the department's ad specials when asked? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_491)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>7. Did the Produce associate know the department's ad specials when asked?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_491_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+    
+    
+#-------------------------------------------------------Q511  
+# Did the Produce associate offer good product knowledge when asked? 	
+# 8. Did the Produce associate offer good product knowledge when asked? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_511)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>8. Did the Produce associate offer good product knowledge when asked?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+  
+  
+          
+          
+#-------------------------------------------------------BAKERY/DELI SUBSECTION SCORE    
+# Sec 12(score): Bakery/Deli
+# Sec 12(score): Bakery/Deli
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>Bakery/Deli</th>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_3(SORT=NAME,LIMIT=1)}
+                	{|LOOP|CLIENT_783_LEVEL_3.CLIENT_783_LEVEL_2(SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            #{CLIENT_783_LEVEL_2.NAME} - 
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                	{/|LOOP|}
+                <td class="{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_12_SCORE,OVERALL).ROUND(1)}%</td>
+                       	                       
+                {/|LOOP|}       
+                                     
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}            
+          
+#-------------------------------------------------------Q651   
+# Does this location have a defined Bakery/Deli Counter? 	
+# 1. Does this location have a defined Bakery/Deli Counter? 	
+# Yes - No
+            
+            
+#  {|CROSSTAB|}  
+#        <tbody>
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_651)}
+ #       	<tr> 
+#Display Question Text
+#                <td colspan=2>1. Does this location have a defined Bakery/Deli Counter?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	#<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">BROKEN
+ #                           {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+  #                  {/|LOOP|}                           
+#Scores for National
+                
+   #                 <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)<70?red:} 
+	#							{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)<80?orange:}
+	#							{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+	#							{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+     #                           {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+      #      </tr>
+       #   		{/|LOOP|}
+        #  	{/|LOOP|}
+         # </tbody>
+  #{/|CROSSTAB|}  
+      
+    
+#-------------------------------------------------------Q1201  
+# Was an associate available at the Bakery/Deli Counter?  	
+# 2. Was an associate available at the Bakery/Deli Counter?  	
+# Yes - No
+            
+            
+#  {|CROSSTAB|}  
+ #       <tbody>
+	#	    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_1201)}
+     #   	<tr> 
+#Display Question Text
+      #          <td colspan=2>2. Was an associate available at the Bakery/Deli Counter?</td>
+       #     	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+        #           	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	     #              	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+			#						{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+			#						{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+			#						{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">BROKEN
+             #               {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+              #      {/|LOOP|}                           
+#Scores for National
+               # 
+                #    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)<70?red:} 
+				#				{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)<80?orange:}
+				#				{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+				#				{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                 #               {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_511_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            #</tr>
+          	#	{/|LOOP|}
+          	#{/|LOOP|}
+          #</tbody>
+  #{/|CROSSTAB|} 
+        
+    
+#-------------------------------------------------------Q601  
+# Did the Bakery/Deli associate greet you? 	
+# 7. Did the Bakery/Deli associate greet you? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_601)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>7. Did the Bakery/Deli associate greet you?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_601_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+          
+    
+#-------------------------------------------------------Q641  
+# Did the Bakery/Deli associate know the department's ad specials when asked? 	
+# 8. Did the Bakery/Deli associate know the department's ad specials when asked? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_641)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>8. Did the Bakery/Deli associate know the department's ad specials when asked?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_641_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+            
+    
+#-------------------------------------------------------Q621  
+# Did the Bakery/Deli associate make a parting comment? 	
+# 9. Did the Bakery/Deli associate make a parting comment? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_621)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>9. Did the Bakery/Deli associate make a parting comment?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+   
+          
+          
+          
+#-------------------------------------------------------MEAT/SEAFOOD SUBSECTION SCORE    
+# Sec 13(score): Meat/Seafood
+# Sec 13(score): Meat/Seafood
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>Meat/Seafood</th>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_3(SORT=NAME,LIMIT=1)}
+                	{|LOOP|CLIENT_783_LEVEL_3.CLIENT_783_LEVEL_2(SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            #{CLIENT_783_LEVEL_2.NAME} - 
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                	{/|LOOP|}
+                <td class="{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_13_SCORE,OVERALL).ROUND(1)}%</td>
+                       	                       
+                {/|LOOP|}       
+                                     
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}            
+  
+#-------------------------------------------------------Q681   
+# Does this location have a Meat/Seafood counter? 	
+# 1. Does this location have a Meat/Seafood counter? 	
+# Yes - No
+            
+            
+#  {|CROSSTAB|}  
+#        <tbody>
+#			
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_681)}
+#        	<tr> 
+#Display Question Text
+#                <td colspan=2>1. Does this location have a Meat/Seafood counter?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+#	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">BROKEN
+#                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+#                    {/|LOOP|}                           
+#Scores for National
+                
+#                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)<70?red:} 
+#								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)<80?orange:}
+#								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+#								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+ #                               {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+#
+ #           </tr>
+  #        		{/|LOOP|}
+   #       	{/|LOOP|}
+    #      </tbody>
+  #{/|CROSSTAB|}  
+              
+    
+#-------------------------------------------------------Q1211  
+# Was an associate available in Meat/Seafood area? 	
+# 2. Was an associate available in Meat/Seafood area? 	
+# Yes - No
+            
+            
+#  {|CROSSTAB|}  
+#        <tbody>
+		    #{|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_1211)}
+        	#<tr> 
+#Display Question Text
+             #   <td colspan=2>2. Was an associate available in Meat/Seafood area?</td>
+            	#{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+#	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+#									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">BROKEN
+ #                           {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+  #                  {/|LOOP|}                           
+#Scores for National
+                
+     #               <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)<70?red:} 
+	#							{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)<80?orange:}
+		#						{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+		#						{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+         #                       {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_621_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+          #  </tr>
+#          		{/|LOOP|}
+ #         	{/|LOOP|}
+  #        </tbody>
+  #{/|CROSSTAB|} 
+                  
+    
+#-------------------------------------------------------Q731
+# Did the Meat/Seafood associate greet you? 	
+# 8. Did the Meat/Seafood associate greet you? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_731)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>8. Did the Meat/Seafood associate greet you?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_731_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+                      
+    
+#-------------------------------------------------------Q751
+# Did the Meat/Seafood associate know the department's ad specials when asked? 	
+# 9. Did the Meat/Seafood associate know the department's ad specials when asked? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_751)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>9. Did the Meat/Seafood associate know the department's ad specials when asked?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_751_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+                        
+    
+#-------------------------------------------------------Q761
+# Did the Meat/Seafood associate make a parting comment? 	
+# 10. Did the Meat/Seafood associate make a parting comment? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_761)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>10. Did the Meat/Seafood associate make a parting comment? 	</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_761_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}
+ 
+          
+          
+          
+#-------------------------------------------------------SECTION 6 SCORE--GOOD    
+# Sec 6(score): VI. Front End
+# Sec 6(score): VI. Front End
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>VI. Front End</th>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_3(SORT=NAME,LIMIT=1)}
+                	{|LOOP|CLIENT_783_LEVEL_3.CLIENT_783_LEVEL_2(SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            #{CLIENT_783_LEVEL_2.NAME} - 
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                	{/|LOOP|}
+                <td class="{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_6_SCORE,OVERALL).ROUND(1)}%</td>
+                       	                       
+                {/|LOOP|}       
+                                     
+            </tr>
+		</tbody>
+  {/|CROSSTAB|} 
+                   
+          
+          
+#-------------------------------------------------------Cashier Service    
+# Sec 14(score): Cashier Service
+# Sec 14(score): Cashier Service
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>Cashier Service</th>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_3(SORT=NAME,LIMIT=1)}
+                	{|LOOP|CLIENT_783_LEVEL_3.CLIENT_783_LEVEL_2(SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            #{CLIENT_783_LEVEL_2.NAME} - 
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                	{/|LOOP|}
+                		<td class="{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_14_SCORE,OVERALL).ROUND(1)}%</td>
+                       	                       
+                {/|LOOP|}       
+                                     
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}            
+              
+#-------------------------------------------------------Q811   
+# How long did you wait until the cashier attended to you?
+# 1. How long did you wait until the cashier attended to you? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_811)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>1. How long did you wait until the cashier attended to you?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_811_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+            
+            
+#-------------------------------------------------------Q821   
+# How many customers were ahead of you? 	
+# 2. How many customers were ahead of you? 	
+# Yes - No
+            
+            
+	#{|CROSSTAB|}  
+	#	<tbody>
+	#	    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_821)}
+     #   	<tr> 
+#Display Question Text
+      #          <td colspan=2>2. How many customers were ahead of you?</td>
+       #     	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+        #           	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	     #              	<td class="{PERCENTAGE(COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2,DYNAMIC_GROUP), COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2)).ROUND(1)<70?red:} 
+			#						{PERCENTAGE(COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2,DYNAMIC_GROUP), COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2)).ROUND(1)>=70&&PERCENTAGE(COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2,DYNAMIC_GROUP), COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2)).ROUND(1)<80?orange:}
+			#						{PERCENTAGE(COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2,DYNAMIC_GROUP), COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2)).ROUND(1).ROUND(1)>=80&&PERCENTAGE(COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2,DYNAMIC_GROUP), COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2)).ROUND(1)<90?yellow:}
+			#						{PERCENTAGE(COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2,DYNAMIC_GROUP), COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2)).ROUND(1).ROUND(1)>=90?green:}">NOTSCORED
+                            #{PERCENTAGE(COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2,DYNAMIC_GROUP), COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2)).ROUND(1).NUMBERFORMAT(1)}%
+             #   </td>
+              #      {/|LOOP|}                           
+#Scores for National  
+               # <td class="{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(1)<70?red:} 
+				#					{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(1)>=70&&PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(1)<80?orange:}
+				#					{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(1).ROUND(1)>=80&&PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(1)<90?yellow:}
+				#					{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(1).ROUND(1)>=90?green:}">
+                 #                   {PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(1).NUMBERFORMAT(1)}%</td>
+                    
+    
+            #</tr>
+          	#	{/|LOOP|}
+          	#{/|LOOP|}
+          #</tbody>
+  #{/|CROSSTAB|}               
+            
+#-------------------------------------------------------Q831   
+# If all checkout lanes were 'NOT" open, was an additional checkout lane opened if there were more than 2 customers ahead of you? 	
+# 3. If all checkout lanes were 'NOT" open, was an additional checkout lane opened if there were more than 2 customers ahead of you? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_831)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>3. If all checkout lanes were 'NOT" open, was an additional checkout lane opened if there were more than 2 customers ahead of you?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_831_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+                
+            
+#-------------------------------------------------------Q911   
+# Did the cashier greet you promptly and pleasantly when you arrived at the register? 	
+# 9. Did the cashier greet you promptly and pleasantly when you arrived at the register? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_911)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>9. Did the cashier greet you promptly and pleasantly when you arrived at the register?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_911_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+                  
+            
+#-------------------------------------------------------Q921   
+# Did the cashier establish eye contact? 	
+# 10. Did the cashier establish eye contact? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_921)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>10. Did the cashier establish eye contact?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_921_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+                    
+            
+#-------------------------------------------------------Q941   
+# Did you observe the cashier during your transaction or the transaction in front of you checking under the shopping cart for items? 	
+# 11. Did you observe the cashier during your transaction or the transaction in front of you checking under the shopping cart for items? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_941)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>11. Did you observe the cashier during your transaction or the transaction in front of you checking under the shopping cart for items?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_941_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+                      
+            
+#-------------------------------------------------------Q961   
+# Did the cashier inform you about the Fuel Bucks? 	
+# 12. Did the cashier inform you about the Fuel Bucks? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_961)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>12. Did the cashier inform you about the Fuel Bucks?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_961_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+                        
+            
+#-------------------------------------------------------Q981   
+# Did the cashier refrain from personal conversation with other associates? 	
+# 13. Did the cashier refrain from personal conversation with other associates? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_981)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>13. Did the cashier refrain from personal conversation with other associates?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_981_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+                          
+            
+#-------------------------------------------------------Q991   
+# Did the cashier thank you or offer a pleasant closing? 	
+# 14. Did the cashier thank you or offer a pleasant closing? 	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_991)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>14. Did the cashier thank you or offer a pleasant closing?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+
+          
+          
+          
+#-------------------------------------------------------Bagger/Carryout
+# Sec 15(score): Bagger/Carryout
+# Sec 15(score): Bagger/Carryout
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>Bagger/Carryout</th>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_3(SORT=NAME,LIMIT=1)}
+                	{|LOOP|CLIENT_783_LEVEL_3.CLIENT_783_LEVEL_2(SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            #{CLIENT_783_LEVEL_2.NAME} - 
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                	{/|LOOP|}
+                		<td class="{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_15_SCORE,OVERALL).ROUND(1)}%</td>
+                       	                       
+                {/|LOOP|}       
+                                     
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}            
+          
+            
+#-------------------------------------------------------Q1031   
+# Did you interact with a bagger?  	
+# 1. Did you interact with a bagger?  	
+# Yes - No
+            
+            
+#  {|CROSSTAB|}  
+#        <tbody>
+		    #{|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_1031)}
+        	#<tr> 
+#Display Question Text
+#                <td colspan=2>1. Did you interact with a bagger?</td>
+ #           	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+  #                 	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	#                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+	#								{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+	#								{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+	#								{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">BROKEN
+     #                       {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+      #              {/|LOOP|}                           
+#Scores for National
+       #         
+        #            <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)<70?red:} 
+		#						{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)<80?orange:}
+		#						{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+		#						{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+         #                       {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_991_PERCENT,OVERALL).ROUND(1)}%</td>
+
+          #  </tr>
+          	#	{/|LOOP|}
+          	#{/|LOOP|}
+          #</tbody>
+  #{/|CROSSTAB|} 
+                                      
+            
+#-------------------------------------------------------Q1081   
+# Were all items packed with care?  	
+# 6. Were all items packed with care?  	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_1081)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>6. Were all items packed with care?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1081_PERCENT,OVERALL).ROUND(1)}%</td>
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+                                       
+            
+#-------------------------------------------------------Q1111   
+# Was carry-out to your car offered with 3 or more bags or if you purchased a large item?  	
+# 7. Was carry-out to your car offered with 3 or more bags or if you purchased a large item?  	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_1111)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>7. Was carry-out to your car offered with 3 or more bags or if you purchased a large item?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1111_PERCENT,OVERALL).ROUND(1)}%</td>
+                    
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+
+          
+          
+#-------------------------------------------------------SECTION 7 SCORE    
+# Sec 7(score): VII. Overall Experience
+# Sec 7(score): VII. Overall Experience
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>VII. Overall Experience</th>
+                {|LOOP|CROSSTAB.CLIENT_783_LEVEL_3(SORT=NAME,LIMIT=1)}
+                	{|LOOP|CLIENT_783_LEVEL_3.CLIENT_783_LEVEL_2(SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            #{CLIENT_783_LEVEL_2.NAME} - 
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                	{/|LOOP|}
+                		<td class="{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_3.CLIENT_783_MASTER_SURVEY_4671_SECTION_7_SCORE,OVERALL).ROUND(1)}%</td>
+                       	
+                {/|LOOP|}       
+                                     
+            </tr> 
+		</tbody>
+  {/|CROSSTAB|}           
+            
+#-------------------------------------------------------Q1151   
+# Based on the level of service provided by this store, would you recommend Food City to family members or friends? Please explain why in the comments.  	
+# 1. Based on the level of service provided by this store, would you recommend Food City to family members or friends? Please explain why in the comments.  	
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_783_master_survey_4671_question_1151)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>1. Based on the level of service provided by this store, would you recommend Food City to family members or friends? Please explain why in the comments.</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_783_LEVEL_2(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td class="{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                            {AVG(CLIENT_783_LEVEL_2.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,CLIENT_783_LEVEL_2).ROUND(1)}%</td> 
+                    {/|LOOP|}                           
+#Scores for National
+                
+                    <td class="{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,OVERALL).ROUND(1)<70?red:} 
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,OVERALL).ROUND(1)>=70&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,OVERALL).ROUND(1)<80?orange:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,OVERALL).ROUND(1)>=80&&AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,OVERALL).ROUND(1)<90?yellow:}
+								{AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,OVERALL).ROUND(1)>=90?green:}">
+                                {AVG(DYNAMIC_GROUP.CLIENT_783_MASTER_SURVEY_4671_QUESTION_1151_PERCENT,OVERALL).ROUND(1)}%</td>
+
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 

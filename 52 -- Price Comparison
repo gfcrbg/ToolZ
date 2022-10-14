@@ -1,0 +1,84 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|RESULT|}
+		<div>
+			<table class='data'>
+				{|LOOP|RESULT.DATAPOINTS}
+					{|SHOWIF|LOOP.ISFIRST}
+						<thead>
+							<tr>
+                                <th></th>
+								<th>Dealer</th>
+								<th>ISP</th>
+							</tr>
+						</thead>
+						<tbody>
+					{/|SHOWIF|}
+                            
+                    <tr><td><b>Main Service</b></td><td></td><td></td></tr>                                                   
+					#<tr>
+                    #   	<th>Shop ID</th>
+                    #    <td>{DATAPOINTS.ID}</td>
+                    #</tr>
+					<tr>
+                        <th>Price Given</th>
+                        <td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_941_VALUE}</td>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_961_VALUE}</td>						
+					</tr>
+                    <tr>
+                        <th>OEM Parts</th>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_571_SCORE}</td>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_971_SCORE}</td>						
+					</tr>
+					<tr>
+                        <th>Business Days for service</th>                        
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_651_VALUE}</td>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_981_VALUE}</td>						
+					</tr>
+                    <tr>
+                        <th>Specific length of time of service</th>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_641_VALUE}</td>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_991_VALUE}</td>						
+					</tr>
+                    
+                    <tr><td><b>Secondary Service</b></td><td></td><td></td></tr>                                                 
+                    <tr>
+                        <th>Price Given</th>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_951_VALUE}</td>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_1001_VALUE}</td>						
+					</tr>
+                    <tr>
+                        <th>OEM Parts</th>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_801_SCORE}</td>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_1011_SCORE}</td>						
+					</tr>
+					<tr>
+                        <th>Business Days for service</th>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_841_VALUE}</td>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_1021_VALUE}</td>						
+					</tr>
+                    <tr>
+                        <th>Specific length of time of service</th>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_881_VALUE}</td>
+						<td>{DATAPOINTS.CLIENT_821_MASTER_SURVEY_4816_QUESTION_1031_VALUE}</td>						
+					</tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><th></th><th></th><th></th></tr>
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|RESULT|}
+	{/|SHOWIF|}
+</div>

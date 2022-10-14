@@ -1,0 +1,319 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+  {DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+  {|VANISHIF|DATATYPES.SHOW_DATATYPE.TOTAL_COUNT}
+    <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+  {/|VANISHIF|}
+  
+  {|SHOWIF|DATATYPES.SHOW_DATATYPE.TOTAL_COUNT}
+  
+
+# 10K Independent Phone National
+# JOBS_FOR_SURVEY_4590
+
+#/////////////////////////////////////////////////////////////
+#-------------------------------------------------------topline - good
+    
+    
+	{|CROSSTAB|}  
+	  <table class="data">  
+		<thead>                   
+		  <tr>            
+          	<th colspan=2>Location</th>
+          	{|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME,CROSSTAB_FILTER=WITH_BLANKS)}
+            	<th>{CLIENT_793_LEVEL_1.NAME.SPLIT( ,0)}</th>
+            {/|LOOP|}
+              #<th>Grand Total</th>
+          </tr>
+            
+          <tr>            
+          	<th colspan=2>Number of Surveys</th>
+          	{|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME,CROSSTAB_FILTER=WITH_BLANKS)}
+            	<th>{COUNT(CLIENT_793_LEVEL_1)}</th>
+            {/|LOOP|}
+              #<th>Grand Total</th>
+          </tr>
+            
+          <tr>            
+          	<th colspan=2>Overall Score</th>
+          	{|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME,CROSSTAB_FILTER=WITH_BLANKS)}
+            	<th>{AVG(CLIENT_793_LEVEL_1.PERCENT_SCORE,CLIENT_793_LEVEL_1).ROUND(1)}%</th>
+            {/|LOOP|}
+              #<th>Grand Total</th>
+          </tr>
+
+        </thead>
+        <tbody>
+            
+            <tr>
+                {|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME,CROSSTAB_FILTER=WITH_BLANKS)}                 
+					{|SHOWIF|LOOP.ISFIRST}
+                    {/|SHOWIF|}
+            	{/|LOOP|}
+            </tr>
+    {/|CROSSTAB|}
+
+
+#-------------------------------------------------------Header---
+            
+<tr><td colspan=20>MS CUSTOMER SERVICE</td></tr>
+
+            
+#-------------------------------------------------------SECTION 4703 PHONE ORDER SCORE---
+# Sec 1(score): I. Exterior 	
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>Phone Order - Bad Data</th>
+                {|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME)}
+                   	<td>{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_1_SCORE,CLIENT_793_LEVEL_1).ROUND(1)}%<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_1_ACTUAL_POINTS)} pts</td>
+                {/|LOOP|}                
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}             
+            
+
+#-------------------------------------------------------SECTION 4703 FOOD SERVICE EMPLOYEE SCORE---
+# Sec 1(score): I. Exterior 	
+            
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>Food Service Employee - Bad Data</th>
+                {|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME)}
+                   	<td>{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_1_SCORE,CLIENT_793_LEVEL_1).ROUND(1)}%<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_1_ACTUAL_POINTS)} pts</td>
+                {/|LOOP|}                
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}             
+            
+           
+#-------------------------------------------------------SECTION 4701 SERVICE MTO SCORE---
+# Sec 3(score): III. Service MTO           
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>Service (MTO) - Check Data</th>
+                {|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME)}
+                   	<td>{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_3_SCORE,CLIENT_793_LEVEL_1).ROUND(1)}%<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_3_ACTUAL_POINTS)} pts</td>
+                {/|LOOP|}                
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}             
+            
+           
+#-------------------------------------------------------SECTION 4701-4702 Checkout SCORE---
+# Sec 3(score): III. Service MTO           
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>Service (MTO) - Check Data</th>
+                {|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME)}
+                   	<td>{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_3_SCORE,CLIENT_793_LEVEL_1).ROUND(1)}%<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_3_ACTUAL_POINTS)} pts</td>
+                {/|LOOP|}                
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}               
+          
+            
+#-------------------------------------------------------Header---
+            
+<tr><td colspan=20>MS IMAGE</td></tr>
+            
+#-------------------------------------------------------SECTION 4701-4702 Exterior---
+# Sec 1(score): 4701-4702 Exterior 	           
+            
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>I. Exterior</th>
+                {|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME)}
+                   	<td>{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_1_SCORE,CLIENT_793_LEVEL_1).ROUND(1)}%<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_1_ACTUAL_POINTS)} pts</td>
+                {/|LOOP|}                
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}            
+          
+
+#-------------------------------------------------------SECTION 4701-4702 Interior---
+# Sec 2(score): 4701-4702 Interior
+                        
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>II. Interior</th>
+                {|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME)}
+                   	<td>{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_2_SCORE,CLIENT_793_LEVEL_1).ROUND(1)}%<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_2_ACTUAL_POINTS)} pts</td>
+                {/|LOOP|}                
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}              
+          
+
+#-------------------------------------------------------SECTION Food Service EEs---
+# Sec 2(score): Food Service EEs
+                        
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>Food Service EEs? No data</th>
+                {|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME)}
+                   	<td>{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_2_SCORE,CLIENT_793_LEVEL_1).ROUND(1)}%<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_2_ACTUAL_POINTS)} pts</td>
+                {/|LOOP|}                
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}   
+          
+
+#-------------------------------------------------------SECTION 4701 MTO---
+# Sec 2(score): 4701 MTO
+          
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>III. MTO</th>
+                {|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME)}
+                   	<td>{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_3_SCORE,CLIENT_793_LEVEL_1).ROUND(1)}%<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_3_ACTUAL_POINTS)} pts</td>
+                {/|LOOP|}                
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}             
+          
+          
+#-------------------------------------------------------SECTION 4701-4702 Employee---
+# Sec 2(score): 4701-4702 Employee
+          
+  {|CROSSTAB|}  
+        <tbody>		    
+        	<tr> 
+                <th colspan=2>IV. Employee</th>
+                {|LOOP|CROSSTAB.CLIENT_793_LEVEL_1(SORT=NAME)}
+                   	<td>{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_4_SCORE,CLIENT_793_LEVEL_1).ROUND(1)}%<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_SECTION_4_ACTUAL_POINTS)} pts</td>
+                {/|LOOP|}                
+            </tr>
+		</tbody>
+  {/|CROSSTAB|}      
+          
+
+#-------------------------------------------------------Header---
+            
+<tr><td colspan=20>UPSELL</td></tr>          
+          
+#-------------------------------------------------------Q651 - HIDDEN QUESTION ON 4703
+# Did the employee offer you an additional item/new product to add to the order?
+# 4. Did the employee offer you an additional item/new product to add to the order?
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_793_master_survey_4701_question_651)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>{GROUPS.NAME}</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_793_LEVEL_1(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>                                        
+                           	{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_651_PERCENT,CLIENT_793_LEVEL_1)=|EVALCONST(NULL)|?-:|EVALTAG(AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_651_PERCENT,CLIENT_793_LEVEL_1).ROUND(1))|}
+                            {AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_651_PERCENT,CLIENT_793_LEVEL_1)=|EVALCONST(NULL)|?:%}<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_651_SCORE)} pts
+                        </td> 
+                    {/|LOOP|}                           
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}       
+          
+          
+#-------------------------------------------------------Q661 - HIDDEN QUESTION ON 4702
+# Did the associate offer you (or did you witness an associate offering a customer) a value?
+# 20. Did the associate offer you (or did you witness an associate offering a customer) a value?
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_793_master_survey_4701_question_661)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>{GROUPS.NAME}</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_793_LEVEL_1(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>                                        
+                           	{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_661_PERCENT,CLIENT_793_LEVEL_1)=|EVALCONST(NULL)|?-:|EVALTAG(AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_661_PERCENT,CLIENT_793_LEVEL_1).ROUND(1))|}
+                            {AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_661_PERCENT,CLIENT_793_LEVEL_1)=|EVALCONST(NULL)|?:%}<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_661_SCORE)} pts
+                        </td> 
+                    {/|LOOP|}                           
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}  
+          
+          
+#-------------------------------------------------------Q411 - HIDDEN QUESTION ON 4701  *May be bad?  It's 3 options instead of 2.
+# Employee offered you a value (such as a meal deal, cookies, drink, etc.)?
+# 29. Employee offered you a value (such as a meal deal, cookies, drink, etc.)?
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_793_master_survey_4701_question_411)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>{GROUPS.NAME}</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_793_LEVEL_1(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>                                        
+                           	{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_411_PERCENT,CLIENT_793_LEVEL_1)=|EVALCONST(NULL)|?-:|EVALTAG(AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_411_PERCENT,CLIENT_793_LEVEL_1).ROUND(1))|}
+                            {AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_411_PERCENT,CLIENT_793_LEVEL_1)=|EVALCONST(NULL)|?:%}<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_411_SCORE)} pts
+                        </td> 
+                    {/|LOOP|}                           
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}  
+          
+          
+#-------------------------------------------------------Q531 - HIDDEN QUESTION ON 4701
+# Did the associate offer you (or did you witness an associate offering a customer) a value?
+# 33. Did the associate offer you (or did you witness an associate offering a customer) a value?
+# Yes - No
+            
+            
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_793_master_survey_4701_question_531)}
+        	<tr> 
+#Display Question Text
+                <td colspan=2>{GROUPS.NAME}</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_793_LEVEL_1(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>                                        
+                         	{AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_531_PERCENT,CLIENT_793_LEVEL_1)=|EVALCONST(NULL)|?-:|EVALTAG(AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_531_PERCENT,CLIENT_793_LEVEL_1).ROUND(1))|}
+                            {AVG(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_531_PERCENT,CLIENT_793_LEVEL_1)=|EVALCONST(NULL)|?:%}<br>{SUM(CLIENT_793_LEVEL_1.CLIENT_793_MASTER_SURVEY_4701_QUESTION_531_SCORE)} pts
+                        </td> 
+                    {/|LOOP|}                           
+            </tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}  
+          
+          
+#-------------------------------------------------------Header---
+            
+<tr><td colspan=20>BONUS - FOOD ONLY</td></tr>          

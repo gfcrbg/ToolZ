@@ -1,0 +1,381 @@
+<div id="no-nav-placeholder" class="presto-eval-logo"></div>
+      <div class="response-containertp">
+
+<h1>Amaize: Customer Satisfaction Comments</h1>
+          <h2>Empty sections indicate a lack of comments for the reporting period.</h2>
+      <div class="response-container">
+
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+  {DATATYPES.DEFAULT_DATE_FILTERS} 
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+</div>
+<div class='results'>
+  {|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+  <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+  {/|VANISHIF|}
+  
+  {|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+  
+#OVERALL SATISFACTION
+      <div class="response-container">
+    
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_51_ID|gte|4}
+	
+    <h2>Overall satisfaction on the visit</h2>
+    
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_61_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+		  &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_61_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_51_SCORE}
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|}
+</div>    
+    
+#QUALITY OF SERVICE
+      <div class="response-container">
+    
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_71_ID|gte|4}
+   
+    <h2>Quality of service</h2>
+
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_81_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+#This is the Name
+            #            {DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}<br/>
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_81_VALUE}
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|}
+</div>    
+    
+#SPEED OF SERVICE
+      <div class="response-container">
+
+    {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_91_ID|gte|4}
+	
+    <h2>Speed of service</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_101_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_101_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_91_SCORE}  
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|}
+  </div>
+    
+#QUALITY OF FOOD
+      <div class="response-container">
+    
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_111_ID|gte|4}
+	
+    <h2>Quality of food</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_121_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_121_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_111_SCORE}  
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|}
+          </div>
+    
+#CLEANLINESS OF THE RESTAURANT
+          <div class="response-container">
+
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_131_ID|gte|4}
+	
+    <h2>Cleanliness of the restaurant</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_141_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_141_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_131_SCORE}  
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|}    
+</div>
+              
+#MUSIC IN THE RESTAURANT
+          <div class="response-container">
+
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_151_ID|gte|4}
+	
+    <h2>Music in the restaurant</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_161_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_161_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_151_SCORE}  
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|} 
+</div>
+              
+ #TEMPERATURE OF THE RESTAURANT
+      <div class="response-container">
+    
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_171_ID|gte|4}
+	
+    <h2>Temperature of the restaurant</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_181_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_181_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_171_SCORE}  
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|}  
+</div>          
+
+#MERCADITO
+      <div class="response-container">
+    
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_421_ID|gte|4}
+	
+    <h2>Mercadito</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_431_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_431_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_421_SCORE}  
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|} 
+  </div>
+          
+#RESTAURANT LOOK AND FEEL
+          <div class="response-container">
+
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_191_ID|gte|4}
+	
+    <h2>Look and feel of the restaurant</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_201_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_201_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_191_SCORE}  
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|} 
+</div>              
+  
+#NOISE IN THE RESTAURANT
+      <div class="response-container">  
+    
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_211_ID|gte|4}
+	
+    <h2>Noise in the restaurant</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_221_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_221_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_211_SCORE}  
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|} 
+  </div>
+          
+#ORDER TAKING PROCESS
+          <div class="response-container">
+
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_231_ID|gte|4}
+	
+    <h2>Order taking process</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_241_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_241_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_231_SCORE}  
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|} 
+              </div>
+  
+#HOW LIKELY TO RETURN TO THE RESTAURANT
+          <div class="response-container">
+
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_271_ID|gte|3}
+	
+    <h2>Likely to return to the location</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_281_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_281_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_271_SCORE}  
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|} 
+ </div>
+              
+#HOW LIKELY TO RECOMMEND TO FRIENDS OR RELATIVES
+      <div class="response-container">
+    
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_291_ID|gte|3}
+	
+    <h2>Likely to recommend to a friend or relative</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_301_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_301_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_291_SCORE}  
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|}   
+</div>
+          
+#HOW COULD THE NEXT VISIT BE BETTER
+          <div class="response-container">
+
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_311_VALUE|ne||EVALCONST(NULL)|}
+	
+    <h2>How can we serve better next time</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_311_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+       <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_311_VALUE}
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|}  
+</div>
+              
+#TEAM MEMBER PROVIDING EXCELLENT SERVICE
+      <div class="response-container">
+    
+  {|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_321_ID|eq|1}
+	
+    <h2>A team member that made a difference</h2>
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_331_VALUE|ne||EVALCONST(NULL)|)}
+      <div class="shop">
+        <div class="shop-date">
+          <span class="score">&nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.PERCENT_SCORE}%</span><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;on<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}
+	      <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a>
+            
+        </div>
+        <div class="triangle-isosceles left">
+          {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_331_VALUE}
+#                    {DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_321_SCORE}  
+        </div>
+      </div>
+    {/|LOOP|}<br>
+  {/|RESULT|}
+</div>
+  {/|SHOWIF|}</div>
+</div>

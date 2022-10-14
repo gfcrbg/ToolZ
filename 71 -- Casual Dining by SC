@@ -1,0 +1,74 @@
+<div><h2 align="center">Casual Dining Quick Ranking</h2></div>
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+<div><br>This report will show each location's ranking against the company.  
+    <br><br>In order to view the location rankings within each market, first select a date range and click Submit, then click the desired Market name.
+	<br><br>*Note: Markets shared by multiple SC's are calculated as such.
+</div>
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	 
+		{|NESTED|}
+		<div>
+			<table class='data'>
+				<thead>
+					<tr>
+						<th>Service Coach</th>
+						<th>Market</th>
+                	    <th>Location</th>
+            	        <th>Count</th>
+        	            <th>Average Score</th>
+    	                <th>Rank Overall</th>
+	                    <th>Rank in Service Coach</th>
+                    	<th>Rank in Market</th>
+					</tr>
+				</thead>
+				<tbody>
+			{|LOOP|NESTED.CLIENT_9_LEVEL_2(SORT=NAME)}
+				<tr class="sc" id="{CLIENT_9_LEVEL_2.NAME.SPLIT( ,1)}">
+					<th class="pointer">{CLIENT_9_LEVEL_2.NAME.SPLIT( ,1)}</th>
+					<td></td>
+                    <td></td>
+					<td>{COUNT(CLIENT_9_LEVEL_2,CLIENT_9_LEVEL_2)}</td>
+                    <td>{AVG(CLIENT_9_LEVEL_2.PERCENT_SCORE,CLIENT_9_LEVEL_2).ROUND(2)}%</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+				</tr>
+				{|LOOP|CLIENT_9_LEVEL_2.CLIENT_9_LEVEL_4(SORT=NAME)}
+					<tr class="market-{CLIENT_9_LEVEL_2.NAME.SPLIT( ,1)}" id="{CLIENT_9_LEVEL_4.NAME.SPLIT( ,1)}">
+						<th></th>
+						<td class="pointer">{CLIENT_9_LEVEL_4.NAME.SPLIT( ,1)}</td>
+                        <td></td>
+						<td>{COUNT(CLIENT_9_LEVEL_4,CLIENT_9_LEVEL_4)}</td>
+                        <td>{AVG(CLIENT_9_LEVEL_4.PERCENT_SCORE,CLIENT_9_LEVEL_4).ROUND(2)}%</td>
+                        <td>-</td>
+                        <td>-</td>                        
+	                    <td>-</td>
+					</tr>
+                    {|LOOP|CLIENT_9_LEVEL_4.CLIENT_9_LEVEL_1(SORT=NAME)}
+	                    <tr class="location-{CLIENT_9_LEVEL_4.NAME.SPLIT( ,1)}">
+							<th></th>
+							<td></td>
+            	            <td>{CLIENT_9_LEVEL_1.NAME}</td>
+							<td>{COUNT(CLIENT_9_LEVEL_1,CLIENT_9_LEVEL_1)}</td>
+                            <td>{AVG(CLIENT_9_LEVEL_1.PERCENT_SCORE).ROUND(2)}%</td>
+							<td>{RANK(AVG(CLIENT_9_LEVEL_1.PERCENT_SCORE), DESC, 2, OVERALL)}</td>
+            	            <td>{RANK(AVG(CLIENT_9_LEVEL_1.PERCENT_SCORE), DESC, 2, CLIENT_9_LEVEL_2)}</td>
+							<td>{RANK(AVG(CLIENT_9_LEVEL_1.PERCENT_SCORE), DESC, 2, CLIENT_9_LEVEL_4)}</td>
+						</tr>	
+                    {/|LOOP|}
+				{/|LOOP|}
+			{/|LOOP|}
+				</tbody>
+			</table>
+		</div>
+		{/|NESTED|}
+	{/|SHOWIF|}
+</div>

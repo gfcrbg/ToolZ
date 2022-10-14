@@ -1,0 +1,140 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+  {DATATYPES.DEFAULT_DATE_FILTERS}      
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+  {|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+  <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+  {/|VANISHIF|}
+
+  {|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+   
+{|VANISHIF|DATATYPES.REPORT_CONFIG.SHOW_GROUP_ID}
+      {|CROSSTAB|}
+      <div>
+        {|LOOP|CROSSTAB.CLIENT_201_LEVEL_3(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}
+          {|SHOWIF|LOOP.ISFIRST}
+          <table class='data'>
+            <thead>
+              <tr>
+                <th>Region</th>
+                {|LOOP|CLIENT_201_LEVEL_3.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+                  <th>{MONTH_YEAR.NAME}</th>
+                {/|LOOP|}
+                <th>All Months</th>
+              </tr>
+            </thead>
+            <tbody>
+          {/|SHOWIF|}
+              <tr>
+                <th>
+          {CLIENT_201_LEVEL_3.NAME}</th>    
+                {|LOOP|CLIENT_201_LEVEL_3.MONTH_YEAR}
+                  <td>{AVG(MONTH_YEAR.PERCENT_SCORE).ROUND}{COUNT(MONTH_YEAR)?%:--}</td>
+                {/|LOOP|}
+                <td>{AVG(CLIENT_201_LEVEL_3.PERCENT_SCORE,CLIENT_201_LEVEL_3).ROUND}%</td>
+              </tr>
+          {|VANISHIF|LOOP.HASNEXT}
+              <tr>
+                <th>Company</th>    
+                {|LOOP|CLIENT_201_LEVEL_3.MONTH_YEAR}
+                  <td>{AVG(MONTH_YEAR.PERCENT_SCORE,MONTH_YEAR).ROUND}%</td>
+                {/|LOOP|}
+                <td>{AVG(CLIENT_201_LEVEL_3.PERCENT_SCORE,OVERALL).ROUND}%</td>
+              </tr>
+            </tbody>
+          </table>
+          {/|VANISHIF|}
+        {/|LOOP|}
+      </div>
+      {/|CROSSTAB|}
+     {/|VANISHIF|}
+<br>    
+    
+{|VANISHIF|DATATYPES.REPORT_CONFIG.SHOW_GROUP_ID}
+      {|CROSSTAB|}
+      <div>
+        {|LOOP|CROSSTAB.CLIENT_201_LEVEL_2(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}
+          {|SHOWIF|LOOP.ISFIRST}
+          <table class='data'>
+            <thead>
+              <tr>
+                <th>Area</th>
+                {|LOOP|CLIENT_201_LEVEL_2.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+                  <th>{MONTH_YEAR.NAME}</th>
+                {/|LOOP|}
+                <th>All Months</th>
+              </tr>
+            </thead>
+            <tbody>
+          {/|SHOWIF|}
+              <tr>
+                <th>
+          {CLIENT_201_LEVEL_2.NAME}</th>    
+                {|LOOP|CLIENT_201_LEVEL_2.MONTH_YEAR}
+                  <td>{AVG(MONTH_YEAR.PERCENT_SCORE).ROUND}{COUNT(MONTH_YEAR)?%:--}</td>
+                {/|LOOP|}
+                <td>{AVG(CLIENT_201_LEVEL_2.PERCENT_SCORE,CLIENT_201_LEVEL_2).ROUND}%</td>
+              </tr>
+          {|VANISHIF|LOOP.HASNEXT}
+              <tr>
+                <th>Company</th>    
+                {|LOOP|CLIENT_201_LEVEL_2.MONTH_YEAR}
+                  <td>{AVG(MONTH_YEAR.PERCENT_SCORE,MONTH_YEAR).ROUND}%</td>
+                {/|LOOP|}
+                <td>{AVG(CLIENT_201_LEVEL_2.PERCENT_SCORE,OVERALL).ROUND}%</td>
+              </tr>
+            </tbody>
+          </table>
+          {/|VANISHIF|}
+        {/|LOOP|}
+      </div>
+      {/|CROSSTAB|}
+     {/|VANISHIF|}
+
+<br>    
+    
+{|VANISHIF|DATATYPES.REPORT_CONFIG.SHOW_GROUP_ID}
+      {|CROSSTAB|}
+      <div>
+        {|LOOP|CROSSTAB.CLIENT_201_LEVEL_1(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}
+          {|SHOWIF|LOOP.ISFIRST}
+          <table class='data'>
+            <thead>
+              <tr>
+                <th>Location</th>
+                {|LOOP|CLIENT_201_LEVEL_1.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+                  <th>{MONTH_YEAR.NAME}</th>
+                {/|LOOP|}
+                <th>All Months</th>
+              </tr>
+            </thead>
+            <tbody>
+          {/|SHOWIF|}
+              <tr>
+                <th>
+          {CLIENT_201_LEVEL_1.NAME}</th>    
+                {|LOOP|CLIENT_201_LEVEL_1.MONTH_YEAR}
+                  <td>{AVG(MONTH_YEAR.PERCENT_SCORE).ROUND}{COUNT(MONTH_YEAR)?%:--}</td>
+                {/|LOOP|}
+                <td>{AVG(CLIENT_201_LEVEL_1.PERCENT_SCORE,CLIENT_201_LEVEL_1).ROUND}%</td>
+              </tr>
+          {|VANISHIF|LOOP.HASNEXT}
+              <tr>
+                <th>Company</th>    
+                {|LOOP|CLIENT_201_LEVEL_1.MONTH_YEAR}
+                  <td>{AVG(MONTH_YEAR.PERCENT_SCORE,MONTH_YEAR).ROUND}%</td>
+                {/|LOOP|}
+                <td>{AVG(CLIENT_201_LEVEL_1.PERCENT_SCORE,OVERALL).ROUND}%</td>
+              </tr>
+            </tbody>
+          </table>
+          {/|VANISHIF|}
+        {/|LOOP|}
+      </div>
+      {/|CROSSTAB|}
+     {/|VANISHIF|}    
+      </div>
+  {/|SHOWIF|}
+  {/|SHOWIF|}
+</div>

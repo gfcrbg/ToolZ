@@ -1,0 +1,66 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|RESULT|}
+		<div>
+			<table class='data'>
+				{|LOOP|RESULT.DATAPOINTS}
+					{|SHOWIF|LOOP.ISFIRST}
+						<thead>
+							<tr>
+								<th>ID</th>
+                                <th>LocID</th>
+								<th>Date</th>
+								<th>Section 1 Actual</th>
+								<th>Section 1 Possible</th>
+								
+                                <th>Section 2 Actual</th>
+								<th>Section 2 Possible</th>
+                                
+                                <th>Section 3 Actual</th>
+								<th>Section 3 Possible</th>
+                                
+                                <th>Section 4 Actual</th>
+								<th>Section 4 Possible</th>
+                                
+                               
+                            </tr>
+						</thead>
+						<tbody>
+					{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.DATAPOINT_ID}</th>
+                        <th>{DATAPOINTS.CLIENT_539_LEVEL_1.NAME}</th>
+						<td>{DATAPOINTS.TRENDING_TIMESTAMP}</td>
+						<td>{DATAPOINTS.CLIENT_539_SURVEY_3752_SECTION_1_ACTUAL_POINTS}</td>
+						<td>{DATAPOINTS.CLIENT_539_SURVEY_3752_SECTION_1_POSSIBLE_POINTS}</td>
+ 						
+                        <td>{DATAPOINTS.CLIENT_539_SURVEY_3752_SECTION_2_ACTUAL_POINTS}</td>
+						<td>{DATAPOINTS.CLIENT_539_SURVEY_3752_SECTION_2_POSSIBLE_POINTS}</td>
+                        
+                        <td>{DATAPOINTS.CLIENT_539_SURVEY_3752_SECTION_3_ACTUAL_POINTS}</td>
+						<td>{DATAPOINTS.CLIENT_539_SURVEY_3752_SECTION_3_POSSIBLE_POINTS}</td>
+                        
+                        <td>{DATAPOINTS.CLIENT_539_SURVEY_3752_SECTION_4_ACTUAL_POINTS}</td>
+						<td>{DATAPOINTS.CLIENT_539_SURVEY_3752_SECTION_4_POSSIBLE_POINTS}</td>
+                        
+                                             
+                        
+					</tr>
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|RESULT|}
+	{/|SHOWIF|}
+</div>

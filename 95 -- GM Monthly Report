@@ -1,0 +1,232 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+<table>
+    <tr>
+        <td>Start Date:</td>
+        <td>{DATATYPES.REPORT_CONFIG.TRENDING_DATE_AFTER.INPUT}</td>
+        <td>End Date:</td>
+        <td>{DATATYPES.REPORT_CONFIG.TRENDING_DATE_BEFORE.INPUT}</td>
+    </tr>
+    <tr>
+        <td>Location:</td>
+        <td>{DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR(SORT=NAME).INPUT} </td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+{DATATYPES.CONTROLS_END}
+{/|SHOWIF|}
+
+
+<div class='results'>
+    {|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    <div class='ui-state-highlight no-data'><p>No data was found to display for location - {DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR}</p></div>
+    {/|VANISHIF|}
+    
+    {|SHOWIF|DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR.ID<1}
+    <div class='ui-state-highlight no-data'><p style="float:center;">Please select a Location.</p></div>
+    {/|SHOWIF|}
+    
+    
+    {|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    {|SHOWIF|DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR.ID>1}
+    <br/>
+    <div>
+        {|RESULT|}
+        {|LOOP|RESULT.CLIENT_92_LEVEL_1(SORT=ORDER_NUM)}
+        {|LOOP|CLIENT_92_LEVEL_1.MONTH_YEAR(SORT=ORDER_NUM|DESC,LIMIT=1)}
+        <div style="font-size:14px;"><b>CURRENT SHOP: {AVG(MONTH_YEAR.PERCENT_SCORE)}%</b></div>
+        {/|LOOP|}
+        {/|LOOP|}
+        {/|RESULT|}
+    </div>
+    <br>
+    <div style="background-color:#6495ED;font-weight:bold;width:100%;color:white;vertical-align:middle;">EVALUATION TRENDING GRAPH</div>
+    <table>
+        <tbody>
+            <tr><td style="text-align:center;"> <br/>
+                {|GRAPH|}
+                graph/t/l
+                /w/600
+                /h/300
+                /k0/{DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR.FUSIONSAFE}
+                /k1/Menards%20Market
+                /k2/Menards%20Overall
+                /k3/HD-Lowes%20in%20Market
+                /n/Evaluation%20Trending
+                /r/0,100
+                /bgc/f5f5dc
+                #Store
+                /d0/,
+                {|RESULT|KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP;CLIENT_92_LEVEL_1_ID}
+                {|LOOP|RESULT.CLIENT_92_LEVEL_1(SORT=ORDER_NUM)}
+                {|LOOP|CLIENT_92_LEVEL_1.MONTH_OF_YEAR(SORT=ORDER_NUM,RESULT_FILTER=WITH_BLANKS)}
+                {AVG(MONTH_OF_YEAR.PERCENT_SCORE)=|EVALCONST(NULL)|?0:|EVALTAG(AVG(MONTH_OF_YEAR.PERCENT_SCORE).ROUND)|}
+                {LOOP.HASNEXT?,}
+                {/|LOOP|}
+                {/|LOOP|}
+                {/|RESULT|}
+                #Region
+                /d1/,
+                {|RESULT|}
+                {|LOOP|RESULT.CLIENT_92_LEVEL_3(KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP,LIMIT=1)}
+                {|LOOP|CLIENT_92_LEVEL_3.MONTH_OF_YEAR(SORT=ORDER_NUM,RESULT_FILTER=WITH_BLANKS)}
+                {AVG(MONTH_OF_YEAR.PERCENT_SCORE,MONTH_OF_YEAR)=|EVALCONST(NULL)|?0:|EVALTAG(AVG(MONTH_OF_YEAR.PERCENT_SCORE,MONTH_OF_YEAR).ROUND)|}
+                {LOOP.HASNEXT?,}
+                {/|LOOP|}
+                {/|LOOP|}
+                {/|RESULT|}
+                #Company
+                /d2/,
+                {|RESULT|}
+                {|LOOP|RESULT.CLIENT_92_LEVEL_1(KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP,LIMIT=1)}
+                {|LOOP|CLIENT_92_LEVEL_1.MONTH_OF_YEAR(SORT=ORDER_NUM,RESULT_FILTER=WITH_BLANKS)}
+                {AVG(MONTH_OF_YEAR.PERCENT_SCORE,MONTH_OF_YEAR)=|EVALCONST(NULL)|?0:|EVALTAG(AVG(MONTH_OF_YEAR.PERCENT_SCORE,MONTH_OF_YEAR).ROUND)|}
+                {LOOP.HASNEXT?,}
+                {/|LOOP|}
+                {/|LOOP|}
+                {/|RESULT|}
+                #COMPETITIVE REGION
+                /d3/,
+                {|RESULT|}
+                {|LOOP|RESULT.CLIENT_92_LOCGROUPSET_61(SORT=ORDER_NUM,KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP;CLIENT_92_LEVEL_3_ID,LIMIT=1)}
+                {|LOOP|CLIENT_92_LOCGROUPSET_61.MONTH_OF_YEAR(SORT=ORDER_NUM,RESULT_FILTER=WITH_BLANKS)}
+                {AVG(MONTH_OF_YEAR.PERCENT_SCORE,MONTH_OF_YEAR)=|EVALCONST(NULL)|?0:|EVALTAG(AVG(MONTH_OF_YEAR.PERCENT_SCORE,MONTH_OF_YEAR).ROUND)|}
+                {LOOP.HASNEXT?,}
+                {/|LOOP|}
+                {/|LOOP|}
+                {/|RESULT|} 
+                
+                /c/0085D0,569E1C,ADCF00,FFD321
+                /l/,  {|RESULT|}
+                {|LOOP|RESULT.MONTH_OF_YEAR(SORT=ORDER_NUM,RESULT_FILTER=WITH_BLANKS)}
+                {MONTH_OF_YEAR.NAME.SUBSTR(0,3).URLENCODE}{LOOP.HASNEXT?,}
+                {/|LOOP|}
+                ?apikey={CONFIG.PDF_API_KEY}
+                {/|GRAPH|}
+                {/|RESULT|}
+                <br/></td></tr>
+        </tbody>
+    </table>
+    <table style="border :1px solid black;">
+        <tbody><div>Shop Date:</div>
+            {|RESULT|}
+            <tr>
+                {|LOOP|RESULT.DATAPOINTS}
+                <td style="border :1px solid black;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2661_VALUE}</td>
+                {/|LOOP|}
+            </tr>
+            {/|RESULT|}
+        </tbody>
+    </table>
+    #Average 6 shops
+    <br/>
+    <div style="background-color:#6495ED;font-weight:bold;width:100%;color:white;vertical-align:middle;">Sales Process - Average 6 Shops</div>
+    <br/>  <table class='data' style="border :1px solid black;">
+    <thead>
+        <tr></tr>
+        <tr style="border :1px solid black;">
+            <th style="border :1px solid black;">Section</th>
+            
+            <th style="border :1px solid black;"><div>{DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR}</div></th>
+            <th style="border :1px solid black;">Menards Market</th>
+            <th style="border :1px solid black;">Menards Overall</th>
+            <th style="border :1px solid black;">HD/Lowes in Market</th>
+        </tr>
+    </thead>
+    <tbody style="border :1px solid black;">
+        #now we put back in our location filter, so that we only get the one the user selected
+        {|RESULT|KEEP_ONLY_FILTERS=NONE}
+        {|LOOP|RESULT.CLIENT_92_LEVEL_1(SORT=NAME,FILTER=ID|eq||EVALTAG(DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR.ID)|)}
+        <tr style="border :1px solid black;">
+            <td style="border :1px solid black;">Greeting</td>
+            
+            
+            #location score
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_20_SCORE).ROUND}%</td>
+            
+            #score for that location's market
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_20_SCORE, CLIENT_92_LEVEL_3).ROUND}%</td>
+            
+            #score for entire company
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_20_SCORE, OVERALL).ROUND}%</td>
+            
+            #score for location's competitor region
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_20_SCORE, CLIENT_92_LOCGROUPSET_61).ROUND}%</td>
+        </tr>
+        <tr>
+            <td style="border :1px solid black;">Qualifying</td>
+            
+            
+            #location score
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_21_SCORE).ROUND}%</td>
+            
+            #score for that location's market
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_21_SCORE, CLIENT_92_LEVEL_3).ROUND}%</td>
+            
+            #score for entire company
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_21_SCORE, OVERALL).ROUND}%</td>
+            
+            #score for location's competitor region
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_21_SCORE, CLIENT_92_LOCGROUPSET_61).ROUND}%</td>
+        </tr>
+        <tr style="border :1px solid black;">
+            <td style="border :1px solid black;">Presenting</td>
+            
+            
+            #location score
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_22_SCORE).ROUND}%</td>
+            
+            #score for that location's market
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_22_SCORE, CLIENT_92_LEVEL_3).ROUND}%</td>
+            
+            #score for entire company
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_22_SCORE, OVERALL).ROUND}%</td>
+            
+            #score for location's competitor region
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_22_SCORE, CLIENT_92_LOCGROUPSET_61).ROUND}%</td>
+        </tr>
+        <tr style="border :1px solid black;">
+            <td style="border :1px solid black;">Closing</td>
+            
+            
+            #location score
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_23_SCORE).ROUND}%</td>
+            
+            #score for that location's market
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_23_SCORE, CLIENT_92_LEVEL_3).ROUND}%</td>
+            
+            #score for entire company
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_23_SCORE, OVERALL).ROUND}%</td>
+            
+            #score for location's competitor region
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_23_SCORE, CLIENT_92_LOCGROUPSET_61).ROUND}%</td>
+        </tr>
+        
+        <tr>
+            <td style="border :1px solid black;">Follow Up</td>
+            
+            
+            #location score
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_24_SCORE).ROUND}%</td>
+            
+            #score for that location's market
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_24_SCORE, CLIENT_92_LEVEL_3).ROUND}%</td>
+            
+            #score for entire company
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_24_SCORE, OVERALL).ROUND}%</td>
+            
+            #score for location's competitor region
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_24_SCORE, CLIENT_92_LOCGROUPSET_61).ROUND}%</td>
+        </tr>
+        {/|LOOP|}
+        {/|RESULT|}
+    </tbody>
+    </table>
+    
+    
+    <br/>
+   
+    
+    {/|SHOWIF|}
+    {/|SHOWIF|}
+</div>

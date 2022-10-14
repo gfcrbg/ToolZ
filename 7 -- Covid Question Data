@@ -1,0 +1,40 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+  {DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+  {|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+  <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+  {/|VANISHIF|}
+  
+  {|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+  
+  {|RESULT|FILTER=PERCENT_SCORE|gte|85}
+  <table class='data'>
+      <thead>
+      		<tr>
+                <th>{|SORT_TOGGLE|CLIENT_559_LEVEL_1.NAME}Store #{/|SORT_TOGGLE|}</th>
+                <th>{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+                <th>Date</th>
+                <th>Hand Sanitizer Available</th>
+                <th>Social Distancing Stickers Visible</th>
+                <th>Handwashing if serving food</th>
+                <th>Acrylic Shields or Separation screens at POS</th>
+      </thead> 
+      <tbody>
+      {|LOOP|RESULT.DATAPOINTS(SORT=CLIENT_559_LEVEL_4.NAME)}
+      <tr>
+          	<td>{DATAPOINTS.CLIENT_559_LEVEL_1.NAME}</td>
+            <td>{DATAPOINTS.PERCENT_SCORE}%</td>
+            <td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+			<td>{DATAPOINTS.CLIENT_559_SURVEY_3874_QUESTION_7801_PERCENT}</td>
+			<td>{DATAPOINTS.CLIENT_559_SURVEY_3874_QUESTION_7811_PERCENT}</td>                    
+			<td>{DATAPOINTS.CLIENT_559_SURVEY_3874_QUESTION_7731_PERCENT}</td>                    
+			<td>{DATAPOINTS.CLIENT_559_SURVEY_3874_QUESTION_7791_PERCENT}</td>                              
+      </tr>
+    {/|LOOP|}
+  {/|RESULT|}
+	  </tbody>        
+  </table>    
+  {/|SHOWIF|}
+</div>

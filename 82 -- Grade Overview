@@ -1,0 +1,99 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div>
+{|NESTED|IGNORE_FILTERS=USER_PERMISSIONS}
+<table>
+
+	{|LOOP|NESTED.CLIENT_501_LEVEL_3(SORT=NAME)}
+    	{LOOP.ISFIRST?:|VANISH|}
+			<thead>
+				<tr>
+					<th>Company</th>
+                    <th>District</th>
+                    <th>Store</th>
+					<th>Employee</th>
+					<th>Evaluation Count</th>
+                    <th>Position</th>
+					<th>Date</th>
+                    <th>Grade</th>
+				</tr>
+			</thead>
+
+    	<tbody>     
+        		<tr>
+   					<td>Overall</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{COUNT(CLIENT_501_LEVEL_3,OVERALL)}</td>
+#                    <td>{AVG(CLIENT_501_LEVEL_3.PERCENT_SCORE,OVERALL).ROUND(2)}%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+		{/LOOP.ISFIRST?:|VANISH|}   
+
+                
+		        <tr class="region" id="{CLIENT_501_LEVEL_3.NAME.SPLIT( ,0)}">
+					<td></td>
+                    <td>{CLIENT_501_LEVEL_3.NAME}</td>            
+					{|LOOP|CLIENT_501_LEVEL_3.CLIENT_501_LEVEL_2(SORT=NAME)}                  				
+						{LOOP.ISFIRST?:|VANISH|}
+							<td></td>
+							<td></td>
+					        <td>{COUNT(CLIENT_501_LEVEL_3,CLIENT_501_LEVEL_3)}</td>
+#							<td>{AVG(CLIENT_501_LEVEL_2.PERCENT_SCORE,CLIENT_501_LEVEL_3).ROUND(2)}%</td>     
+                     		<td></td>
+                    		<td></td>
+                    		<td></td>
+		        </tr>
+						{/LOOP.ISFIRST?:|VANISH|}
+          
+          
+				<tr class="district-{CLIENT_501_LEVEL_3.NAME.SPLIT( ,0)}" id="{CLIENT_501_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_2.NAME.SPLIT( ,0)}">
+					<td></td>
+					<td></td>
+					<td>{CLIENT_501_LEVEL_2.NAME}</td>
+					<td></td>
+                    
+						
+					<td>{COUNT(CLIENT_501_LEVEL_2,CLIENT_501_LEVEL_2)}</td>
+#					<td>{AVG(CLIENT_501_LEVEL_2.PERCENT_SCORE,CLIENT_501_LEVEL_2).ROUND(2)}%</td>   
+                    <td></td>
+                    <td></td>
+                    <td></td>
+        		</tr>
+						{|LOOP|CLIENT_501_LEVEL_2.CLIENT_501_LEVEL_1(SORT=NAME)}
+                			<tr class="store-{CLIENT_501_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_2.NAME.SPLIT( ,0)}" id="{CLIENT_501_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_2.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_1.NAME.SPLIT( ,0)}">
+								<td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{CLIENT_501_LEVEL_1.NAME}</td>
+                                <td>{COUNT(CLIENT_501_LEVEL_1,CLIENT_501_LEVEL_1)}</td>
+#                                <td>{AVG(CLIENT_501_LEVEL_1.PERCENT_SCORE,CLIENT_501_LEVEL_1).ROUND(2)}%</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+							</tr>																											
+                                
+                            {|LOOP|CLIENT_501_LEVEL_1.DATAPOINTS(SORT=JOB_DATE,DESC)}
+                                <tr class="employee-{CLIENT_501_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_2.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_1.NAME.SPLIT( ,0)}" id="{CLIENT_501_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_2.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_1.NAME.SPLIT( ,0)}-shops">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{DATAPOINTS.CLIENT_501_SURVEY.NAME}</td>
+                                	<td>{DATAPOINTS.JOB_DATE}</td>
+                                    <td class="grade-{DATAPOINTS.PERCENT_SCORE}">{DATAPOINTS.PERCENT_SCORE=100?A}{DATAPOINTS.PERCENT_SCORE=50?B}{DATAPOINTS.PERCENT_SCORE=0?C}</td>
+                                </tr>    
+                            {/|LOOP|}
+						{/|LOOP|}            																														
+                    {/|LOOP|}
+                {/|LOOP|}																											              																													
+            <br><br>
+	    </tbody>
+	</table>
+{/|NESTED|}

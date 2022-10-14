@@ -1,0 +1,150 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+{|NESTED|IGNORE_FILTERS=USER_PERMISSIONS}
+<table class='data'>
+
+	{|LOOP|NESTED.CLIENT_65_LEVEL_3(SORT=NAME)}
+    	{LOOP.ISFIRST?:|VANISH|} 
+			<thead>
+				<tr>
+					<th>Company</th>
+                    <th>RDO</th>
+                    <th>District</th>
+					<th>Store</th>
+					<th>Evaluation Count</th>
+                    <th>Score</th>
+                    <th>Shop Date</th>
+                    <th>Shop Post Date</th>
+					<th>Coaching Date</th>
+                    <th>Coaching Turn Time (Days)</th>
+                    <th>Coach Count</th>
+                    <th>Date Modified</th>
+				</tr>
+			</thead>
+
+    	<tbody>     
+        		<tr>
+   					<td>Overall</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{COUNT(CLIENT_65_LEVEL_3,OVERALL)}</td>
+                    <td></td>
+                    <td></td>
+					<td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    
+                    #<td>{AVG(CLIENT_65_LEVEL_3.CUSTOM_DAYS_TO_FINALIZED,OVERALL)=|EVALCONST(NULL)|?Not Coached:|EVALTAG(AVG(CLIENT_65_LEVEL_3.CUSTOM_DAYS_TO_FINALIZED,OVERALL).NUMBERFORMAT(2))|}</td>                 
+#                                        <td>{AVG(CLIENT_65_LEVEL_3.CUSTOM_DAYS_TO_FINALIZED,OVERALL).NUMBERFORMAT(2)}</td>                  
+                </tr>
+		{/LOOP.ISFIRST?:|VANISH|}   
+
+                
+		        <tr class="region" id="{CLIENT_65_LEVEL_3.NAME.SPLIT( ,0)}">
+					<td></td>
+                    <td>{CLIENT_65_LEVEL_3.NAME}</td>            
+					{|LOOP|CLIENT_65_LEVEL_3.CLIENT_65_LEVEL_2(SORT=NAME)}                  				
+						{LOOP.ISFIRST?:|VANISH|}
+							<td></td>
+							<td></td>
+					        <td>{COUNT(CLIENT_65_LEVEL_3,CLIENT_65_LEVEL_3)}</td>
+                     		<td></td>
+                    		<td></td>
+                    		<td></td>
+                    		<td></td>
+                    		<td></td>
+                            #<td>{AVG(CLIENT_65_LEVEL_3.CUSTOM_DAYS_TO_FINALIZED,CLIENT_65_LEVEL_3)=|EVALCONST(NULL)|?Not Coached:|EVALTAG(AVG(CLIENT_65_LEVEL_3.CUSTOM_DAYS_TO_FINALIZED,CLIENT_65_LEVEL_3).NUMBERFORMAT(2))|}</td>                 
+
+                    		#<td>{AVG(CLIENT_65_LEVEL_3.CUSTOM_DAYS_TO_FINALIZED,CLIENT_65_LEVEL_3).NUMBERFORMAT(2)}</td>
+		        </tr>
+						{/LOOP.ISFIRST?:|VANISH|}
+          
+          
+				<tr class="district-{CLIENT_65_LEVEL_3.NAME.SPLIT( ,0)}" id="{CLIENT_65_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_65_LEVEL_2.NAME.SPLIT( ,0)}">
+					<td></td>
+					<td>{CLIENT_65_LEVEL_3.NAME}</td>
+					<td>{CLIENT_65_LEVEL_2.NAME}</td>
+					<td></td>		
+					<td>{COUNT(CLIENT_65_LEVEL_2,CLIENT_65_LEVEL_2)}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    #<td>{AVG(CLIENT_65_LEVEL_2.CUSTOM_DAYS_TO_FINALIZED,CLIENT_65_LEVEL_2)=|EVALCONST(NULL)|?Not Coached:|EVALTAG(AVG(CLIENT_65_LEVEL_2.CUSTOM_DAYS_TO_FINALIZED,CLIENT_65_LEVEL_2).NUMBERFORMAT(2))|}</td>                 
+
+                    #<td>{AVG(CLIENT_65_LEVEL_2.CUSTOM_DAYS_TO_FINALIZED,CLIENT_65_LEVEL_2).NUMBERFORMAT(2)}</td>
+                    
+                    
+        		</tr>
+						{|LOOP|CLIENT_65_LEVEL_2.CLIENT_65_LEVEL_1(SORT=NAME)}
+                			#<tr class="store-{CLIENT_65_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_65_LEVEL_2.NAME.SPLIT( ,0)}" id="{CLIENT_65_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_65_LEVEL_2.NAME.SPLIT( ,0)}-{CLIENT_65_LEVEL_1.NAME.SPLIT( ,0)}">
+							#	<td></td>
+                            #    <td>{CLIENT_65_LEVEL_3.NAME}</td>
+                            #    <td>{CLIENT_65_LEVEL_2.NAME}</td>
+                            #    <td>{CLIENT_65_LEVEL_1.NAME}</td>
+                            #    <td>{COUNT(CLIENT_65_LEVEL_1,CLIENT_65_LEVEL_1)}</td>
+                            #    <td></td>
+                            #    <td></td>
+                            #    <td></td>
+                            #    <td></td>
+                            #    <td></td>
+                                #<td>{AVG(CLIENT_65_LEVEL_1.CUSTOM_DAYS_TO_FINALIZED,CLIENT_65_LEVEL_1)=|EVALCONST(NULL)|?Not Coached:|EVALTAG(AVG(CLIENT_65_LEVEL_1.CUSTOM_DAYS_TO_FINALIZED,CLIENT_65_LEVEL_1).NUMBERFORMAT(2))|}</td>                 
+
+                                #<td>{AVG(CLIENT_65_LEVEL_1.CUSTOM_DAYS_TO_FINALIZED,CLIENT_65_LEVEL_1).NUMBERFORMAT(2)}</td>
+							#</tr>																											
+                                
+                            {|LOOP|CLIENT_65_LEVEL_1.DATAPOINTS(SORT=JOB_DATE,DESC)}
+            					<tr class="store-{CLIENT_65_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_65_LEVEL_2.NAME.SPLIT( ,0)}" id="{CLIENT_65_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_65_LEVEL_2.NAME.SPLIT( ,0)}-{CLIENT_65_LEVEL_1.NAME.SPLIT( ,0)}">
+                                #<tr class="employee-{CLIENT_65_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_65_LEVEL_2.NAME.SPLIT( ,0)}-{CLIENT_65_LEVEL_1.NAME.SPLIT( ,0)}" id="{CLIENT_65_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_65_LEVEL_2.NAME.SPLIT( ,0)}-{CLIENT_65_LEVEL_1.NAME.SPLIT( ,0)}-shops">
+                                    <td></td>
+                                    <td>{CLIENT_65_LEVEL_3.NAME}</td>
+                                    <td>{CLIENT_65_LEVEL_2.NAME}</td>
+                                    <td>{CLIENT_65_LEVEL_1.NAME}</td>
+                                   # <td></td>
+                                   <td>{DATAPOINTS.ID}</td>
+                                    <td>{DATAPOINTS.PERCENT_SCORE}%</td>
+                                	<td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_1_VALUE}</td>                                  
+                                	<td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_42_VALUE}</td>
+                                    #<td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|?OPEN:|EVALTAG(DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE)|}</td>
+#kinda garbage                                   <td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|&&DATAPOINTS.CUSTOM_DAYS_SINCE_FIRST_FINALIZED>30?BAD:|EVALTAG(DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE)|}</td>
+                                   <td><b>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|&&DATAPOINTS.CUSTOM_DAYS_SINCE_FIRST_FINALIZED<=30?OPEN:}</b>
+                                       {DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|&&DATAPOINTS.CUSTOM_DAYS_SINCE_FIRST_FINALIZED>30?NOT COACHED:}
+                                       {DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|?:|EVALTAG(DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE)|}
+                                    </td>
+
+                                    
+                                   #<td>{DATAPOINTS.CUSTOM_DAYS_SINCE_FIRST_FINALIZED}dsff</td>
+                                    <td 
+                                    #class="{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|&&DATAPOINTS.CUSTOM_DAYS_SINCE_FIRST_FINALIZED>30?bummer:}" 
+                                    #id="{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|&&DATAPOINTS.CUSTOM_DAYS_SINCE_FIRST_FINALIZED<=30?bueno}">
+                                    class="{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|||DATAPOINTS.CUSTOM_DAYS_TO_FINALIZED>30?bummer:bueno}"
+                                    id="{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|&&DATAPOINTS.CUSTOM_DAYS_SINCE_FIRST_FINALIZED<=30?bueno}"
+                                    >
+                                        {DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|&&DATAPOINTS.CUSTOM_DAYS_SINCE_FIRST_FINALIZED<=30?:}
+                                        {DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|&&DATAPOINTS.CUSTOM_DAYS_SINCE_FIRST_FINALIZED>30?NOT COACHED:}
+                                        <b class="{DATAPOINTS.CUSTOM_DAYS_TO_FINALIZED>=31?bummer:}" id="{DATAPOINTS.CUSTOM_DAYS_TO_FINALIZED<=30?bueno:}" >{DATAPOINTS.CUSTOM_DAYS_TO_FINALIZED=|EVALCONST(NULL)|?:|EVALTAG(DATAPOINTS.CUSTOM_DAYS_TO_FINALIZED)|}</b>
+                                    </td>
+                                    <td
+                                    class="{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|||DATAPOINTS.CUSTOM_DAYS_TO_FINALIZED>30?bummer:bueno}"
+                                    id="{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|&&DATAPOINTS.CUSTOM_DAYS_SINCE_FIRST_FINALIZED<=30?bueno}"
+                                    >
+                                        {DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_621_VALUE=|EVALCONST(NULL)|||DATAPOINTS.CUSTOM_DAYS_TO_FINALIZED>30?0:1}
+                                        
+                                    </td>
+                                    #conditional display for zero
+                                    <td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_22_VALUE}</td>
+                                </tr>    
+                            {/|LOOP|}
+						{/|LOOP|}            																														
+                    {/|LOOP|}
+                {/|LOOP|}																											              																													
+            <br><br>
+	    </tbody>
+	</table>
+{/|NESTED|}

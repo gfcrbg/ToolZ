@@ -1,0 +1,138 @@
+<div class='toolz-results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+	 {|NESTED|KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP}
+  <div id='my-graph'>
+    {|HIGHCHARTS|}
+    {
+    "chart": {
+      "type": "column",
+      "height": 300,
+      "width": 850,
+      "plotBorderWidth": 1
+    },
+    "title": {
+      "text": "Average Overall Scores",
+      "x": -20
+    },
+    "yAxis": {
+      "title": {
+      "text": ""
+      },
+      "min": 0,
+      "max": 100
+    },
+        "xAxis": {
+          "type": "category"
+        },
+    "legend": {
+      "enabled": false
+    },
+    "credits": {
+      "enabled": false
+    },
+    "plotOptions": {
+      "column": {
+      "animation": false,
+      "dataLabels": {"enabled": true,
+      				"verticalAlign": true,
+                    "y": 50,
+                    "style": {
+                            "fontSize": "20px"
+                    		}
+                    }
+      }
+    },
+    
+    "series": [
+    #first, we setup a region series, with just the region scores
+    {
+      "name": "Regions",
+      "data": [
+            {|LOOP|NESTED.CLIENT_284_LEVEL_4(SORT=NAME)}
+            {
+              #label it with the region name
+              "name":"{CLIENT_284_LEVEL_4.NAME.HC_SAFE_STRING}",
+              
+              #the value is our region's average score
+              "y": {AVG(CLIENT_284_LEVEL_4.PERCENT_SCORE, CLIENT_284_LEVEL_4).ROUND.HC_SAFE_NUMBER},
+              
+              #tell this what to drill down into
+              "drilldown":{CLIENT_284_LEVEL_4.ID}
+              
+              #loop district and location just to avoid errors
+              {|LOOP|CLIENT_284_LEVEL_4.CLIENT_284_LEVEL_3(SORT=NAME)}
+                {|LOOP|CLIENT_284_LEVEL_3.CLIENT_284_LEVEL_2(SORT=NAME)}{/|LOOP|}
+              {/|LOOP|}
+            }{LOOP.HASNEXT?,}      
+            {/|LOOP|}]
+    }
+    ],
+    
+    #then, setup our drilldown series
+    "drilldown":
+    {
+        "series":[
+        
+          #setup a series for the districts in each region
+          {|LOOP|NESTED.CLIENT_284_LEVEL_4}
+          {
+            "name":"Districts",
+            
+            #it's important to give it this id, so the graph knows to drill down to it
+            "id":{CLIENT_284_LEVEL_4.ID},
+            "data": [
+            
+              #loop the districts
+              {|LOOP|CLIENT_284_LEVEL_4.CLIENT_284_LEVEL_3(SORT=NAME)}
+              {
+                #label it with the district name
+                "name":"{CLIENT_284_LEVEL_3.NAME.HC_SAFE_STRING}",
+                
+                #the value is our district's average score
+                "y": {AVG(CLIENT_284_LEVEL_3.PERCENT_SCORE, CLIENT_284_LEVEL_3).ROUND.HC_SAFE_NUMBER},
+                
+                #tell this what to drill down into
+                "drilldown":{CLIENT_284_LEVEL_3.ID}
+                
+                #loop the locations to avoid errors
+                {|LOOP|CLIENT_284_LEVEL_3.CLIENT_284_LEVEL_2(SORT=NAME)}{/|LOOP|}
+              }{LOOP.HASNEXT?,}    
+              {/|LOOP|}
+            ]
+          },
+          
+            #now, setup a series for each district's locations
+            {|LOOP|CLIENT_284_LEVEL_4.CLIENT_284_LEVEL_3(SORT=NAME)}
+            {
+              "name":"Average Score",
+            
+              #it's important to give it this id, so the graph knows to drill down to it
+              "id":{CLIENT_284_LEVEL_3.ID},
+              "data": [
+              {|LOOP|CLIENT_284_LEVEL_3.CLIENT_284_LEVEL_2(SORT=NAME)}
+                {
+                  "name":"{CLIENT_284_LEVEL_2.NAME.HC_SAFE_STRING}",
+                  "y": {AVG(CLIENT_284_LEVEL_2.PERCENT_SCORE, CLIENT_284_LEVEL_2).ROUND.HC_SAFE_NUMBER}
+                }{LOOP.HASNEXT?,}    
+              {/|LOOP|}
+              ]
+            }{LOOP.HASNEXT?,}
+            {/|LOOP|}
+          {LOOP.HASNEXT?,}
+          {/|LOOP|}  
+        ]      
+      }
+    }
+    {/|HIGHCHARTS|}
+  </div>
+  {/|NESTED|}
+	
+	{/|SHOWIF|}
+    
+    <div class='toolz-data-last-updated'>Data last updated: {DATATYPES.SHOW_DATATYPE.DATA_LAST_UPDATED.FORMATTED(n/j/y g:i a)}</div>
+</div>

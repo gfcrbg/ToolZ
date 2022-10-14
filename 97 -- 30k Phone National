@@ -1,0 +1,957 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+  {DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+  {|VANISHIF|DATATYPES.SHOW_DATATYPE.TOTAL_COUNT}
+    <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+  {/|VANISHIF|}
+  
+  {|SHOWIF|DATATYPES.SHOW_DATATYPE.TOTAL_COUNT}
+ 
+#-------------------------------------------------------Q691-number template                  
+                    
+	{|CROSSTAB|}  
+	  <table class="data">  
+		<thead>
+          <tr>
+            <th></th>
+          	<th>National</th>
+          	{|LOOP|DATATYPES.SHOW_DATATYPE.CLIENT_397_LEVEL_3.MEMBERS(SORT=NAME)}
+            	<th>{MEMBERS.NAME}</th>
+            {/|LOOP|}
+          </tr>
+          <tr><th colspan=3>Mystery Shop Topline</th></tr>
+        </thead>
+        <tbody>    	                  
+        	<tr>
+               	<td>Price Quote for 30K</td>          
+                {|LOOP|CROSSTAB.CLIENT_397_LEVEL_3(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}                 
+					{|SHOWIF|LOOP.ISFIRST}
+                		<td>${AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_3385_QUESTION_691_VALUE,OVERALL).ROUND(2).NUMBERFORMAT(2)}</td>
+					{/|SHOWIF|}
+                	<td>${AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_3385_QUESTION_691_VALUE).ROUND(2).NUMBERFORMAT(2)}</td>
+            	{/|LOOP|}
+        	</tr>
+    {/|CROSSTAB|}  
+            
+#-------------------------------------------------------Q721-time template                  
+                    
+	{|CROSSTAB|}                       
+        <tbody>    	                  
+            <tr>
+               	<td>Time to Complete Service (hh:mm)</td>          
+                {|LOOP|CROSSTAB.CLIENT_397_LEVEL_3(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}                 
+					{|SHOWIF|LOOP.ISFIRST}
+                		<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_3385_QUESTION_721_VALUE,OVERALL).FORMATTED(hh:mm)}</td>
+					{/|SHOWIF|}
+                	<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_3385_QUESTION_721_VALUE).FORMATTED(hh:mm)}</td>
+            	{/|LOOP|}
+        	</tr>
+    {/|CROSSTAB|}              
+    
+#--------------------------------------------------------Q171---template for multiple guess  
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_171)}
+        	<tr> 
+#Display Question Text
+                <td>Ask for an appointment?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}
+    
+
+#--------------------------------------------------------Q181 
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_181)}
+        	<tr> 
+#Display Question Text
+                <td>Offer coupons/specials?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}          
+
+#--------------------------------------------------------Q1231 
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_1231)}
+        	<tr> 
+#Display Question Text
+                <td>Service completed within 60 minutes?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}  
+          
+          #--------------------------------------------------------Q1241 
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_1241)}
+        	<tr> 
+#Display Question Text
+                <td>Able to get in for service same or next day?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}
+          
+#-------------------------------------------------------Q1361 added by Greg S. 7/2/2021
+
+  {|CROSSTAB|}
+            <tbody>
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_1361)}
+                
+		        {|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,CROSSTAB_FILTER=BLANKS_WITHIN_RANGE)}
+                <tr>
+#Display Question Text
+                	<td>                    	
+                        If not same or next day could get in within 
+                        	#debug text{DYNAMIC_GROUP.INDEX}-
+                        {DYNAMIC_GROUP.NAME}<br>
+						</td>                 
+#Scores for National
+                    	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,DYNAMIC_GROUP),COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                  
+#Scores for Regional
+                        {|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME,CROSSTAB_FILTER=BLANKS_WITHIN_RANGE)}
+                    		<td>
+                                #debug text{DYNAMIC_GROUP.ID}-{CLIENT_397_LEVEL_3.NAME}-
+                    			{PERCENTAGE(COUNT(DYNAMIC_GROUP,CLIENT_397_LEVEL_3,DYNAMIC_GROUP),COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%
+                    		</td>
+						{/|LOOP|}        
+         		 </tr>
+    			{/|LOOP|}             	
+        	{/|LOOP|}     		
+  {/|CROSSTAB|}
+          
+#--------------------------------------------------------Q1271 added by Q 10-24-19 
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_1271)}
+        	<tr> 
+#Display Question Text
+                <td>Latest appointment time was within two hours of closing?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}  
+          
+#--------------------------------------------------------Q1291
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_1291)}
+        	<tr> 
+#Display Question Text
+                <td>Ask if you had Toyota pre-paid maintenance?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}
+          
+#--------------------------------------------------------Q1351
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_1351)}
+        	<tr> 
+#Display Question Text
+                <td>Offer ToyotaCare Plus?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}
+          
+#--------------------------------------------------------Q1311
+          
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_1311)}
+        	<tr> 
+#Display Question Text
+                <td>Offer Toyota Service Care?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}         
+          
+#--------------------------------------------------------Q791 
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_791)}
+        	<tr> 
+#Display Question Text
+                <td>Mention Toyota Express Maintenance Service?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}  
+          
+
+
+#-------------------------------------------------------Q231                 
+                    
+	{|CROSSTAB|}                       
+        <tbody>
+                      <tr><th colspan=3>Mystery Shop Detailed Summary</th></tr>
+
+        	<tr>
+               	<td>Time to Connect to Service Department (mm:ss)</td>          
+                {|LOOP|CROSSTAB.CLIENT_397_LEVEL_3(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}                 
+					{|SHOWIF|LOOP.ISFIRST}
+                		<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_3385_QUESTION_231_VALUE,OVERALL).FORMATTED(mm:ss)}</td>
+					{/|SHOWIF|}
+                	<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_3385_QUESTION_231_VALUE).FORMATTED(mm:ss)}</td>
+            	{/|LOOP|}
+        	</tr>
+    {/|CROSSTAB|}  
+            
+#-------------------------------------------------------Q241                  
+                    
+	{|CROSSTAB|}                       
+        <tbody>    	                  
+        	<tr>
+               	<td>Additional Time on Hold (mm:ss)</td>          
+                {|LOOP|CROSSTAB.CLIENT_397_LEVEL_3(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}                 
+					{|SHOWIF|LOOP.ISFIRST}
+                		<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_3385_QUESTION_241_VALUE,OVERALL).FORMATTED(mm:ss)}</td>
+					{/|SHOWIF|}
+                	<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_3385_QUESTION_241_VALUE).FORMATTED(mm:ss)}</td>
+            	{/|LOOP|}
+        	</tr>
+    {/|CROSSTAB|}  
+            
+#-------------------------------------------------------Q51                  
+                    
+	{|CROSSTAB|}                       
+        <tbody>    	                  
+        	<tr>
+               	<td>Total Call Time (mm:ss)</td>          
+                {|LOOP|CROSSTAB.CLIENT_397_LEVEL_3(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}                 
+					{|SHOWIF|LOOP.ISFIRST}
+                		<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_3385_QUESTION_51_VALUE,OVERALL).FORMATTED(mm:ss)}</td>
+					{/|SHOWIF|}
+                	<td>{AVG(CLIENT_397_LEVEL_3.CLIENT_397_SURVEY_3385_QUESTION_51_VALUE).FORMATTED(mm:ss)}</td>
+            	{/|LOOP|}
+        	</tr>
+    {/|CROSSTAB|}  
+            
+#--------------------------------------------------------Q191 
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_191)}
+        	<tr> 
+#Display Question Text
+                <td>Did Service Associate thank the customer?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}     
+          
+#--------------------------------------------------------Q141 
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_141)}
+        	<tr> 
+#Display Question Text
+                <td>Did Service Associate identify Department?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}     
+          
+#--------------------------------------------------------Q151 
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_151)}
+        	<tr> 
+#Display Question Text
+                <td>Did Service Associate provide their name?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}     
+          
+#--------------------------------------------------------Q901
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_901)}
+        	<tr> 
+#Display Question Text
+                <td>Ask for a phone number or an email address?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}   
+          
+#--------------------------------------------------------Q271
+   
+  {|CROSSTAB|}  
+        <tbody><tr><th colspan=2>Factory Recommended Items</th></tr>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_271)}
+        	<tr> 
+#Display Question Text
+                <td>Did the Service Associate recommend a 30K mile service first</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}   
+          
+#--------------------------------------------------------Q291
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_291)}
+        	<tr> 
+#Display Question Text
+                <td>Replace engine oil and oil filter?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}             
+   
+#--------------------------------------------------------Q301
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_301)}
+        	<tr> 
+#Display Question Text
+                <td>Rotate tires?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+          
+#--------------------------------------------------------Q311
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_311)}
+        	<tr> 
+#Display Question Text
+                <td>Replace engine air filter?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}           
+          
+#--------------------------------------------------------Q321
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_321)}
+        	<tr> 
+#Display Question Text
+                <td>Replace cabin air filter?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+          
+#--------------------------------------------------------Q331
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_331)}
+        	<tr> 
+#Display Question Text
+                <td>Inspect and adjust all fluid levels?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+          
+#--------------------------------------------------------Q911
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_911)}
+        	<tr> 
+#Display Question Text
+                <td>Complimentary MPI included?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+          
+  
+#--------------------------------------------------------Q531 depreciated 5/20
+   
+#  {|CROSSTAB|}  
+#        <tbody><tr><th colspan=2>Dealer Recommended</th></tr>
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_531)}
+#        	<tr> 
+#Display Question Text
+#                <td>Brake service?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+#                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+#	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+#                    {/|LOOP|}                           
+#          			</tr>
+#          		{/|LOOP|}
+#          	{/|LOOP|}
+#          </tbody>
+#  {/|CROSSTAB|}   
+          
+#--------------------------------------------------------Q551 depreciated 5/20
+   
+#  {|CROSSTAB|}  
+#        <tbody>
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_551)}
+#        	<tr> 
+#Display Question Text
+#                <td>Fuel injector service?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+#                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+#	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+#                    {/|LOOP|}                           
+#          			</tr>
+#          		{/|LOOP|}
+#          	{/|LOOP|}
+#          </tbody>
+#  {/|CROSSTAB|}             
+   
+#--------------------------------------------------------Q561 depreciated 5/20
+   
+#  {|CROSSTAB|}  
+#        <tbody>
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_561)}
+#        	<tr> 
+#Display Question Text
+#                <td>Lube chassis?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+#                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+#	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+#                    {/|LOOP|}                           
+#          			</tr>
+#          		{/|LOOP|}
+#          	{/|LOOP|}
+#          </tbody>
+#  {/|CROSSTAB|} 
+          
+#--------------------------------------------------------Q571
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_571)}
+        	<tr> 
+#Display Question Text
+                <td>Multi point inspection?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}           
+          
+#--------------------------------------------------------Q581 depreciated 5/20
+   
+#  {|CROSSTAB|}  
+#        <tbody>
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_581)}
+#        	<tr> 
+#Display Question Text
+#                <td>Radiator/Coolant flush?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+#                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+#	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+#                    {/|LOOP|}                           
+#          			</tr>
+#          		{/|LOOP|}
+#          	{/|LOOP|}
+#          </tbody>
+#  {/|CROSSTAB|} 
+          
+#--------------------------------------------------------Q591 depreciated 5/20
+   
+#  {|CROSSTAB|}  
+#        <tbody>
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_591)}
+#        	<tr> 
+#Display Question Text
+#                <td>Spark plugs?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+#                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+#	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+#                    {/|LOOP|}                           
+#          			</tr>
+#          		{/|LOOP|}
+#          	{/|LOOP|}
+#          </tbody>
+#  {/|CROSSTAB|} 
+          
+#--------------------------------------------------------Q601 depreciated 5/20
+   
+#  {|CROSSTAB|}  
+#        <tbody>
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_601)}
+#        	<tr> 
+#Display Question Text
+#                <td>Throttle body cleaning?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+#                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+#	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+#                    {/|LOOP|}                           
+#          			</tr>
+#          		{/|LOOP|}
+#          	{/|LOOP|}
+#          </tbody>
+#  {/|CROSSTAB|}     
+          
+#--------------------------------------------------------Q611 depreciated 5/20
+   
+#  {|CROSSTAB|}  
+#        <tbody>
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_611)}
+#        	<tr> 
+#Display Question Text
+#                <td>Transmission flush?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+#                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+#	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+#                    {/|LOOP|}                           
+#          			</tr>
+#          		{/|LOOP|}
+#          	{/|LOOP|}
+#          </tbody>
+#  {/|CROSSTAB|} 
+          
+#--------------------------------------------------------Q621 depreciated 5/20
+   
+#  {|CROSSTAB|}  
+#        <tbody>
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_621)}
+#        	<tr> 
+#Display Question Text
+#                <td>Windshield wiper inserts?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+#                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+#	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+#                    {/|LOOP|}                           
+#          			</tr>
+#          		{/|LOOP|}
+#          	{/|LOOP|}
+#          </tbody>
+#  {/|CROSSTAB|} 
+          
+#--------------------------------------------------------Q631 depreciated 5/20
+   
+#  {|CROSSTAB|}  
+#        <tbody>
+#		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_631)}
+#        	<tr> 
+#Display Question Text
+#                <td>Tighten drive shaft bolt?</td>
+#            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+#                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+#                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+#	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+#                    {/|LOOP|}                           
+#          			</tr>
+#          		{/|LOOP|}
+#          	{/|LOOP|}
+#          </tbody>
+#  {/|CROSSTAB|}           
+          
+       
+          
+#--------------------------------------------------------Q941
+   
+  {|CROSSTAB|}  
+        <tbody><tr><th colspan=2>Building Value</th></tr>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_941)}
+        	<tr> 
+#Display Question Text
+                <td>Factory trained technicians?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}   
+          
+#--------------------------------------------------------Q951
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_951)}
+        	<tr> 
+#Display Question Text
+                <td>Toyota genuine parts?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}             
+   
+#--------------------------------------------------------Q961
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_961)}
+        	<tr> 
+#Display Question Text
+                <td>Competitive pricing?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+          
+#--------------------------------------------------------Q971
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_971)}
+        	<tr> 
+#Display Question Text
+                <td>Shuttle service?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}           
+          
+#--------------------------------------------------------Q981
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_981)}
+        	<tr> 
+#Display Question Text
+                <td>Complimentary car wash?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+          
+#--------------------------------------------------------Q991
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_991)}
+        	<tr> 
+#Display Question Text
+                <td>Express maintenance?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+          
+#--------------------------------------------------------Q1011
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_1011)}
+        	<tr> 
+#Display Question Text
+                <td>Check installation of driver's floor mat?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|}     
+          
+#--------------------------------------------------------Q1001
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_1001)}
+        	<tr> 
+#Display Question Text
+                <td>Mention any open recalls?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+          
+#--------------------------------------------------------Q1041
+   
+  {|CROSSTAB|}  
+        <tbody>
+		    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq|client_397_survey_3385_question_1041)}
+        	<tr> 
+#Display Question Text
+                <td>Pricing available on website?</td>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,LIMIT=1)}          
+#Scores for National      		
+                    <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2).NUMBERFORMAT(2)}%</td>                       
+#This loop runs to pull the percentage each answer option was used per region.
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_397_LEVEL_3(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=NAME)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3,DYNAMIC_GROUP), COUNT(CLIENT_397_LEVEL_3,CLIENT_397_LEVEL_3)).ROUND(2).NUMBERFORMAT(2)}%</td>
+                    {/|LOOP|}                           
+          			</tr>
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+  {/|CROSSTAB|} 
+          
+ 
+          
+	</table>    
+  {/|SHOWIF|}
+</div>

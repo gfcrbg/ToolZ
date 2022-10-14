@@ -1,0 +1,124 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+#<div>
+#    Select a store: {DATATYPES.SHOW_DATATYPE.CLIENT_501_LEVEL_2_SELECTOR(SORT=NAME).INPUT}
+#</div>
+#Location Selector	
+#	<div>
+#    	<label>Select a Location</label>
+#        {DATATYPES.SHOW_DATATYPE.CLIENT_336_LEVEL_1_SELECTOR(SORT=NAME,FILTER=NAME|likewild|Amaize).INPUT}
+#	</div>
+<div>
+        
+        # This is the same as the HTML our regular selectors build!
+        # You can substitute the name of the group you want, or use your browser's html inspector to double-check what the normal one is doing.
+        <select class="k_select"
+        	name="DATATYPES___SHOW_DATATYPE___CLIENT_501_LEVEL_2_SELECTOR" 
+        	id="DATATYPES___SHOW_DATATYPE___CLIENT_501_LEVEL_2_SELECTOR"
+        >
+            # Don't forget to add an 'all' option!
+        	<option value="">-- Select a Location --</option>
+            
+            {|RESULT|}
+            # Hiding options without data is your call, but if you do make sure you use the KEEP_ONLY_FILTERS=NONE,
+            # otherwise this filter will limit its own options!
+            {|LOOP|RESULT.CLIENT_501_LEVEL_2(SORT=NAME,NO_BLANKS,KEEP_ONLY_FILTERS=NONE)}
+            	
+                <option value="{CLIENT_501_LEVEL_2.ID}" 
+            		# This makes it so that we'll keep the option we selected when we reload the page.
+            		{DATATYPES.SHOW_DATATYPE.CLIENT_501_LEVEL_2_SELECTOR.ID=|EVALTAG(CLIENT_501_LEVEL_2.ID)|?selected}
+            	>
+                    # Regular Display
+                    {CLIENT_501_LEVEL_2.NAME}
+                    
+                    # Without the (user-side) location ID.
+                    # {CLIENT_336_LEVEL_1.NAME_ONLY}
+                    
+                    # With some string operation applied to all of our options.
+                    # (In this case, only showing the first word)
+                    # {CLIENT_501_LEVEL_1.NAME.SPLIT( ,1)}
+                    
+                    # Making an exception for a specific option.
+                    # (This gets hard if we're altering a whole lot of options, though.)
+                    #{|SHOWIF|CLIENT_336_LEVEL_1.ID=197215}Altered Amaize Davie Label{/|SHOWIF|}
+                    #{|VANISHIF|CLIENT_336_LEVEL_1.ID=197215}{CLIENT_336_LEVEL_1.NAME}{/|VANISHIF|}
+            	</option>
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            # If all else fails you can define options manually -- or even hardcode all of your options if you have to.
+#            <option value="197215" 
+#            	{DATATYPES.SHOW_DATATYPE.CLIENT_336_LEVEL_1_SELECTOR.ID=197215?selected}
+#            >
+#                Hardcoded Amaize Davie Option
+#            </option>
+        </select>
+     </div>
+
+
+
+
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+{|SHOWIF|DATATYPES.SHOW_DATATYPE.CLIENT_501_LEVEL_2_SELECTOR.ID}
+
+<div>
+{|NESTED|}
+<table>
+
+	{|LOOP|NESTED.CLIENT_501_LEVEL_3(SORT=NAME)}
+    	{LOOP.ISFIRST?:|VANISH|}
+			<thead>
+				<tr>
+                    <th>District</th>
+                    <th>Store</th>
+					<th>Employee</th>
+			#		<th>Evaluation Count</th>
+                    <th>Position</th>
+					<th>Month</th>
+                    <th>Grade</th>
+                    <th>Link</th>
+				</tr>
+			</thead>
+
+    	<tbody>     
+
+		{/LOOP.ISFIRST?:|VANISH|}   
+
+                
+					{|LOOP|CLIENT_501_LEVEL_3.CLIENT_501_LEVEL_2(SORT=NAME)}                  				
+						{|LOOP|CLIENT_501_LEVEL_2.CLIENT_501_LEVEL_1(SORT=NAME)}
+                	#		<tr class="store-{CLIENT_501_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_2.NAME.SPLIT( ,0)}" id="{CLIENT_501_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_2.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_1.NAME.SPLIT( ,0)}">
+					#			<th>{CLIENT_501_LEVEL_3.NAME}</th>
+					#			<th>{CLIENT_501_LEVEL_2.NAME}</th>
+                     #           <th>{CLIENT_501_LEVEL_1.NAME}</th>
+                      #          <th>{COUNT(CLIENT_501_LEVEL_1,CLIENT_501_LEVEL_1)}</th>
+                       #         <td></td>
+                        #        <td></td>
+                         #       <td></td>
+							#</tr>																											
+                                
+                            {|LOOP|CLIENT_501_LEVEL_1.DATAPOINTS(SORT=JOB_DATE,DESC)}
+                                <tr class="employee-{CLIENT_501_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_2.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_1.NAME.SPLIT( ,0)}" id="{CLIENT_501_LEVEL_3.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_2.NAME.SPLIT( ,0)}-{CLIENT_501_LEVEL_1.NAME.SPLIT( ,0)}-shops">
+#                                   <td></td>
+								<td>{CLIENT_501_LEVEL_3.NAME}</td>
+								<td>{CLIENT_501_LEVEL_2.NAME}</td>
+                                <td>{CLIENT_501_LEVEL_1.NAME}</td>
+                                   # <td></td>
+                                    <td>{DATAPOINTS.CLIENT_501_SURVEY.NAME}</td>
+                                	<td>{DATAPOINTS.JOB_DATE.FORMATTED(F, Y)}</td>
+                                    <td class="grade-{DATAPOINTS.PERCENT_SCORE}">{DATAPOINTS.PERCENT_SCORE=100?A}{DATAPOINTS.PERCENT_SCORE=50?B}{DATAPOINTS.PERCENT_SCORE=0?C}</td>
+#Below is an extra cell to show the percent score, but it's not currently showing anything.
+                                  	<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a></td>
+
+                                 #   <td>{DATAPOINTS.PERCENT_SCORE}</td>
+                                </tr>    
+                            {/|LOOP|}
+						{/|LOOP|}            																														
+                    {/|LOOP|}
+                {/|LOOP|}																											              																													
+            <br><br>
+	    </tbody>
+	</table>
+{/|NESTED|}
+{/|SHOWIF|}

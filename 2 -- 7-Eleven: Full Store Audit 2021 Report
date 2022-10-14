@@ -1,0 +1,39 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|RESULT|}
+		<div>
+			<table class='data'>
+				{|LOOP|RESULT.DATAPOINTS}
+					{|SHOWIF|LOOP.ISFIRST}
+						<thead>
+							<tr>
+								<th>{|SORT_TOGGLE|DATAPOINT_ID}ID{/|SORT_TOGGLE|}</th>
+								<th>Pic?</th>
+								<th>{|SORT_TOGGLE|MONTH_OF_YEAR.ORDER_NUM}Month{/|SORT_TOGGLE|}</th>
+							</tr>
+						</thead>
+						<tbody>
+					{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.DATAPOINT_ID}</th>
+						<td><a href="https://cdn.sassiex.com/{DATAPOINTS.CLIENT_559_SURVEY_4623_QUESTION_1071_VALUE}">Pic 1</a></td>
+						<td>{DATAPOINTS.MONTH_OF_YEAR.NAME}</td>
+					</tr>
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|RESULT|}
+	{/|SHOWIF|}
+</div>

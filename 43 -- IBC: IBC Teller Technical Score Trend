@@ -1,0 +1,57 @@
+<div><h2 align="center">Teller Technical Score Trend (90 Goal)</h2></div>
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+	{|CROSSTAB|}
+		<div>
+            #Runs 3 times, once per group
+			{|LOOP|CROSSTAB.CLIENT_37_LEVEL_3(SORT=NAME)}
+				{|SHOWIF|LOOP.ISFIRST}
+				<table>
+					<thead>
+						<tr>
+                            #month
+							<th class='header'></th>
+							{|LOOP|CLIENT_37_LEVEL_3.MONTH_YEAR(SORT=ORDER_NUM|DESC,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+								<th class='header'>{MONTH_YEAR.NAME}</th>
+							{/|LOOP|}
+						</tr>
+                    </thead>    
+				{/|SHOWIF|}
+                        
+						<tr>
+							<th>{CLIENT_37_LEVEL_3.NAME.SPLIT(-,0)}</th>				
+
+							{|LOOP|CLIENT_37_LEVEL_3.MONTH_YEAR(SORT=ORDER_NUM|DESC)}
+                            	{|LOOP|MONTH_YEAR(SORT=NAME|DESC,FILTERSET=type|eq|major_sectional_percent_score;NAME|eq|Sec 2(score): Technical,SORT=ORDER_NUM)}
+                            		<td>{AVG(MONTH_YEAR.PERCENT_SCORE).ROUND(2)}</td>
+                            	{/|LOOP|}
+							{/|LOOP|}
+						</tr>
+				{|VANISHIF|LOOP.HASNEXT}
+                        <tr>
+							<th>Overall</th>				
+							#Overall, clearly.
+							{|LOOP|CLIENT_37_LEVEL_3.MONTH_YEAR(SORT=ORDER_NUM|DESC)}
+                            	{|LOOP|MONTH_YEAR(SORT=NAME|DESC,FILTERSET=type|eq|major_sectional_percent_score;NAME|eq|Sec 2(score): Technical,SORT=ORDER_NUM)}
+                            		<td>{AVG(MONTH_YEAR.PERCENT_SCORE,MONTH_YEAR).ROUND(2)}</td>
+                            	{/|LOOP|}
+							{/|LOOP|}
+						</tr>
+					
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+	{/|CROSSTAB|}
+
+    {/|SHOWIF|}
+</div>

@@ -1,0 +1,280 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+#{DATATYPES.DEFAULT_DATE_FILTERS}
+<br/>
+<table width="100%">
+    <tr>
+        <td width="20%">Start Date:</td>
+        <td width="30%">{DATATYPES.REPORT_CONFIG.TRENDING_DATE_AFTER.INPUT}</td>
+        <td width="20%">End Date:</td>
+        <td width="30%">{DATATYPES.REPORT_CONFIG.TRENDING_DATE_BEFORE.INPUT}</td>
+    </tr>
+    <tr>
+        <td width="20%">Survey:</td>
+        <td width="30%">{DATATYPES.SHOW_DATATYPE.CLIENT_211_SURVEY_SELECTOR(SORT=NAME|ASC,FILTERSET=ID|eq|2615;ID|eq|2656|OR).INPUT}</td>
+       # {DATATYPES.SHOW_DATATYPE.CLIENT_211_SURVEY_SELECTOR.ID}
+        <td width="20%">Super Region:</td>
+        <td width="30%">{DATATYPES.SHOW_DATATYPE.CLIENT_211_LEVEL_4_SELECTOR.INPUT}</td>
+    </tr>
+    <tr>
+        <td width="20%">Affiliate:</td>
+        <td width="30%">{DATATYPES.SHOW_DATATYPE.CLIENT_211_LEVEL_3_SELECTOR.INPUT}</td>
+        <td width="20%">Region:</td>
+        <td width="30%">{DATATYPES.SHOW_DATATYPE.CLIENT_211_LEVEL_2_SELECTOR.INPUT}</td>
+    </tr>
+</table>
+
+{DATATYPES.CONTROLS_END}
+{/|SHOWIF|}
+
+<div class='results' >
+    {|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+    {/|VANISHIF|}
+    
+    {|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    
+    {|SHOWIF|DATATYPES.SHOW_DATATYPE.CLIENT_211_SURVEY_SELECTOR.ID<1}
+    <div class='error-message'>You must select a Survey.</div>	
+    {/|SHOWIF|}
+    {|SHOWIF|DATATYPES.SHOW_DATATYPE.CLIENT_211_SURVEY_SELECTOR.ID}
+    <br/>
+    
+    <table>
+        <tr>
+            <td width="20%"><img src="http://go.sassiex.com/fifth-third-logo.png"/></td>
+            <td width="60%">
+                <div style="font-weight:bold;font-size:14px; color:#1D4196; text-align:center;">Company Overview</div>
+                <div style="font-weight:bold;font-size:14px; color:#1D4196; text-align:center;">Fifth Third Bank: {DATATYPES.SHOW_DATATYPE.CLIENT_211_SURVEY_SELECTOR}</div>
+                <div style="font-weight:bold;font-size:14px; color:#1D4196; text-align:center;">Companywide Report</div>
+                <div style="font-weight:bold;font-size:14px; color:#1D4196; text-align:center;">{DATATYPES.REPORT_CONFIG.TRENDING_DATE_AFTER.FORMATTED(m/d/Y)} -
+                    {DATATYPES.REPORT_CONFIG.TRENDING_DATE_BEFORE.FORMATTED(m/d/Y)}</div>
+            </td>
+            <td width="20%"></td>
+            
+        </tr>
+    </table>
+    <br/>
+    
+    <div>
+        
+        #It shows Company information
+        <table class='data'>
+            <thead>
+                <tr class="colHeading">
+                    <th width="15%">Name</th>
+                    <th width="15%">Sub Division</th>
+                    <th width="8%">Evaluation Count</th>
+                    <th>Score</th>
+                    <th>No. of Shops with Score >95%</th>
+                    <th>Percentage of shops>95%</th>
+                    <th>Initial Greeting</th>
+                    <th>Platform Banker Performance</th>
+                    <th>Greeting</th>
+                    <th>Needs Assessment</th>
+                    <th>Presentation and Product knowledge</th>
+                    <th>Closing and Sale</th>
+                    <th>Exit and Thank You</th>
+                    <th>Visit Assessment</th>
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                #COMPANY 
+                <tr>
+                    <td colspan="15" class="groupHeading">COMPANY</td>
+                </tr>
+                
+                <tr>
+                    <td>Company</td>
+                    <td></td>
+                    
+                    {|CROSSTAB|}
+                    {|LOOP|CROSSTAB.CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301(FILTER=ID|eq|1)}
+                    <td>{COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301,OVERALL)}</td>
+                    #display average score regardless of answer
+                    <td>{AVG(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301.PERCENT_SCORE,OVERALL).ROUND}</td>
+                    
+                    #display the count of 'yes' shops
+                    <td>{COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301)}</td>
+                    
+                    #display the percentage of 'yes' shops out of all shops
+                    <td>{PERCENTAGE(COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301), COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301,OVERALL)).ROUND}</td>
+                    
+                    {|LOOP|CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301.PROPERTIES(FILTER=type|eq|sectional_percent_score,SORT=ORDER_NUM)}
+                    
+                    <td>{AVG(PROPERTIES.VALUE,OVERALL).NUMBERFORMAT(2)}</td>
+                    {/|LOOP|}
+ 
+                    {/|LOOP|}
+                {/|CROSSTAB|}
+           
+                </tr>
+             #Super Region
+                <tr>
+                    <td colspan="15" class="groupHeading">SUPER REGION</td>
+                </tr>
+                
+                {|CROSSTAB|}
+                {|LOOP|CROSSTAB.CLIENT_211_LEVEL_5(SORT=NAME)}
+                
+                <tr>
+                    <td>{CLIENT_211_LEVEL_5.NAME}</td>
+                    <td></td>
+                    <td>{COUNT(CLIENT_211_LEVEL_5,CLIENT_211_LEVEL_5)}</td>
+                    <td>{AVG(CLIENT_211_LEVEL_5.PERCENT_SCORE,CLIENT_211_LEVEL_5).NUMBERFORMAT(2)}</td>
+                    
+                    {|LOOP|CLIENT_211_LEVEL_5.CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301(FILTER=ID|eq|1)}
+                    #show the count for 'yes' responses in the region
+                    <td>{COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301)}</td>
+                    
+                    #show the percentage for 'yes' responses in the region
+                    <td>{PERCENTAGE(COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301), COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301,CLIENT_211_LEVEL_5)).ROUND}</td>
+                    {/|LOOP|}
+                    
+                    {|LOOP|CLIENT_211_LEVEL_5.PROPERTIES(FILTER=type|eq|sectional_percent_score,SORT=ORDER_NUM)}
+                    <td>{AVG(CLIENT_211_LEVEL_5.PROPERTIES.VALUE,CLIENT_211_LEVEL_5).NUMBERFORMAT(2)}</td>
+                    {/|LOOP|}
+                    
+                </tr>
+                
+                {/|LOOP|}  
+                {/|CROSSTAB|}   
+                
+              #Affiliate
+                 <tr>
+                   <td colspan="15" class="groupHeading">AFFILIATE</td>
+                </tr>
+                {|NESTED|}
+                {|LOOP|NESTED.CLIENT_211_LEVEL_5(SORT=NAME)}
+                {|LOOP|CLIENT_211_LEVEL_5.CLIENT_211_LEVEL_4(SORT=NAME)}
+                <tr>
+                    <td>{CLIENT_211_LEVEL_4.NAME}</td>
+                    <td>Super Region:{CLIENT_211_LEVEL_5.NAME}</td>
+                    <td>{COUNT(CLIENT_211_LEVEL_4,CLIENT_211_LEVEL_4)}</td>
+                    <td>{AVG(CLIENT_211_LEVEL_4.PERCENT_SCORE,CLIENT_211_LEVEL_4).NUMBERFORMAT(2)}</td>
+                    
+                    
+                    {|LOOP|CLIENT_211_LEVEL_4.CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301(FILTER=ID|eq|1)}
+                    #show the count for 'yes' responses in the region
+                    <td>{COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301)}</td>
+                    
+                    #show the percentage for 'yes' responses in the region
+                    <td>{PERCENTAGE(COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301), COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301,CLIENT_211_LEVEL_4)).ROUND}</td>
+                    {/|LOOP|}
+                    
+                    
+                    {|LOOP|CLIENT_211_LEVEL_4.PROPERTIES(FILTER=type|eq|sectional_percent_score,SORT=ORDER_NUM)}
+                    <td>{AVG(CLIENT_211_LEVEL_4.PROPERTIES.VALUE,CLIENT_211_LEVEL_4).NUMBERFORMAT(2)}</td>
+                    {/|LOOP|}
+                    
+                </tr>
+                {/|LOOP|}      
+                {/|LOOP|} 
+                {/|NESTED|}   
+                
+                #REGION
+                
+                <tr>
+                   <td colspan="15" class="groupHeading">REGION</td>
+                </tr>
+                {|NESTED|}
+                {|LOOP|NESTED.CLIENT_211_LEVEL_4(SORT=NAME)}
+                {|LOOP|CLIENT_211_LEVEL_4.CLIENT_211_LEVEL_3(SORT=NAME)}
+                <tr>
+                    <td>{CLIENT_211_LEVEL_3.NAME}</td>
+                    <td>Affiliate:{CLIENT_211_LEVEL_4.NAME}</td>
+                    <td>{COUNT(CLIENT_211_LEVEL_3,CLIENT_211_LEVEL_3)}</td>
+                    <td>{AVG(CLIENT_211_LEVEL_3.PERCENT_SCORE,CLIENT_211_LEVEL_3).NUMBERFORMAT(2)}</td>
+                    
+                    
+                    {|LOOP|CLIENT_211_LEVEL_3.CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301(FILTER=ID|eq|1)}
+                    #show the count for 'yes' responses in the region
+                    <td>{COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301)}</td>
+                    
+                    #show the percentage for 'yes' responses in the region
+                    <td>{PERCENTAGE(COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301), COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301,CLIENT_211_LEVEL_3)).ROUND}</td>
+                    {/|LOOP|}
+                    
+                    
+                    {|LOOP|CLIENT_211_LEVEL_3.PROPERTIES(FILTER=type|eq|sectional_percent_score,SORT=ORDER_NUM)}
+                    <td>{AVG(CLIENT_211_LEVEL_3.PROPERTIES.VALUE,CLIENT_211_LEVEL_3).NUMBERFORMAT(2)}</td>
+                    {/|LOOP|}
+                    
+                </tr>
+                {/|LOOP|}      
+                {/|LOOP|} 
+                {/|NESTED|}   
+                
+                #District
+                <tr>
+                  <td colspan="15" class="groupHeading">DISTRICT</td>
+                 </tr>
+                 {|NESTED|}
+                {|LOOP|NESTED.CLIENT_211_LEVEL_3(SORT=NAME)}
+                {|LOOP|CLIENT_211_LEVEL_3.CLIENT_211_LEVEL_2(SORT=NAME)}
+                <tr>
+                    <td>{CLIENT_211_LEVEL_2.NAME}</td>
+                    <td>Region:{CLIENT_211_LEVEL_3.NAME}</td>
+                    <td>{COUNT(CLIENT_211_LEVEL_2,CLIENT_211_LEVEL_2)}</td>
+                    <td>{AVG(CLIENT_211_LEVEL_2.PERCENT_SCORE,CLIENT_211_LEVEL_2).NUMBERFORMAT(2)}</td>
+                    
+                    
+                    {|LOOP|CLIENT_211_LEVEL_2.CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301(FILTER=ID|eq|1,NESTED_FILTER=WITH_BLANKS)}
+                    #show the count for 'yes' responses in the region
+                    <td>{COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301)}</td>
+                    
+                    #show the percentage for 'yes' responses in the region
+                    <td>{PERCENTAGE(COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301), COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301,CLIENT_211_LEVEL_2)).ROUND}</td>
+                    {/|LOOP|}
+                    
+                    
+                    {|LOOP|CLIENT_211_LEVEL_2.PROPERTIES(FILTER=type|eq|sectional_percent_score,SORT=ORDER_NUM)}
+                    <td>{AVG(CLIENT_211_LEVEL_2.PROPERTIES.VALUE,CLIENT_211_LEVEL_2).NUMBERFORMAT(2)}</td>
+                    {/|LOOP|}
+                    
+                </tr>
+                {/|LOOP|}      
+                {/|LOOP|} 
+                {/|NESTED|}   
+                
+                
+                #Branch
+                  <tr>
+                    <td colspan="15" class="groupHeading">BRANCH</td>
+                 </tr>
+                 {|NESTED|}
+                {|LOOP|NESTED.CLIENT_211_LEVEL_2(SORT=NAME)}
+                {|LOOP|CLIENT_211_LEVEL_2.CLIENT_211_LEVEL_1(SORT=NAME)}
+                <tr>
+                    <td>{CLIENT_211_LEVEL_1.NAME}</td>
+                    <td>District:{CLIENT_211_LEVEL_2.NAME}</td>
+                    <td>{COUNT(CLIENT_211_LEVEL_1,CLIENT_211_LEVEL_1)}</td>
+                    <td>{AVG(CLIENT_211_LEVEL_1.PERCENT_SCORE,CLIENT_211_LEVEL_1).NUMBERFORMAT(2)}</td>
+                    
+                    
+                    {|LOOP|CLIENT_211_LEVEL_1.CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301(FILTER=ID|eq|1,NESTED_FILTER=WITH_BLANKS)}
+                    #show the count for 'yes' responses in the region
+                    <td>{COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301)}</td>
+                    
+                    #show the percentage for 'yes' responses in the region
+                    <td>{PERCENTAGE(COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301), COUNT(CLIENT_211_MASTER_SURVEY_2615_QUESTION_2301,CLIENT_211_LEVEL_1)).ROUND}</td>
+                    {/|LOOP|}
+                    
+                    
+                    {|LOOP|CLIENT_211_LEVEL_1.PROPERTIES(FILTER=type|eq|sectional_percent_score,SORT=ORDER_NUM)}
+                    <td>{AVG(CLIENT_211_LEVEL_1.PROPERTIES.VALUE,CLIENT_211_LEVEL_1).NUMBERFORMAT(2)}</td>
+                    {/|LOOP|}
+                    
+                </tr>
+                {/|LOOP|}      
+                {/|LOOP|} 
+                {/|NESTED|}   
+     
+            </tbody>
+        </table>
+    </div>
+    
+    {/|SHOWIF|}
+    {/|SHOWIF|}
+</div>

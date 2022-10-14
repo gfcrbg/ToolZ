@@ -1,0 +1,94 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+{|NESTED|IGNORE_FILTERS=USER_PERMISSIONS}
+<table class='results'>
+
+	{|LOOP|NESTED.CLIENT_201_LEVEL_3(SORT=NAME)}
+    	{LOOP.ISFIRST?:|VANISH|}
+			<thead>
+				<tr>
+					<th>Company</th>
+                    <th>Region</th>
+                    <th>Area</th>
+					<th>Location</th>
+					<th>Evaluation Count</th>
+					<th>Score</th>
+					{|LOOP|CLIENT_201_LEVEL_3.PROPERTIES(FILTER=type|eq|major_sectional_percent_score,SORT=ORDER_NUM)}
+						<th>{PROPERTIES.NAME}</th>     
+					{/|LOOP|}
+				</tr>
+			</thead>
+																																		#END of Header
+		    <tbody>     
+        		<tr>
+   					<th>Company</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <td>{COUNT(CLIENT_201_LEVEL_3,OVERALL)}</td>
+                    <td>{AVG(CLIENT_201_LEVEL_3.PERCENT_SCORE,OVERALL).ROUND(2)}%</td>
+                    {|LOOP|CLIENT_201_LEVEL_3.PROPERTIES(FILTER=type|eq|major_sectional_percent_score,SORT=ORDER_NUM)}
+								<td>{AVG(PROPERTIES.VALUE,OVERALL).ROUND(2)}%</td>
+					{/|LOOP|}
+                </tr>
+		{/LOOP.ISFIRST?:|VANISH|}                         
+          
+																																		#MM Titles
+				<tr class="region" id="{CLIENT_201_LEVEL_3.NAME.SPLIT( ,1)}">
+					<th></th>
+					<th class="pointer">{CLIENT_201_LEVEL_3.NAME}</th>
+					<th></th>
+							<td></td>
+																																		#Total Count per Row of MM
+						<td>{COUNT(CLIENT_201_LEVEL_3,CLIENT_201_LEVEL_3)}</td>
+						<td>{AVG(CLIENT_201_LEVEL_3.PERCENT_SCORE,CLIENT_201_LEVEL_3).ROUND(2)}%</td>
+		  																																#end 
+		  																																#This loop produces the MM lines            
+		  				{|LOOP|CLIENT_201_LEVEL_3.PROPERTIES(FILTER=type|eq|major_sectional_percent_score,SORT=ORDER_NUM)}
+		  					<td>{AVG(PROPERTIES.VALUE,CLIENT_201_LEVEL_3).ROUND(2)}%</td>
+		  				{/|LOOP|}
+																																		#end
+            
+           
+        		</tr>
+						{|LOOP|CLIENT_201_LEVEL_3.CLIENT_201_LEVEL_2(SORT=NAME)}
+                			<tr class="area-{CLIENT_201_LEVEL_3.NAME.SPLIT( ,1)}" id={CLIENT_201_LEVEL_2.NAME.SPLIT( ,0)}>
+								<th></th>
+                                
+                                <th></th>
+                                <th class="pointer">{CLIENT_201_LEVEL_2.NAME}</th>
+                                <th></th>
+                                <td>{COUNT(CLIENT_201_LEVEL_2,CLIENT_201_LEVEL_2)}</td>
+                                <td>{AVG(CLIENT_201_LEVEL_2.PERCENT_SCORE,CLIENT_201_LEVEL_2).ROUND(2)}%</td>
+                                {|LOOP|CLIENT_201_LEVEL_2.PROPERTIES(FILTER=type|eq|major_sectional_percent_score,SORT=ORDER_NUM)}
+				  					<td>{AVG(PROPERTIES.VALUE,CLIENT_201_LEVEL_2).ROUND(2)}%</td>
+		  						{/|LOOP|}
+							</tr>																											
+                																														#LOCATIONS          
+						{|LOOP|CLIENT_201_LEVEL_2.CLIENT_201_LEVEL_1(SORT=NAME)}            
+							<tr class="location-{CLIENT_201_LEVEL_2.NAME.SPLIT( ,0)}">
+							<th></th>
+                            
+							<th></th>
+							<th></th>
+							<th>{CLIENT_201_LEVEL_1.NAME.SPLIT( ,0)}</th>
+							<td>{COUNT(CLIENT_201_LEVEL_1,CLIENT_201_LEVEL_1)}</td>
+							<td>{AVG(CLIENT_201_LEVEL_1.PERCENT_SCORE).ROUND(2)}%</td>
+							{|LOOP|CLIENT_201_LEVEL_1.PROPERTIES(FILTER=type|eq|major_sectional_percent_score,SORT=ORDER_NUM)}
+								<td>{AVG(CLIENT_201_LEVEL_1.PROPERTIES.VALUE).ROUND(2)}%</td>
+							{/|LOOP|}
+
+																																		#end             
+					</tr>
+						{/|LOOP|}																										
+                																														#Close Location Loop
+			{/|LOOP|}
+	{/|LOOP|}																															
+                																														#Close Region Loop
+  				<br><br>
+	    	</tbody>
+</table>
+{/|NESTED|}

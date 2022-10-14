@@ -1,0 +1,54 @@
+<div><h2 align="center">Casual Dining Quick Ranking</h2></div>
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+<div><br>This report will show each location's ranking against the company.  <br><br>In order to view the location rankings within each market, first select a date range and click Submit, then click the desired Market name.</div>
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|NESTED|}
+		<div>          
+			<table>
+                <thead>
+                <tr class="header-row">
+	                <th><h2>Service Coach</h2></th>
+					<th><h2>Location</h2></th>
+                    <th><h2>Count</h2></th>
+                    <th><h2>Average Score</h2></th>
+                    <th><h2>Rank Overall</h2></th>
+                    <th><h2>Rank in Service Coach</h2></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {|LOOP|NESTED.CLIENT_9_LEVEL_2(SORT=NAME)}
+                		<tr class="market" id="{CLIENT_9_LEVEL_2.NAME.SPLIT( ,1)}">
+		    	            <th>{CLIENT_9_LEVEL_2.NAME.SPLIT( ,1)}</th>
+                            	<td></td>
+			                    <td></td>
+								<td></td>
+						        <td></td>
+						        <td></td>
+                    
+                    	</tr>
+    		            {|LOOP|CLIENT_9_LEVEL_2.CLIENT_9_LEVEL_1(SORT=ORDER_NUM)}
+     						 <tr class="location-{CLIENT_9_LEVEL_2.NAME.SPLIT( ,1)}">
+						        <th></th>
+						        <td>{CLIENT_9_LEVEL_1.NAME}</td>
+			                    <td>{COUNT(CLIENT_9_LEVEL_1)}</td>
+						        <td>{AVG(CLIENT_9_LEVEL_1.PERCENT_SCORE).ROUND(2)}</td>
+						        <td>{RANK(AVG(CLIENT_9_LEVEL_1.PERCENT_SCORE), DESC, 2, OVERALL)}</td>
+						        <td>{RANK(AVG(CLIENT_9_LEVEL_1.PERCENT_SCORE), DESC, 2, CLIENT_9_LEVEL_2)}</td>
+					        </tr>
+    					{/|LOOP|}    
+                    {/|LOOP|}
+                </tbody>
+            </table>
+		</div>
+		{/|NESTED|}
+	{/|SHOWIF|}
+</div>

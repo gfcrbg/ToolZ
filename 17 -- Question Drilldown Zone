@@ -1,0 +1,63 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+		<select name="misc_vars___show_question_id">
+	    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_multichoice,SORT=ORDER_NUM)}
+	        <option	value="{GROUPS.ID}"{GROUPS.ID=|EVALTAG(MISC_VARS.SHOW_QUESTION_ID)|?selected}>
+    	        {GROUPS.NAME}
+        	</option>
+	    {/|LOOP|}
+    	</select>
+
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+#AREA	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    
+    <table class="data">
+    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq||EVALTAG(MISC_VARS.SHOW_QUESTION_ID)|)}
+    	<thead>
+        <tr> <th colspan=6>{GROUPS.NAME}</th> </tr>
+		{|CROSSTAB|IGNORE_FILTERS=USER_PERMISSIONS}<tr><td>Zone</td><td>Answer Option</td>
+            {|LOOP|CROSSTAB.CLIENT_559_LEVEL_5(SORT=NAME)}
+            {|SHOWIF|LOOP.ISFIRST}
+		        {|LOOP|CLIENT_559_LEVEL_5.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+		            <td>{MONTH_YEAR.NAME}</td>
+            		# filter out N/A responses (based on the answer option)
+            		{|LOOP|MONTH_YEAR.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,FILTER=NAME|ne|N/A)}
+					{/|LOOP|}
+        		{/|LOOP|}</tr>    
+        </thead>
+        <tbody>
+            {/|SHOWIF|}
+
+            	<tr><td>{CLIENT_559_LEVEL_5.NAME}</td>                    
+		        {|LOOP|CLIENT_559_LEVEL_5.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}					
+    	            {|SHOWIF|LOOP.ISFIRST}
+      				<td>
+                    	{|LOOP|MONTH_YEAR.DYNAMIC_GROUP}
+							{DYNAMIC_GROUP.NAME}<br>
+						{/|LOOP|}
+                    </td>
+                    
+	            	{/|SHOWIF|}   
+                    <td>
+                    {|LOOP|MONTH_YEAR.DYNAMIC_GROUP}
+						#They want to see yes & no percentages rolling up to 100, ignoring NAs
+                        #take the percentage out of the sum of the counts we're showing, rather than the overall total of answers for the month/level combo
+        				{PERCENTAGE(COUNT(DYNAMIC_GROUP), SUM(COUNT(DYNAMIC_GROUP),CLIENT_559_LEVEL_5,MONTH_YEAR)).ROUND}% 
+
+                        <br>                        
+   					{/|LOOP|}
+                    </td>
+    			{/|LOOP|}</tr>
+        	{/|LOOP|}
+    	{/|CROSSTAB|}
+    {/|LOOP|}
+    </tbody>                                    
+    </table>
+{/|SHOWIF|}
+

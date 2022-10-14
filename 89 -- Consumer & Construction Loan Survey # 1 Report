@@ -1,0 +1,71 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}
+
+{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+
+  <div>
+    {DATATYPES.SHOW_DATATYPE.CLIENT_297_SURVEY_3025_QUESTION_81.GROUP.NAME}
+    {DATATYPES.SHOW_DATATYPE.CLIENT_297_SURVEY_3025_QUESTION_81_SELECTOR(SORT=ORDER_NUM).INPUT}
+  </div>
+      
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+    
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    	{|RESULT|}
+<div>
+	<table class="data">
+		{|LOOP|RESULT.DATAPOINTS(SORT=ID)}
+			{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+               	        <th>Link</th>
+                        <th>{|SORT_TOGGLE|PERCENT_SCORE}Evaluation Score{/|SORT_TOGGLE|}</th>
+						<th>{|SORT_TOGGLE|CLIENT_297_LEVEL_1.NAME}Location{/|SORT_TOGGLE|}</th>         	        
+                        <th>{|SORT_TOGGLE|CLIENT_297_LEVEL_2.NAME}District{/|SORT_TOGGLE|}</th>
+	                    <th>{|SORT_TOGGLE|CLIENT_297_SURVEY.NAME}Survey Name{/|SORT_TOGGLE|}</th>
+						#<th>{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+                        <th>{|SORT_TOGGLE|CLIENT_297_SURVEY_3025_QUESTION_1_VALUE}Date customer contacted{/|SORT_TOGGLE|}</th>
+                        <th>{|SORT_TOGGLE|CLIENT_297_SURVEY_3025_QUESTION_41_VALUE}Employee Name{/|SORT_TOGGLE|}</th>
+                        <th>{|SORT_TOGGLE|CLIENT_297_SURVEY_3025_QUESTION_51_VALUE}Customer Name{/|SORT_TOGGLE|}</th>
+                        <th>{|SORT_TOGGLE|CLIENT_297_SURVEY_3025_QUESTION_71_VALUE}Loan Officer Name{/|SORT_TOGGLE|}</th>
+                        <th>{|SORT_TOGGLE|CLIENT_297_SURVEY_3025_QUESTION_81.NAME}Type of Loan{/|SORT_TOGGLE|}</th>                       
+						<th>{|SORT_TOGGLE|CLIENT_297_SURVEY_3025_QUESTION_11_SCORE}Please rate your experience with our loan application process so far (Rate from 1 to 5){/|SORT_TOGGLE|}</th>
+        	            <th>{|SORT_TOGGLE|CLIENT_297_SURVEY_3025_QUESTION_61_VALUE}Tell us about your 5-star experience{/|SORT_TOGGLE|}</th>
+                        <th>{|SORT_TOGGLE|CLIENT_297_SURVEY_3025_QUESTION_21_VALUE}How can we make it a 5?{/|SORT_TOGGLE|}</th>
+
+                        #<th>{|SORT_TOGGLE|PERCENT_SCORE}Grade{/|SORT_TOGGLE|}</th>
+					</tr>
+				</thead>
+	    		<tbody>     
+			{/|SHOWIF|}																								                                
+                	<tr>
+                       	<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a></td>
+						<td>{DATAPOINTS.PERCENT_SCORE}</td>                        
+                        <td>{DATAPOINTS.CLIENT_297_LEVEL_1.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_297_LEVEL_2.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_297_SURVEY.NAME}</td>
+                        #<td>{DATAPOINTS.JOB_DATE.FORMATTED(F, Y)}</td>
+                        <td>{DATAPOINTS.CLIENT_297_SURVEY_3025_QUESTION_1_VALUE}</td>
+                        <td>{DATAPOINTS.CLIENT_297_SURVEY_3025_QUESTION_41_VALUE}</td>
+                        <td>{DATAPOINTS.CLIENT_297_SURVEY_3025_QUESTION_51_VALUE}</td>
+                        <td>{DATAPOINTS.CLIENT_297_SURVEY_3025_QUESTION_71_VALUE}</td>
+                        <td>{DATAPOINTS.CLIENT_297_SURVEY_3025_QUESTION_81.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_297_SURVEY_3025_QUESTION_11_SCORE}</td>
+						<td>{DATAPOINTS.CLIENT_297_SURVEY_3025_QUESTION_61_VALUE}</td>
+						<td>{DATAPOINTS.CLIENT_297_SURVEY_3025_QUESTION_21_VALUE}</td>
+
+                        #<td class="grade-{DATAPOINTS.PERCENT_SCORE}">{DATAPOINTS.PERCENT_SCORE=100?A}{DATAPOINTS.PERCENT_SCORE=50?B}{DATAPOINTS.PERCENT_SCORE=0?C}</td>
+                    </tr>    
+                {/|LOOP|}																											              																													
+            <br><br>
+	    </tbody>
+	</table>
+{/|RESULT|}
+{/|SHOWIF|}
+

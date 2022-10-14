@@ -1,0 +1,41 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|RESULT|}
+		<div>
+			<table class='data'>
+				{|LOOP|RESULT.DATAPOINTS}
+					{|SHOWIF|LOOP.ISFIRST}
+						<thead>
+							<tr>
+								<th>{|SORT_TOGGLE|CLIENT_430_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+                                <th>{|SORT_TOGGLE|CLIENT_430_SURVEY.NAME}Survey{/|SORT_TOGGLE|}</th>
+								<th>{|SORT_TOGGLE|TRENDING_TIMESTAMP}Date{/|SORT_TOGGLE|}</th>
+								<th>Receipt</th>
+							</tr>
+						</thead>
+						<tbody>
+					{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_430_LEVEL_1.NAME}</th>
+                        <th>{DATAPOINTS.CLIENT_430_SURVEY.NAME}</th>
+						<td>{DATAPOINTS.TRENDING_TIMESTAMP}</td>
+						<td><a href="https://d2cavxku0k86dr.cloudfront.net/{DATAPOINTS.CLIENT_430_MASTER_SURVEY_3438_QUESTION_751_VALUE}" target="_blank">{DATAPOINTS.DATAPOINT_ID}</a></td>
+					</tr>
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|RESULT|}
+	{/|SHOWIF|}
+</div>

@@ -1,0 +1,73 @@
+#<p>I used this site for the maths.  https://www.checkmarket.com/blog/net-promoter-score</p>
+
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|CROSSTAB|}
+		<div>
+			{|LOOP|CROSSTAB.CLIENT_618_LEVEL_1(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}
+				{|SHOWIF|LOOP.ISFIRST}
+				<table class='data'>
+					<thead>
+						<tr>
+							<th>{|SORT_TOGGLE|CLIENT_618_LEVEL_1.NAME}LOCATION{/|SORT_TOGGLE|}</th><th>Question</th>
+							{|LOOP|CLIENT_618_LEVEL_1.MONTH_OF_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE,LIMIT=-6|6)}
+								<th>{MONTH_OF_YEAR.NAME}</th>{/|LOOP|}</tr><tr>
+                        		<th>Store</th><th></th>
+                            	#<td>Month Count</td>
+                            	#<td>Q171 Avg</td>
+                            	#<td>Q181 Avg</td>
+                           	 	#<td>NPS</td>
+							#{/|LOOP|}
+						</tr>
+					</thead>
+					<tbody>
+				{/|SHOWIF|}
+						<tr>
+							<th>{CLIENT_618_LEVEL_1.NAME}</th>				
+                            <td>Recommend?</td>
+							{|LOOP|CLIENT_618_LEVEL_1.MONTH_OF_YEAR}
+                            #<td>{COUNT(MONTH_OF_YEAR)}</td>
+                            	#<td>{COUNT(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_171_VALUE)}:{CALC(100*(SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_171_VALUE)/COUNT(MONTH_OF_YEAR))).NUMBERFORMAT(2)} </td>
+                            	#<td>{SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_181_VALUE)}:{CALC(100*(SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_181_VALUE)/COUNT(MONTH_OF_YEAR))).NUMBERFORMAT(2)}</td>
+                            	<td>{CALC((100*(SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_171_VALUE)/COUNT(MONTH_OF_YEAR)))-(100*(SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_181_VALUE)/COUNT(MONTH_OF_YEAR)))).NUMBERFORMAT(2)}</td>
+							{/|LOOP|}
+						</tr>
+						<tr>
+							<td></td>
+                            <td>Return?</td>
+							{|LOOP|CLIENT_618_LEVEL_1.MONTH_OF_YEAR}
+								#<td>{COUNT(MONTH_OF_YEAR)}</td>
+                            	#<td>{COUNT(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_171_VALUE)}:{CALC(100*(SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_171_VALUE)/COUNT(MONTH_OF_YEAR))).NUMBERFORMAT(2)} </td>
+                            	#<td>{SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_181_VALUE)}:{CALC(100*(SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_181_VALUE)/COUNT(MONTH_OF_YEAR))).NUMBERFORMAT(2)}</td>
+                            	<td>{CALC((100*(SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_191_VALUE)/COUNT(MONTH_OF_YEAR)))-(100*(SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_201_VALUE)/COUNT(MONTH_OF_YEAR)))).NUMBERFORMAT(2)}</td>
+							{/|LOOP|}
+						</tr>                        
+#I think this combined section is wrong, so I'm wiping it out                        
+                        #<tr>
+						#	<td></td>
+                        #    <td>Combined</td>
+					#		{|LOOP|CLIENT_618_LEVEL_1.MONTH_OF_YEAR}
+								#<td>{COUNT(MONTH_OF_YEAR)}</td>
+                            	#<td>{COUNT(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_171_VALUE)}:{CALC(100*(SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_171_VALUE)/COUNT(MONTH_OF_YEAR))).NUMBERFORMAT(2)} </td>
+                            	#<td>{SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_181_VALUE)}:{CALC(100*(SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_181_VALUE)/COUNT(MONTH_OF_YEAR))).NUMBERFORMAT(2)}</td>
+                    #        	<td>{CALC((100*((SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_191_VALUE)+SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_171_VALUE))/(COUNT(MONTH_OF_YEAR)*2)))-(SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_191_VALUE)+SUM(MONTH_OF_YEAR.CLIENT_618_SURVEY_4061_QUESTION_171_VALUE))/(COUNT(MONTH_OF_YEAR)*2)).NUMBERFORMAT(2)}</td>
+					#		{/|LOOP|}
+					#	</tr> 
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|CROSSTAB|}
+	{/|SHOWIF|}
+</div>

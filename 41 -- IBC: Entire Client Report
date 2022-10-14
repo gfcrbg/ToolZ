@@ -1,0 +1,41 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|CROSSTAB|}
+		<div>
+			{|LOOP|CROSSTAB.CLIENT_37_LEVEL_1(SORT=NAME)}
+				{|SHOWIF|LOOP.ISFIRST}
+				<table class='data'>
+					<thead>
+						<tr>
+							<th>Name</th>
+							{|LOOP|CLIENT_37_LEVEL_1.CLIENT_37_SURVEY(SORT=NAME,FILTERSET=ORDER_NUM|ne|1370;ORDER_NUM|ne|1371;ORDER_NUM|ne|1375;ORDER_NUM|ne|1377;ORDER_NUM|ne|1787;ORDER_NUM|ne|1839;ORDER_NUM|ne|2319|AND)}
+                            	<th>{CLIENT_37_SURVEY.NAME}</th>
+							{/|LOOP|}
+						</tr>
+					</thead>
+					<tbody>
+				{/|SHOWIF|}
+						<tr>
+							<th>{CLIENT_37_LEVEL_1.NAME}</th>				
+							{|LOOP|CLIENT_37_LEVEL_1.CLIENT_37_SURVEY}
+								<td>{AVG(CLIENT_37_SURVEY.PERCENT_SCORE).ROUND(2)}</td>
+							{/|LOOP|}
+						</tr>
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|CROSSTAB|}
+	{/|SHOWIF|}
+</div>

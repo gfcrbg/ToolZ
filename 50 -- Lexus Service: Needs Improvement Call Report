@@ -1,0 +1,46 @@
+<h1>Needs Improvement Call Report</h1>
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|RESULT|}
+		<div>
+			<table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=CLIENT_394_LEVEL_3.NAME,FILTERSET=CLIENT_394_GROUP.NAME|like|Dealer;CLIENT_394_MASTER_SURVEY_3379_QUESTION_531.NAME|ne|Neutral)}
+					{|SHOWIF|LOOP.ISFIRST}
+						<thead>
+							<tr>
+								<th>{|SORT_TOGGLE|CLIENT_394_SURVEY.NAME}Shop{/|SORT_TOGGLE|}</th>
+								<th>{|SORT_TOGGLE|CLIENT_394_LEVEL_3.NAME}Area{/|SORT_TOGGLE|}</th>
+								<th>{|SORT_TOGGLE|CLIENT_394_MASTER_SURVEY_3379_QUESTION_531.NAME}Status{/|SORT_TOGGLE|}</th>
+                                <th>{|SORT_TOGGLE|DATAPOINT_ID}Ref ID{/|SORT_TOGGLE|}</th>
+                                <th>{|SORT_TOGGLE|CLIENT_394_LEVEL_1.NAME_ONLY}Dealer{/|SORT_TOGGLE|}</th>
+                                <th>{|SORT_TOGGLE|CLIENT_394_LEVEL_1.ID_ONLY}Dealer ID{/|SORT_TOGGLE|}</th>
+							</tr>
+						</thead>
+						<tbody>
+					{/|SHOWIF|}
+					<tr class="status-value-{DATAPOINTS.CLIENT_394_MASTER_SURVEY_3379_QUESTION_531.ID}">
+						<th>{DATAPOINTS.CLIENT_394_SURVEY.NAME}</th>
+						<td>{DATAPOINTS.CLIENT_394_LEVEL_3.NAME}</td>
+						<td>{DATAPOINTS.CLIENT_394_MASTER_SURVEY_3379_QUESTION_531.NAME}</td>
+                        <td>{DATAPOINTS.DATAPOINT_ID}</td>
+                        <td>{DATAPOINTS.CLIENT_394_LEVEL_1.NAME_ONLY}</td>
+                        <td>{DATAPOINTS.CLIENT_394_LEVEL_1.ID_ONLY}</td>
+					</tr>
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|RESULT|}
+	{/|SHOWIF|}
+</div>

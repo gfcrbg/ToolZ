@@ -1,0 +1,40 @@
+<div class='toolz-results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+	{|RESULT|}
+        {|LOOP|RESULT.CLIENT_559_LEVEL_3(SORT=RANK(AVG(CLIENT_559_LEVEL_3.PERCENT_SCORE),DESC, OVERALL))}
+		    {|SHOWIF|LOOP.ISFIRST}
+                <table class='toolz-my-table data'>
+                    <thead>
+                        <tr>
+                            <th>ULG</th>
+                            <th>Rank</th>
+                            #<th>Percent Rank</th>
+                            <th>No. Evaluations</th>
+                            <th>Avg Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            {/|SHOWIF|}
+                <tr>
+                    <td>{CLIENT_559_LEVEL_3.NAME}</td>
+                    <td>{RANK(AVG(CLIENT_559_LEVEL_3.PERCENT_SCORE),DESC, OVERALL)}</td>
+                    #<td>pr</td>
+                    <td>{COUNT(CLIENT_559_LEVEL_3.PERCENT_SCORE)}</td>
+                    <td>{AVG(CLIENT_559_LEVEL_3.PERCENT_SCORE).ROUND(2)}</td>                    
+                </tr>
+            {|VANISHIF|LOOP.HASNEXT}
+                </tbody>
+            </table>
+            {/|VANISHIF|}
+        {/|LOOP|}
+	{/|RESULT|}
+	
+	{/|SHOWIF|}
+    
+    <div class='toolz-data-last-updated'>Data last updated: {DATATYPES.SHOW_DATATYPE.DATA_LAST_UPDATED.FORMATTED(n/j/y g:i a)}</div>
+</div>

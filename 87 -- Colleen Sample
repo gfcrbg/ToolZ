@@ -1,0 +1,121 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+    {|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+    {/|VANISHIF|}
+    
+    {|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    
+    <div>
+        <br/>
+        #Report Header Part
+        <center>
+            <div style="color:blue;font-size:18px">Sectional Score Report</div>
+            <div style="color:blue;font-size:14px">Town Park Financial:Revenue Control Audit</div>
+            <div style="color:blue">{DATATYPES.REPORT_CONFIG.TRENDING_DATE_AFTER.FORMATTED(m/d/Y)} -
+                {DATATYPES.REPORT_CONFIG.TRENDING_DATE_BEFORE.FORMATTED(m/d/Y)}</div>  
+        </center><br/>
+        <table>
+            <tbody>
+               #No of surveys
+                <tr>
+                    <th>No of surveys</th>
+                    
+                    #since they just want the count of all shops, there's no reason to complicate it with 
+                    #months
+                    <td>{COUNT(DATATYPES.SHOW_DATATYPE)}</td>
+                </tr>
+                 #Survey Total Score
+                <tr>
+                    <th>Survey Total Score</th>
+                    
+                    <td>
+                    #it's not clear here if they want the average overall score for the date range
+                    {AVG(DATATYPES.SHOW_DATATYPE.PERCENT_SCORE).ROUND(2)}<br/>
+                        
+                    #or the average average score per month
+                    {|RESULT|}
+                    	{|LOOP|RESULT.MONTH_OF_YEAR(SORT=ORDER_NUM|DESC,LIMIT=1)}
+                    		{AVG(AVG(MONTH_OF_YEAR.PERCENT_SCORE),OVERALL).ROUND(2)}%
+                   		{/|LOOP|}
+                    {/|RESULT|}
+                    
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table class='data'>
+             <tbody>
+                
+                 #RECONCILLIATION  
+                <tr>
+                    <th colspan="2" style="font-size:14px;text-align:center;background-color:blue;color:white">Reconcilliation</th>
+                </tr> 
+    			
+                #it appears what they want here is anything with a 'yes' answer to a specific question
+               	<tr> 
+                    <th style="background-color:pink">Number of surveys in this section</th>
+                    <td style="background-color:pink">{COUNT(DATATYPES.SHOW_DATATYPE(FILTER=CLIENT_214_SURVEY_2635_QUESTION_1651_ID|eq|1))}</td>
+                </tr>
+                
+                #again, since we just want overall numbers, there's no reason to involve months
+                <tr> 
+                    <th style="background-color:pink">Percentage score of surveys in this section</th>
+                    <td style="background-color:pink">
+                    	{AVG(DATATYPES.SHOW_DATATYPE.CLIENT_214_SURVEY_2635_SECTION_1_SCORE).ROUND(2)}%
+                    </td>
+                </tr>
+                 
+                 
+                #given the fact that the behavior here is being hardcoded for each group, looping through
+                #the questions in the section doesn't seem that useful
+                
+                <tr> 
+                    <th>Number Of Failures:</th>
+                    
+                    #based on the instructions in the two documents attached to the tracker, it appears that this value
+                    #should also be based on question 1651. It doesn't really make sense why this same number is displayed
+                    #twice, so this could use some clarification from the client.
+                    
+                    #also, on the example report this was a percentage but the mockup says count, so i opted for count
+                    <td>{COUNT(DATATYPES.SHOW_DATATYPE(FILTER=CLIENT_214_SURVEY_2635_QUESTION_1651_ID|eq|1))}</td>
+                </tr>
+                
+                <tr> 
+                     <th>Reason 1: {DATATYPES.SHOW_DATATYPE.CLIENT_214_SURVEY_2635_QUESTION_1691_OPTION_1.GROUP.NAME.SPLIT(: :,1)}</th>
+                     
+                     <td>{COUNT(DATATYPES.SHOW_DATATYPE(FILTER=CLIENT_214_SURVEY_2635_QUESTION_1691_OPTION_1_ID|eq|1))}</td>
+				</tr>
+                
+                <tr> 
+                     <th>Reason 2: {DATATYPES.SHOW_DATATYPE.CLIENT_214_SURVEY_2635_QUESTION_1691_OPTION_2.GROUP.NAME.SPLIT(: :,1)}</th>
+                     
+                     <td>{COUNT(DATATYPES.SHOW_DATATYPE(FILTER=CLIENT_214_SURVEY_2635_QUESTION_1691_OPTION_2_ID|eq|1))}</td>
+				</tr>
+                 
+                #if it turns out they do want a percentage rather than a count
+                
+                <tr> 
+                     <th>Reason 3: {DATATYPES.SHOW_DATATYPE.CLIENT_214_SURVEY_2635_QUESTION_1691_OPTION_3.GROUP.NAME.SPLIT(: :,1)}</th>
+                     
+                     <td>
+                         {|RESULT|}
+                         	#the filter on ID here limits our loop to only the 'yes' response while still maintaining
+                         	#the overall count we need for the percentage
+                         	{|LOOP|RESULT.CLIENT_214_SURVEY_2635_QUESTION_1691_OPTION_3(FILTER=ID|eq|1)}
+                         		{PERCENTAGE(COUNT(CLIENT_214_SURVEY_2635_QUESTION_1691_OPTION_3), COUNT(CLIENT_214_SURVEY_2635_QUESTION_1691_OPTION_3,OVERALL)).ROUND(2)}%
+                         	{/|LOOP|}
+                         {/|RESULT|}
+                     </td>
+				</tr>
+                 
+            </tbody>
+        </table>
+    </div>
+    
+    {/|SHOWIF|}
+</div>

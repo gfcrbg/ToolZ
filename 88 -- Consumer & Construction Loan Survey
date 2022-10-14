@@ -1,0 +1,60 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}
+
+{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+
+  <div>
+    {DATATYPES.SHOW_DATATYPE.CLIENT_297_MASTER_SURVEY_3025_QUESTION_81.GROUP.NAME}
+    {DATATYPES.SHOW_DATATYPE.CLIENT_297_MASTER_SURVEY_3025_QUESTION_81_SELECTOR(SORT=ORDER_NUM).INPUT}
+  </div>
+      
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+#AREA	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    <table class="data">
+    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS}
+    	<thead>
+        <tr> <th colspan=6>{GROUPS.NAME}</th> </tr>
+		{|CROSSTAB|}<tr><td>Area</td><td>Answer Option</td>
+            {|LOOP|CROSSTAB.CLIENT_297_LEVEL_2(SORT=NAME)}
+            {|SHOWIF|LOOP.ISFIRST}
+		        {|LOOP|CLIENT_297_LEVEL_2.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+		            <td>{MONTH_YEAR.NAME}</td>
+            		{|LOOP|MONTH_YEAR.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM)}
+					{/|LOOP|}
+        		{/|LOOP|}</tr>    
+        </thead>
+        <tbody>
+            {/|SHOWIF|}
+
+            	<tr><td>{CLIENT_297_LEVEL_2.NAME}</td>                    
+		        {|LOOP|CLIENT_297_LEVEL_2.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}					
+    	            {|SHOWIF|LOOP.ISFIRST}
+      				<td>
+                    	{|LOOP|MONTH_YEAR.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,WITH_BLANKS_IN_RANGE)}
+							{DYNAMIC_GROUP.NAME}<br>
+						{/|LOOP|}
+                    </td>
+                    
+	            	{/|SHOWIF|}   
+                    <td>
+                    {|LOOP|MONTH_YEAR.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,WITH_BLANKS_IN_RANGE)}
+        				{PERCENTAGE(COUNT(DYNAMIC_GROUP),COUNT(DYNAMIC_GROUP,MONTH_YEAR,CLIENT_297_LEVEL_2)).ROUND}% 
+                        #{COUNT(DYNAMIC_GROUP)}
+                        <br>                        
+   					{/|LOOP|}
+                    </td>
+    			{/|LOOP|}</tr>
+        	{/|LOOP|}
+    	{/|CROSSTAB|}
+    {/|LOOP|}
+    </tbody>                                    
+    </table>
+{/|SHOWIF|}
+

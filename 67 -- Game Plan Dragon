@@ -1,0 +1,64 @@
+<div class='toolz-results'>
+    {|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+        <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+    {/|VANISHIF|}
+    
+    {|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    
+        {|RESULT|}
+        <div>
+            <table class='data'>
+                {|LOOP|RESULT.DATAPOINTS}
+                	<tbody>
+					<tr>
+                    	<th id="heading">Evaluation ID</th>
+                        <th id="heading">Location ID</th>
+                        <th id="heading">Date</th>
+                        <th id="heading">Manager</th>
+                        <th id="heading">Coaching Plan?</th>        
+                    </tr>                            
+                    <tr>
+                        <td><a href="http://www.realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}&access={DATAPOINTS.JOB_ACCESS_CODE}" target="_blank">{DATAPOINTS.DATAPOINT_ID}</a></td>
+                        <td>{DATAPOINTS.CLIENT_749_LEVEL_1.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_749_SURVEY_4735_QUESTION_1_VALUE.SPLIT(-,1)}/{DATAPOINTS.CLIENT_749_SURVEY_4735_QUESTION_1_VALUE.SPLIT(-,2)}/{DATAPOINTS.CLIENT_749_SURVEY_4735_QUESTION_1_VALUE.SPLIT(-,0)}</td>
+                        <td>{DATAPOINTS.CLIENT_749_SURVEY_4735_QUESTION_751_VALUE}</td>
+                        <td>{DATAPOINTS.CLIENT_749_SURVEY_4735_QUESTION_2071.NAME}</td>
+					</tr>
+					<tr>
+                        <th id="heading" colspan=5>Comments</th>                       
+                    </tr>
+                    <tr>
+                        <td>{DATAPOINTS.CLIENT_749_SURVEY_4735_QUESTION_2081_VALUE}</td>
+                    </tr>
+                    <tr>
+                        <th id="heading" colspan=2>Primary Recognition Category</th>
+                        <td>{DATAPOINTS.CLIENT_749_SURVEY_4735_QUESTION_2091.NAME}</td>
+                    </tr>
+                    <tr>
+                        <th id="heading" colspan=5>Summary of Recognition Feedback</th>                       
+                    </tr>
+                    <tr>
+                        <td>{DATAPOINTS.CLIENT_749_SURVEY_4735_QUESTION_771_VALUE}</td>
+                    </tr>
+                    <tr>    
+                        <th id="heading" colspan=2>Primary Opportunity Category</th>
+                        <td>{DATAPOINTS.CLIENT_749_SURVEY_4735_QUESTION_2101.NAME}</td>
+                    </tr>
+                    <tr>
+                        <th id="heading" colspan=5>Summary of Opportunity Feedback</th>                        
+					</tr> 
+                    <tr>                        
+                        <td>{DATAPOINTS.CLIENT_749_SURVEY_4735_QUESTION_761_VALUE}</td>
+                    </tr>
+                    <tr><th colspan=5></th></tr> 
+                            
+                {|VANISHIF|LOOP.HASNEXT}                    
+                    </tbody>
+                </table>
+                {/|VANISHIF|}
+            {/|LOOP|}
+        </div>
+        {/|RESULT|}
+    {/|SHOWIF|} 
+        <div class='toolz-data-last-updated'>Data last updated: {DATATYPES.SHOW_DATATYPE.DATA_LAST_UPDATED.FORMATTED(n/j/y g:i a)}</div>
+</div>

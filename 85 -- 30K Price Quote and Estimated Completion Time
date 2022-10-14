@@ -1,0 +1,148 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+  {DATATYPES.DEFAULT_DATE_FILTERS}     
+      Please select a Region: {DATATYPES.SHOW_DATATYPE.CLIENT_397_LEVEL_3_SELECTOR(SORT=NAME,FILTER=NAME|ne|all).INPUT}
+
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+    {|VANISHIF|DATATYPES.SHOW_DATATYPE.CLIENT_397_LEVEL_3_SELECTOR.ID}
+    	<div class='ui-state-highlight no-data'>You must select a region</div>
+    {/|VANISHIF|}
+  {|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+  <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+  {/|VANISHIF|}
+
+  {|SHOWIF|DATATYPES.SHOW_DATATYPE.CLIENT_397_LEVEL_3_SELECTOR.ID}
+   
+{|VANISHIF|DATATYPES.REPORT_CONFIG.SHOW_GROUP_ID}
+      {|CROSSTAB|}
+      <div>
+        {|LOOP|CROSSTAB.CLIENT_397_LEVEL_3(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}
+          {|SHOWIF|LOOP.ISFIRST}
+          <table class='data'>
+            <thead>
+              <tr>
+                <th></th><th></th><th></th>
+                {|LOOP|CLIENT_397_LEVEL_3.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+                  <th colspan=2>{MONTH_YEAR.NAME}</th>
+                {/|LOOP|}
+#                <th>All Months</th>
+              </tr>
+              <tr><th></th><th></th><th></th>
+              	{|LOOP|CLIENT_397_LEVEL_3.MONTH_YEAR(SORT=NAME)}
+            		<th>30k Price</th>
+                    <th>Est. Time</th>
+                {/|LOOP|}
+              </tr>
+            </thead>
+            <tbody>
+          {/|SHOWIF|}
+              <tr>
+                <th>Region {CLIENT_397_LEVEL_3.NAME}</th><th>-</th><th>AVG</th>    
+                {|LOOP|CLIENT_397_LEVEL_3.MONTH_YEAR}
+					<td>{COUNT(MONTH_YEAR)?$:}{AVG(MONTH_YEAR.CLIENT_397_SURVEY_3385_QUESTION_691_VALUE).ROUND(2).NUMBERFORMAT(2)}</td>
+        	    	<td>{COUNT(MONTH_YEAR)?|EVALTAG(AVG(MONTH_YEAR.CLIENT_397_SURVEY_3385_QUESTION_721_VALUE).FORMATTED(hh:mm:ss))|:}</td>                
+                {/|LOOP|}
+#                <td>{AVG(CLIENT_397_LEVEL_3.PERCENT_SCORE,CLIENT_397_LEVEL_3).ROUND}%</td>
+              </tr>
+          {|VANISHIF|LOOP.HASNEXT}
+#              <tr>
+#                <th>Company</th>    
+#                {|LOOP|CLIENT_397_LEVEL_3.MONTH_YEAR}
+#                  <td>{AVG(MONTH_YEAR.PERCENT_SCORE,MONTH_YEAR).ROUND}%</td>
+#                {/|LOOP|}
+#                <td>{AVG(CLIENT_397_LEVEL_3.PERCENT_SCORE,OVERALL).ROUND}%</td>
+#              </tr>
+            </tbody>
+          </table>
+          {/|VANISHIF|}
+        {/|LOOP|}
+      </div>
+      {/|CROSSTAB|}
+     {/|VANISHIF|}
+<br>    
+    
+{|VANISHIF|DATATYPES.REPORT_CONFIG.SHOW_GROUP_ID}
+      {|NESTED|}
+      <div>
+        {|LOOP|NESTED.CLIENT_397_LEVEL_2(SORT=NAME)}
+          {|SHOWIF|LOOP.ISFIRST}
+          <table class='data'>
+#            <thead>
+#              <tr>
+#                <th></th><th></th><th></th>
+#                {|LOOP|CLIENT_397_LEVEL_2.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+#                  <th colspan=2>{MONTH_YEAR.NAME}</th>
+#                {/|LOOP|}
+#              </tr>
+#              <tr><th></th><th></th><th></th>
+#              	{|LOOP|CLIENT_397_LEVEL_2.MONTH_YEAR(SORT=NAME)}
+#            		<th>30k Price</th>
+#                    <th>Est. Time</th>
+#                {/|LOOP|}
+#              </tr>
+#            </thead>
+            <tbody>
+          {/|SHOWIF|}
+              <tr>
+                <th>Region {DATATYPES.SHOW_DATATYPE.CLIENT_397_LEVEL_3_SELECTOR}</th><th>District {CLIENT_397_LEVEL_2.NAME}</th><th>AVG</th>    
+                {|LOOP|CLIENT_397_LEVEL_2.MONTH_YEAR(SORT=ORDER_NUM,WITH_BLANKS_IN_RANGE)}
+					<td>{COUNT(MONTH_YEAR)?$:}{AVG(MONTH_YEAR.CLIENT_397_SURVEY_3385_QUESTION_691_VALUE).ROUND(2).NUMBERFORMAT(2)}</td>
+        	    	<td>{COUNT(MONTH_YEAR)?|EVALTAG(AVG(MONTH_YEAR.CLIENT_397_SURVEY_3385_QUESTION_721_VALUE).FORMATTED(hh:mm:ss))|:}</td>                
+                {/|LOOP|}
+              </tr>
+          {|VANISHIF|LOOP.HASNEXT}
+            </tbody>
+          </table>
+          {/|VANISHIF|}
+        {/|LOOP|}
+      </div>
+      {/|CROSSTAB|}
+     {/|VANISHIF|}
+
+<br>    
+    
+{|VANISHIF|DATATYPES.REPORT_CONFIG.SHOW_GROUP_ID}
+      {|NESTED|}
+      <div>
+        #{|LOOP|CROSSTAB.CLIENT_397_LEVEL_1(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}
+        {|LOOP|NESTED.CLIENT_397_LEVEL_2(SORT=NAME)}
+        {|LOOP|CLIENT_397_LEVEL_2.CLIENT_397_LEVEL_1(SORT=NAME)}
+          {|SHOWIF|LOOP.ISFIRST}
+          <table class='data'>
+#            <thead>
+#              <tr>
+#                <th></th><th></th><th></th>
+#                {|LOOP|CLIENT_397_LEVEL_1.MONTH_YEAR(SORT=ORDER_NUM,WITH_BLANKS_IN_RANGE)}
+#                  <th colspan=2>{MONTH_YEAR.NAME}</th>
+#                {/|LOOP|}
+#              </tr>
+#              <tr><th></th><th></th><th></th>
+#              	{|LOOP|CLIENT_397_LEVEL_1.MONTH_YEAR(SORT=NAME)}
+#            		<th>30k Price</th>
+#                    <th>Est. Time</th>
+#                {/|LOOP|}
+#              </tr>
+#            </thead>
+            <tbody>
+          {/|SHOWIF|}
+              <tr>
+                <th>Region {DATATYPES.SHOW_DATATYPE.CLIENT_397_LEVEL_3_SELECTOR}</th><th>District {CLIENT_397_LEVEL_2.NAME}</th><th>Dealer {CLIENT_397_LEVEL_1.NAME.CLIP(5)}</th>    
+                {|LOOP|CLIENT_397_LEVEL_1.MONTH_YEAR(SORT=ORDER_NUM,WITH_BLANKS_IN_RANGE)}
+					<td>{COUNT(MONTH_YEAR)?$:}{AVG(MONTH_YEAR.CLIENT_397_SURVEY_3385_QUESTION_691_VALUE).ROUND(2).NUMBERFORMAT(2)}</td>
+        	    	<td>{COUNT(MONTH_YEAR)?|EVALTAG(AVG(MONTH_YEAR.CLIENT_397_SURVEY_3385_QUESTION_721_VALUE).FORMATTED(hh:mm:ss))|:}</td>                
+                {/|LOOP|}
+              </tr>
+          {|VANISHIF|LOOP.HASNEXT}
+            </tbody>
+          </table>
+          {/|VANISHIF|}
+        {/|LOOP|}
+        {/|LOOP|}
+      </div>
+      {/|NESTED|}
+     {/|VANISHIF|}    
+      </div>
+  {/|SHOWIF|}
+  {/|SHOWIF|}
+</div>

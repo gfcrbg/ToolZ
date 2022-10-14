@@ -1,0 +1,42 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|CROSSTAB|}
+		<div>
+			{|LOOP|CROSSTAB.CLIENT_559_LEVEL_1(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}
+				{|SHOWIF|LOOP.ISFIRST}
+				<table class='data'>
+					<thead>
+						<tr>
+							<th>{|SORT_TOGGLE|CLIENT_559_LEVEL_1.NAME}Name{/|SORT_TOGGLE|}</th>
+							{|LOOP|CLIENT_559_LEVEL_1.MONTH_OF_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE,LIMIT=-6|6)}
+								<th>{|SORT_TOGGLE|POS(COUNT(MONTH_OF_YEAR),|EVALTAG(MONTH_OF_YEAR.INDEX)|)}{MONTH_OF_YEAR.NAME}{/|SORT_TOGGLE|}</th>
+							{/|LOOP|}
+						</tr>
+					</thead>
+					<tbody>
+				{/|SHOWIF|}
+						<tr>
+							<th>{CLIENT_559_LEVEL_1.NAME.SPLIT( ,0)}</th>
+                           
+							{|LOOP|CLIENT_559_LEVEL_1.MONTH_OF_YEAR}
+								<td>{AVG(MONTH_OF_YEAR.PERCENT_SCORE)}</td>
+							{/|LOOP|}
+						</tr>
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|CROSSTAB|}
+	{/|SHOWIF|}
+</div>

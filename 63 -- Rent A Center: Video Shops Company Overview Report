@@ -1,0 +1,229 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+#Filters
+	<div>
+    	<th>Division:
+    		{DATATYPES.SHOW_DATATYPE.CLIENT_89_LEVEL_4_SELECTOR.INPUT}
+    	</th>
+	</div>
+	{DATATYPES.CONTROLS_END}
+{/|SHOWIF|}
+
+<div class='results'>
+    #If no data was found to display
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+    
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    <div>
+        #Report Titles
+        <table>
+            <tr>
+                    <td  class="headCenter">
+                         <img src = 'http://www.gamefilm-consultants.com/custom/client_files/logos/Rent%2BA%2BCenter-big.gif' border = '0'>
+                    	 <br><br>Company Overview
+                    </td>
+                </tr>
+                <tr>
+                    <th class="textCenter" >
+                        Rent A Center: Video Shops<br>
+                        Companywide Report<br>
+                        {DATATYPES.REPORT_CONFIG.TRENDING_DATE_AFTER.FORMATTED(m/d/Y)} -
+                        {DATATYPES.REPORT_CONFIG.TRENDING_DATE_BEFORE.FORMATTED(m/d/Y)}<br>
+                        Only evaluations under the management of {DATATYPES.SHOW_DATATYPE.CLIENT_89_LEVEL_4_SELECTOR.ID=|EVALCONST(NULL)|?all:|EVALTAG(DATATYPES.SHOW_DATATYPE.CLIENT_89_LEVEL_4_SELECTOR)|} division(s) are shown.
+                     </th>
+                </tr>
+                <tr>
+                    <td class="txtSection">
+                    Section 1 : 	 Greet<br>
+                    Section 2 : 	 Ask<br>
+                    Section 3 : 	 Show<br>
+                    Section 4 : 	 Close<br>
+                    </td>
+                </tr>
+                
+        </table>
+    </div>
+    #Report Heading Design
+        <table class="data">
+           	<thead>
+
+                <tr class="colHeading">
+                    <th>Sub Division</th>
+                    <th>Name</th>
+                    <th>Evaluation Count</th>
+                    <th>Score</th>
+                    <th>Sec 1</th>
+                    <th>Sec 2</th>
+                    <th>Sec 3</th>
+                    <th>Sec 4</th>
+                </tr>
+              
+               </thead>
+     
+    
+        	<tbody>
+		
+		{|RESULT|KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP}
+        #It shows Company information
+			
+                	<tr>
+                        <td colspan="8" class="groupHeading">COMPANY</td>
+                    </tr>
+                                  
+					{|LOOP|RESULT.CLIENT_89_LEVEL_1}
+                    {|SHOWIF|LOOP.ISFIRST}
+					<tr>
+						<td></td>
+                        <th>Company</th>
+                        <td>{SUM(COUNT(CLIENT_89_LEVEL_1))}</td>
+                        <th>{AVG(CLIENT_89_LEVEL_1.PERCENT_SCORE,OVERALL).NUMBERFORMAT(1)}</th>
+                        <th>{AVG(CLIENT_89_LEVEL_1.CLIENT_89_SURVEY_1817_SECTION_1_SCORE,OVERALL).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_1.CLIENT_89_SURVEY_1817_SECTION_2_SCORE,OVERALL).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_1.CLIENT_89_SURVEY_1817_SECTION_3_SCORE,OVERALL).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_1.CLIENT_89_SURVEY_1817_SECTION_4_SCORE,OVERALL).NUMBERFORMAT(1)} </th>
+					</tr>
+                    {/|SHOWIF|}
+                    {/|LOOP|}
+				
+    	{/|RESULT|}
+
+    	#End of company information
+        
+		{|RESULT|}
+		
+            
+        #It shows Region information
+		
+                	<tr>
+                        <td colspan="8" class="groupHeading">EVP</td>
+                    </tr>
+           
+                    
+					{|LOOP|RESULT.CLIENT_89_LEVEL_5(SORTSET=AVG(CLIENT_89_LEVEL_5.PERCENT_SCORE)|DESC)}
+					<tr>
+						<td></td>
+                        <th>{CLIENT_89_LEVEL_5.NAME}</th>
+                        <td>{COUNT(CLIENT_89_LEVEL_5)}</td>
+                        <th>{AVG(CLIENT_89_LEVEL_5.PERCENT_SCORE).NUMBERFORMAT(1)()}</th>
+                        <th>{AVG(CLIENT_89_LEVEL_5.CLIENT_89_SURVEY_1817_SECTION_1_SCORE).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_5.CLIENT_89_SURVEY_1817_SECTION_2_SCORE).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_5.CLIENT_89_SURVEY_1817_SECTION_3_SCORE).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_5.CLIENT_89_SURVEY_1817_SECTION_4_SCORE).NUMBERFORMAT(1)} </th>
+					</tr>
+				{/|LOOP|}
+          
+        
+   		{/|RESULT|}
+    	#End of Region information
+    
+        #It shows Division Information
+        {|NESTED|} 
+		    
+              {|LOOP|NESTED.CLIENT_89_LEVEL_5(SORT=NAME)}
+               	{|SHOWIF|LOOP.ISFIRST}
+			
+                	<tr>
+                        <td colspan="8" class="groupHeading">DIVISION</td>
+                    </tr>
+                {/|SHOWIF|}
+			
+                    {|LOOP|CLIENT_89_LEVEL_5.CLIENT_89_LEVEL_4(SORT=AVG(PERCENT_SCORE)|DESC)}
+                	<tr>
+		                <td>EVP: {CLIENT_89_LEVEL_5.NAME}</td>
+                        <td>{CLIENT_89_LEVEL_4.NAME}</td>
+                        <td>{COUNT(CLIENT_89_LEVEL_4)}</td>
+                        <td>{AVG(CLIENT_89_LEVEL_4.PERCENT_SCORE).NUMBERFORMAT(1)()}</td>
+                        <td>{AVG(CLIENT_89_LEVEL_4.CLIENT_89_SURVEY_1817_SECTION_1_SCORE).NUMBERFORMAT(1)} </td>
+                    	<td>{AVG(CLIENT_89_LEVEL_4.CLIENT_89_SURVEY_1817_SECTION_2_SCORE).NUMBERFORMAT(1)} </td>
+                    	<td>{AVG(CLIENT_89_LEVEL_4.CLIENT_89_SURVEY_1817_SECTION_3_SCORE).NUMBERFORMAT(1)} </td>
+                    	<td>{AVG(CLIENT_89_LEVEL_4.CLIENT_89_SURVEY_1817_SECTION_4_SCORE).NUMBERFORMAT(1)} </td>
+                	</tr>
+                    <tr><th colspan="8">{|VANISHIF|LOOP.HASNEXT}<hr width="100%" height="10px" color="Black">{/|VANISHIF|}</th></tr>
+                	{/|LOOP|}
+                    {/|LOOP|}        
+			
+     	{/|NESTED|} 
+    	#End of Division Information
+        
+        #It shows Region Information
+        {|NESTED|} 
+		   	<tr>
+                        <td colspan="8" class="groupHeading">REGION</td>
+                    </tr>
+               		    
+					{|LOOP|NESTED.CLIENT_89_LEVEL_4(SORT=NAME)}
+                    {|LOOP|CLIENT_89_LEVEL_4.CLIENT_89_LEVEL_3(SORT=AVG(PERCENT_SCORE)|DESC)}
+					<tr class="month-row-{CLIENT_89_LEVEL_4.ID}">
+                        <th>Division: {CLIENT_89_LEVEL_4.NAME}</th>
+                        <th>{CLIENT_89_LEVEL_3.NAME}</th>
+                        <th>{COUNT(CLIENT_89_LEVEL_3)}</th>
+                        <th>{AVG(CLIENT_89_LEVEL_3.PERCENT_SCORE).NUMBERFORMAT(1)()}</th>
+                        <th>{AVG(CLIENT_89_LEVEL_3.CLIENT_89_SURVEY_1817_SECTION_1_SCORE).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_3.CLIENT_89_SURVEY_1817_SECTION_2_SCORE).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_3.CLIENT_89_SURVEY_1817_SECTION_3_SCORE).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_3.CLIENT_89_SURVEY_1817_SECTION_4_SCORE).NUMBERFORMAT(1)} </th>
+					</tr>
+                    <tr><th colspan="8">{|VANISHIF|LOOP.HASNEXT}<hr width="100%" height="10px" color="Black">{/|VANISHIF|}</th></tr>
+
+					{/|LOOP|}
+                    {/|LOOP|}        
+        {/|NESTED|} 
+        #End of Region Information
+        
+        #It shows District Information
+        
+		  {|NESTED|} 
+                <tr>
+                        <td colspan="8" class="groupHeading">DISTRICT</td>
+                    </tr>
+               		    
+					{|LOOP|NESTED.CLIENT_89_LEVEL_3(SORT=NAME)}
+                    {|LOOP|CLIENT_89_LEVEL_3.CLIENT_89_LEVEL_2(SORT=AVG(PERCENT_SCORE)|DESC)}
+					<tr>
+						<td>Region: {CLIENT_89_LEVEL_3.NAME}</td>	
+                        <th>{CLIENT_89_LEVEL_2.NAME}</th>
+                        <td>{COUNT(CLIENT_89_LEVEL_2)}</td>
+                        <th>{AVG(CLIENT_89_LEVEL_2.PERCENT_SCORE).NUMBERFORMAT(1)()}</th>
+                        <th>{AVG(CLIENT_89_LEVEL_2.CLIENT_89_SURVEY_1817_SECTION_1_SCORE).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_2.CLIENT_89_SURVEY_1817_SECTION_2_SCORE).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_2.CLIENT_89_SURVEY_1817_SECTION_3_SCORE).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_2.CLIENT_89_SURVEY_1817_SECTION_4_SCORE).NUMBERFORMAT(1)} </th>
+					</tr>
+					<tr><th colspan="8">{|VANISHIF|LOOP.HASNEXT}<hr width="100%" height="10px" color="Black">{/|VANISHIF|}</th></tr>
+					{/|LOOP|}
+                    {/|LOOP|}      
+                   
+		{/|NESTED|} 
+        #End of District Information
+        
+    	#It shows Location Information
+        
+		  {|NESTED|} 
+                <tr>
+                        <td colspan="8" class="groupHeading">LOCATION</td>
+                    </tr>
+               		    
+					{|LOOP|NESTED.CLIENT_89_LEVEL_2(SORT=NAME)}
+                    {|LOOP|CLIENT_89_LEVEL_2.CLIENT_89_LEVEL_1(SORT=AVG(PERCENT_SCORE)|DESC)}
+					<tr>
+                        <td>District: {CLIENT_89_LEVEL_2.NAME}</td>
+                        <th>{CLIENT_89_LEVEL_1.NAME}</th>
+                        <td>{COUNT(CLIENT_89_LEVEL_1)}</td>
+                        <th>{AVG(CLIENT_89_LEVEL_1.PERCENT_SCORE).NUMBERFORMAT(1)()}</th>
+                        <th>{AVG(CLIENT_89_LEVEL_1.CLIENT_89_SURVEY_1817_SECTION_1_SCORE).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_1.CLIENT_89_SURVEY_1817_SECTION_2_SCORE).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_1.CLIENT_89_SURVEY_1817_SECTION_3_SCORE).NUMBERFORMAT(1)} </th>
+                    	<th>{AVG(CLIENT_89_LEVEL_1.CLIENT_89_SURVEY_1817_SECTION_4_SCORE).NUMBERFORMAT(1)} </th>
+					</tr>
+					<tr><th colspan="8">{|VANISHIF|LOOP.HASNEXT}<hr width="100%" height="10px" color="Black">{/|VANISHIF|}</th></tr>
+					{/|LOOP|}
+                    {/|LOOP|}       
+                   
+		{/|NESTED|}
+    	#End of District Information
+      {/|SHOWIF|}
+            </tbody>
+               </table>
+</div>

@@ -1,0 +1,112 @@
+<div><h2 align="center">Combined Company Overview</h2></div>
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+
+<div class='results'>
+{|NESTED|IGNORE_FILTERS=USER_PERMISSIONS}
+<table class='data'>
+
+	{|LOOP|NESTED.CLIENT_783_LEVEL_2(SORT=NAME)}
+    	{LOOP.ISFIRST?:|VANISH|}
+			<thead>
+				<tr class="header-row">
+					<th class="colHeader">Company</th>
+					<th class="colHeader">District</th>
+					<th class="colHeader">Location</th>
+					<th class="colHeader">Evaluation Count</th>
+					<th class="colHeader">Score</th>
+					{|LOOP|CLIENT_783_LEVEL_2.PROPERTIES(FILTERSET=type|eq|major_sectional_percent_score;NAME|ne|Sec 3(score): Branch Experience,SORT=ORDER_NUM)}
+						<th class="colHeader">{PROPERTIES.NAME.SPLIT(:,1)}</th>      
+					{/|LOOP|}
+				</tr>
+			</thead>
+																																		#END of Header
+		    <tbody>     
+        		<tr>
+   					<th>Overall</th>
+                    <td></td>
+                    <td></td>
+                    <td>{COUNT(CLIENT_783_LEVEL_2,OVERALL)}</td>
+                    <td class="{AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,OVERALL).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,OVERALL).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,OVERALL).ROUND(1)>=90?green:}">
+                        {AVG(CLIENT_783_LEVEL_2.PERCENT_SCORE,OVERALL).ROUND(1)}%</td>
+                    {|LOOP|CLIENT_783_LEVEL_2.PROPERTIES(FILTERSET=type|eq|major_sectional_percent_score;NAME|ne|Sec 3(score): Branch Experience,SORT=ORDER_NUM)}
+								<td class="{AVG(PROPERTIES.VALUE,OVERALL).ROUND(1)<70?red:} 
+									{AVG(PROPERTIES.VALUE,OVERALL).ROUND(1)>=70&&AVG(PROPERTIES.VALUE,OVERALL).ROUND(1)<80?orange:}
+									{AVG(PROPERTIES.VALUE,OVERALL).ROUND(1)>=80&&AVG(PROPERTIES.VALUE,OVERALL).ROUND(1)<90?yellow:}
+									{AVG(PROPERTIES.VALUE,OVERALL).ROUND(1)>=90?green:}">
+                                    {AVG(PROPERTIES.VALUE,OVERALL).ROUND(1)}%</td>
+					{/|LOOP|}
+                </tr>
+		{/LOOP.ISFIRST?:|VANISH|}   
+
+                
+		        <tr class="market" id="{CLIENT_783_LEVEL_2.NAME.SPLIT( ,0)}">
+																																		#THIS FLAGS THE REGION NAMES
+					<th></th>
+                    <td class="district">{CLIENT_783_LEVEL_2.NAME}</td>            
+					{|LOOP|CLIENT_783_LEVEL_2.CLIENT_783_LEVEL_1(SORT=NAME)}
+                    																													#This is the Market Manager Loop currently
+						{LOOP.ISFIRST?:|VANISH|}
+							<td></td>
+                    																													#Total Count per Row of Region
+					        <td>{COUNT(CLIENT_783_LEVEL_2,CLIENT_783_LEVEL_2)}</td>
+							<td class="{AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                                {AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>            
+																																		#This loop produces the region lines of data
+					        {|LOOP|CLIENT_783_LEVEL_2.PROPERTIES(FILTERSET=type|eq|major_sectional_percent_score;NAME|ne|Sec 3(score): Branch Experience,SORT=ORDER_NUM)}
+								<td class="{AVG(PROPERTIES.VALUE,CLIENT_783_LEVEL_2).ROUND(1)<70?red:} 
+									{AVG(PROPERTIES.VALUE,CLIENT_783_LEVEL_2).ROUND(1)>=70&&AVG(PROPERTIES.VALUE,CLIENT_783_LEVEL_2).ROUND(1)<80?orange:}
+									{AVG(PROPERTIES.VALUE,CLIENT_783_LEVEL_2).ROUND(1)>=80&&AVG(PROPERTIES.VALUE,CLIENT_783_LEVEL_2).ROUND(1)<90?yellow:}
+									{AVG(PROPERTIES.VALUE,CLIENT_783_LEVEL_2).ROUND(1)>=90?green:}">
+                                    #{AVG(PROPERTIES.VALUE,CLIENT_783_LEVEL_2).ROUND(1)}%</td>
+                    				{AVG(PROPERTIES.VALUE,CLIENT_783_LEVEL_2)=|EVALCONST(NULL)|?-:|EVALTAG(AVG(PROPERTIES.VALUE,CLIENT_783_LEVEL_2).ROUND(1))|}
+                                        {AVG(PROPERTIES.VALUE,CLIENT_783_LEVEL_2)=|EVALCONST(NULL)|?:%}
+                                        </td>
+							{/|LOOP|}
+																																		#End
+		        </tr>
+						{/LOOP.ISFIRST?:|VANISH|}
+																									
+                																														#LOCATIONS          
+						{|LOOP|CLIENT_783_LEVEL_2.CLIENT_783_LEVEL_1(SORT=NAME)}            
+							<tr class="branch-{CLIENT_783_LEVEL_2.NAME.SPLIT( ,0)}">
+							<th></th>
+							<td></td>
+							<td>{CLIENT_783_LEVEL_1.NAME.SPLIT( ,0)}</td>
+							<td>{COUNT(CLIENT_783_LEVEL_1,CLIENT_783_LEVEL_1)}</td>
+							<td class="{AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE).ROUND(1)>=90?green:}">
+                                {AVG(CLIENT_783_LEVEL_1.PERCENT_SCORE).ROUND(1)}%</td>
+							{|LOOP|CLIENT_783_LEVEL_1.PROPERTIES(FILTERSET=type|eq|major_sectional_percent_score;NAME|ne|Sec 3(score): Branch Experience,SORT=ORDER_NUM)}
+								<td class="{AVG(CLIENT_783_LEVEL_1.PROPERTIES.VALUE).ROUND(1)<70?red:} 
+									{AVG(CLIENT_783_LEVEL_1.PROPERTIES.VALUE).ROUND(1)>=70&&AVG(CLIENT_783_LEVEL_1.PROPERTIES.VALUE).ROUND(1)<80?orange:}
+									{AVG(CLIENT_783_LEVEL_1.PROPERTIES.VALUE).ROUND(1)>=80&&AVG(CLIENT_783_LEVEL_1.PROPERTIES.VALUE).ROUND(1)<90?yellow:}
+									{AVG(CLIENT_783_LEVEL_1.PROPERTIES.VALUE).ROUND(1)>=90?green:}">
+                                    #{AVG(CLIENT_783_LEVEL_1.PROPERTIES.VALUE).ROUND(1)}%</td>
+                                	{AVG(CLIENT_783_LEVEL_1.PROPERTIES.VALUE)=|EVALCONST(NULL)|?-:|EVALTAG(AVG(CLIENT_783_LEVEL_1.PROPERTIES.VALUE).ROUND(1))|}
+                                    {AVG(CLIENT_783_LEVEL_1.PROPERTIES.VALUE)=|EVALCONST(NULL)|?:%}
+                                    </td>
+							{/|LOOP|}
+
+																																		#end             
+					</tr>
+						{/|LOOP|}																										
+                																														#Close Location Loop
+                	{/|LOOP|}																											
+                																														#Close MM Loop
+	{/|LOOP|}																															
+                																														#Close Region Loop
+  				<br><br>
+	    	</tbody>
+</table>
+{/|NESTED|}

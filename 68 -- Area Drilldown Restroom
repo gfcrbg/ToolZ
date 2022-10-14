@@ -1,0 +1,60 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+<tr><td>Select a Month</td><td>	{DATATYPES.SHOW_DATATYPE.CLIENT_539_DATERANGE_SMALL_SELECTOR(SORT=ORDER_NUM).INPUT}<br>
+<tr><td>OR Select a Period</td><td>{DATATYPES.SHOW_DATATYPE.CLIENT_539_DATERANGE_MEDIUM_SELECTOR(SORT=ORDER_NUM).INPUT}
+		<select name="misc_vars___show_question_id">
+	    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTERSET=NAME|likewild|(;NAME|likewild|*|OR;type|eq|question_multichoice,SORT=ORDER_NUM)}
+	        <option	value="{GROUPS.ID}"{GROUPS.ID=|EVALTAG(MISC_VARS.SHOW_QUESTION_ID)|?selected}>
+    	        {GROUPS.NAME}
+        	</option>
+	    {/|LOOP|}
+    	</select>
+
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+#AREA	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    <table class="data">
+    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq||EVALTAG(MISC_VARS.SHOW_QUESTION_ID)|)}
+    	<thead>
+        <tr> <th colspan=6>{GROUPS.NAME}</th> </tr>
+		{|CROSSTAB|}<tr><td>Area</td><td>Answer Option</td>
+            {|LOOP|CROSSTAB.CLIENT_539_LEVEL_2(SORT=NAME)}
+            {|SHOWIF|LOOP.ISFIRST}
+		        {|LOOP|CLIENT_539_LEVEL_2.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+		            <td>{MONTH_YEAR.NAME}</td>
+            		{|LOOP|MONTH_YEAR.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM)}
+					{/|LOOP|}
+        		{/|LOOP|}</tr>    
+        </thead>
+        <tbody>
+            {/|SHOWIF|}
+
+            	<tr><td>{CLIENT_539_LEVEL_2.NAME}</td>                    
+		        {|LOOP|CLIENT_539_LEVEL_2.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}					
+    	            {|SHOWIF|LOOP.ISFIRST}
+      				<td>
+                    	{|LOOP|MONTH_YEAR.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,WITH_BLANKS_IN_RANGE)}
+							{DYNAMIC_GROUP.NAME}<br>
+						{/|LOOP|}
+                    </td>
+                    
+	            	{/|SHOWIF|}   
+                    <td>
+                    {|LOOP|MONTH_YEAR.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,WITH_BLANKS_IN_RANGE)}
+        				{PERCENTAGE(COUNT(DYNAMIC_GROUP),COUNT(DYNAMIC_GROUP,MONTH_YEAR,CLIENT_539_LEVEL_2)).ROUND}% 
+                        #{COUNT(DYNAMIC_GROUP)}
+                        <br>                        
+   					{/|LOOP|}
+                    </td>
+    			{/|LOOP|}</tr>
+        	{/|LOOP|}
+    	{/|CROSSTAB|}
+    {/|LOOP|}
+    </tbody>                                    
+    </table>
+{/|SHOWIF|}
+

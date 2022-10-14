@@ -1,0 +1,61 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+		<select name="misc_vars___show_question_id">
+	    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_multichoice,SORT=ORDER_NUM)}
+	        <option	value="{GROUPS.ID}"{GROUPS.ID=|EVALTAG(MISC_VARS.SHOW_QUESTION_ID)|?selected}>
+    	        {GROUPS.NAME}
+        	</option>
+	    {/|LOOP|}
+    	</select>
+
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+#AREA	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    <table class="data">
+    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq||EVALTAG(MISC_VARS.SHOW_QUESTION_ID)|)}
+    	<thead>
+        <tr> <th colspan=6>{GROUPS.NAME}</th> </tr>
+		{|CROSSTAB|IGNORE_FILTERS=USER_PERMISSIONS}<tr><td>Field Consultant</td><td>Answer Option</td>
+            {|LOOP|CROSSTAB.CLIENT_559_LEVEL_3(SORT=NAME)}
+            {|SHOWIF|LOOP.ISFIRST}
+		        {|LOOP|CLIENT_559_LEVEL_3.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+		            <td>{MONTH_YEAR.NAME}</td>
+            		{|LOOP|MONTH_YEAR.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,FILTER=NAME|ne|N/A)}
+					{/|LOOP|}
+        		{/|LOOP|}</tr>    
+        </thead>
+        <tbody>
+            {/|SHOWIF|}
+
+            	<tr><td>{CLIENT_559_LEVEL_3.NAME}</td>                    
+		        {|LOOP|CLIENT_559_LEVEL_3.MONTH_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}					
+    	            {|SHOWIF|LOOP.ISFIRST}
+      				<td>
+                    	{|LOOP|MONTH_YEAR.DYNAMIC_GROUP}
+							{DYNAMIC_GROUP.NAME}<br>
+						{/|LOOP|}
+                    </td>
+                    
+	            	{/|SHOWIF|}   
+                    <td>
+                    {|LOOP|MONTH_YEAR.DYNAMIC_GROUP}
+	     				{PERCENTAGE(COUNT(DYNAMIC_GROUP), SUM(COUNT(DYNAMIC_GROUP),CLIENT_559_LEVEL_3,MONTH_YEAR)).ROUND}% 
+
+      #  				{PERCENTAGE(COUNT(DYNAMIC_GROUP),COUNT(DYNAMIC_GROUP,MONTH_YEAR,CLIENT_559_LEVEL_3)).ROUND}% 
+                        #{COUNT(DYNAMIC_GROUP)}
+                        <br>                        
+   					{/|LOOP|}
+                    </td>
+    			{/|LOOP|}</tr>
+        	{/|LOOP|}
+    	{/|CROSSTAB|}
+    {/|LOOP|}
+    </tbody>                                    
+    </table>
+{/|SHOWIF|}
+

@@ -1,0 +1,58 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+<h2>
+Due to the amount of data involved, this report is limited to 3 month periods, and may still take up to 15 minutes. Please ignore the "Report Date" and set "through" date only.</h2>
+		<select name="misc_vars___question_property_id">
+            {|LOOP|DATATYPES.SHOW_DATATYPE.PROPERTIES(FILTER=type|eq|question_percent_score,SORT=ORDER_NUM)}
+                <option	value="{PROPERTIES.PROPERTY_ID}"{PROPERTIES.PROPERTY_ID=|EVALTAG(MISC_VARS.QUESTION_PROPERTY_ID)|?selected}>
+                    {PROPERTIES.NAME.SPLIT(:,1)}
+                </option>
+            {/|LOOP|}
+		</select>
+
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq||EVALTAG(MISC_VARS.SHOW_QUESTION_ID)|))}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)&&MISC_VARS.QUESTION_PROPERTY_ID}
+	
+		{|CROSSTAB|}
+		<div>
+			{|LOOP|CROSSTAB.CLIENT_559_LEVEL_1(SORT=NAME,CROSSTAB_FILTER=NO_BLANKS)}
+				{|SHOWIF|LOOP.ISFIRST}
+				<table class='data'>
+					<thead>
+						<tr>
+							<th>{|SORT_TOGGLE|CLIENT_559_LEVEL_1.NAME}Name{/|SORT_TOGGLE|}</th>
+                            <th>Question</th>
+							{|LOOP|CLIENT_559_LEVEL_1.MONTH_OF_YEAR(SORT=ORDER_NUM,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE,LIMIT=-3|3)}
+								<th>{|SORT_TOGGLE|POS(COUNT(MONTH_OF_YEAR),|EVALTAG(MONTH_OF_YEAR.INDEX)|)}{MONTH_OF_YEAR.NAME}{/|SORT_TOGGLE|}</th>
+							{/|LOOP|}
+						</tr>
+					</thead>
+					<tbody>
+				{/|SHOWIF|}
+						<tr>
+							<th>{CLIENT_559_LEVEL_1.NAME.SPLIT( ,0)}</th>
+                            
+                            {|LOOP|CLIENT_559_LEVEL_1.MONTH_OF_YEAR}
+                            	{|LOOP|MONTH_OF_YEAR.PROPERTIES(FILTER=PROPERTY_ID|eq||EVALTAG(MISC_VARS.QUESTION_PROPERTY_ID)|)}
+                                {|SHOWIF|MONTH_OF_YEAR.INDEX=1}
+                            		<th>{PROPERTIES.NAME}</th>
+                            	{/|SHOWIF|}
+                               		<td>{AVG(PROPERTIES.VALUE)}</td>
+                                {/|LOOP|}
+                            {/|LOOP|}
+						</tr>
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|CROSSTAB|}
+	{/|SHOWIF|}
+</div>

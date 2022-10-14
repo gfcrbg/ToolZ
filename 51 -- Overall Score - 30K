@@ -1,0 +1,84 @@
+<div class='toolz-results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+	{|RESULT|}
+        <div class='graph'>
+            <div id='toolz-my-graph-dragon1497281557382' class='toolz-graph-regular'>
+                {|HIGHCHARTS|}
+                {
+                    "chart": {
+                        "type": "column",
+                            
+                        #graphs should not be larger than 370 wide
+                        "width": 370,                    
+                        
+                        #graphs on regular widgets should not be larger than 220 high
+                        #graphs on wide widgets can be larger
+                        "height": "220",
+                        
+                        "plotBorderWidth": 1,
+                        
+                        #internet explorer 8 does not render transparent backgrounds
+                        "backgroundColor": "{IE8?white:transparent}"
+                    },
+                    "title": {
+                        "text": "Overall Score - 30K",
+                        "style":
+                        {
+                            "fontSize": "14px"
+                        }
+                    },
+                    "yAxis": {
+                        "title": {
+                            "text": ""
+                        },
+                        "min": 0,
+                        "max": 100
+                    },
+                    "legend": {
+                        "enabled": false
+                    },
+                    "credits": {
+                        "enabled": false
+                    },
+                    "plotOptions": {
+                        "columnrange": {
+                            "animation": false,
+                            "minPointLength": 3
+                        }
+                    },
+                    
+                    "xAxis": 
+                    {
+                        "labels":
+                        {
+                            "rotation": -45
+                        },
+                        "categories": [{|LOOP|RESULT.CLIENT_394_DATERANGE_MEDIUM(SORT=NAME)}
+                                            "{CLIENT_394_DATERANGE_MEDIUM.NAME.HC_SAFE_STRING}"{LOOP.HASNEXT?,}
+                                        {/|LOOP|}
+                                        ]
+                    },
+                    
+                    "series": [
+                    {
+                        "name": "Average Score",
+                        "data": [{|LOOP|RESULT.CLIENT_394_DATERANGE_MEDIUM}
+                                    [{AVG(CLIENT_394_DATERANGE_MEDIUM.PERCENT_SCORE).ROUND(2).HC_SAFE_NUMBER}]{LOOP.HASNEXT?,}
+                                {/|LOOP|}]
+                    }
+                    ]
+                }
+                {/|HIGHCHARTS|}
+            </div>
+		</div>
+	{/|RESULT|}
+	
+	{/|SHOWIF|}
+    
+    <div class='toolz-data-last-updated'>Data last updated: {DATATYPES.SHOW_DATATYPE.DATA_LAST_UPDATED.FORMATTED(n/j/y g:i a)}</div>
+</div>

@@ -1,0 +1,45 @@
+<h1>Lexus JD Power Price Report</h1>
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|RESULT|}
+		<div>
+			<table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(FILTER=CLIENT_394_GROUP.NAME|like|Dealer,SORT=ID)}
+					{|SHOWIF|LOOP.ISFIRST}
+						<thead>
+							<tr>
+								<th>{|SORT_TOGGLE|CLIENT_394_LEVEL_3.NAME}Area{/|SORT_TOGGLE|}</th>
+								<th>{|SORT_TOGGLE|CLIENT_394_LEVEL_1.ID_ONLY}Dealer ID{/|SORT_TOGGLE|}</th>
+								<th>{|SORT_TOGGLE|CLIENT_394_LEVEL_1.NAME_ONLY}Dealership{/|SORT_TOGGLE|}</th>
+                                <th>{|SORT_TOGGLE|CLIENT_394_DATERANGE_MEDIUM.NAME}Rounds{/|SORT_TOGGLE|}</th>
+                                <th>{|SORT_TOGGLE|CLIENT_394_SURVEY_3379_QUESTION_351_VALUE}Price{/|SORT_TOGGLE|}</th>
+							</tr>
+						</thead>
+						<tbody>
+					{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_394_LEVEL_3.NAME}</th>
+						<td>{DATAPOINTS.CLIENT_394_LEVEL_1.ID_ONLY}</td>
+						<td>{DATAPOINTS.CLIENT_394_LEVEL_1.NAME_ONLY}</td>
+                        <td>{DATAPOINTS.CLIENT_394_DATERANGE_MEDIUM.NAME}</td>
+                        #<td>{DATAPOINTS.CLIENT_394_SURVEY_3379_QUESTION_351_VALUE.NUMBERFORMAT(2)}</td>
+                        <td>{DATAPOINTS.CLIENT_394_SURVEY_3379_QUESTION_351_VALUE=|EVALCONST(NULL)|?-:$|EVALTAG(DATAPOINTS.CLIENT_394_SURVEY_3379_QUESTION_351_VALUE.NUMBERFORMAT(2))|}</td>
+					</tr>
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|RESULT|}
+	{/|SHOWIF|}
+</div>

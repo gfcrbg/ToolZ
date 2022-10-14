@@ -1,0 +1,82 @@
+<div><h2 align="center">Teller Mystery Shop Expanded Company Overview</h2></div>
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+
+<div class='results'>
+{|NESTED|IGNORE_FILTERS=USER_PERMISSIONS}
+<table>
+
+	{|LOOP|NESTED.CLIENT_37_LEVEL_3(SORT=NAME)}
+    	{LOOP.ISFIRST?:|VANISH|}
+			<thead>
+				<tr class="header-row">
+					<th>Company</th>
+					<th>Market</th>
+					<th>Branch</th>
+					<th>Evaluation Count</th>
+					<th>Score</th>
+					{|LOOP|CLIENT_37_LEVEL_3.PROPERTIES(FILTERSET=type|eq|major_sectional_percent_score;NAME|ne|Sec 3(score): Branch Experience,SORT=ORDER_NUM)}
+						<th>{PROPERTIES.NAME.SPLIT(:,1)}</th>     
+					{/|LOOP|}
+				</tr>
+			</thead>
+																																		#END of Header
+		    <tbody>     
+        		<tr>
+   					<th>Overall</th>
+                    <th></th>
+                    <th></th>
+                    <td>{COUNT(CLIENT_37_LEVEL_3,OVERALL)}</td>
+                    <td>{AVG(CLIENT_37_LEVEL_3.PERCENT_SCORE,OVERALL).ROUND(2)}%</td>
+                    {|LOOP|CLIENT_37_LEVEL_3.PROPERTIES(FILTERSET=type|eq|major_sectional_percent_score;NAME|ne|Sec 3(score): Branch Experience,SORT=ORDER_NUM)}
+								<td>{AVG(PROPERTIES.VALUE,OVERALL).ROUND(2)}%</td>
+					{/|LOOP|}
+                </tr>
+		{/LOOP.ISFIRST?:|VANISH|}   
+
+                
+		        <tr class="market" id="{CLIENT_37_LEVEL_3.NAME.SPLIT( ,0)}">
+																																		#THIS FLAGS THE REGION NAMES
+					<th></th>
+                    <th>{CLIENT_37_LEVEL_3.NAME}</th>            
+					{|LOOP|CLIENT_37_LEVEL_3.CLIENT_37_LEVEL_1(SORT=NAME)}
+                    																													#This is the Market Manager Loop currently
+						{LOOP.ISFIRST?:|VANISH|}
+							<td></td>
+                    																													#Total Count per Row of Region
+					        <td>{COUNT(CLIENT_37_LEVEL_3,CLIENT_37_LEVEL_3)}</td>
+							<td>{AVG(CLIENT_37_LEVEL_1.PERCENT_SCORE,CLIENT_37_LEVEL_3).ROUND(2)}%</td>            
+																																		#This loop produces the region lines of data
+					        {|LOOP|CLIENT_37_LEVEL_3.PROPERTIES(FILTERSET=type|eq|major_sectional_percent_score;NAME|ne|Sec 3(score): Branch Experience,SORT=ORDER_NUM)}
+								<td>{AVG(PROPERTIES.VALUE,CLIENT_37_LEVEL_3).ROUND(2)}%</td>
+							{/|LOOP|}
+																																		#End
+		        </tr>
+						{/LOOP.ISFIRST?:|VANISH|}
+																									
+                																														#LOCATIONS          
+						{|LOOP|CLIENT_37_LEVEL_3.CLIENT_37_LEVEL_1(SORT=NAME)}            
+							<tr class="branch-{CLIENT_37_LEVEL_3.NAME.SPLIT( ,0)}">
+							<th></th>
+							<th></th>
+							<th>{CLIENT_37_LEVEL_1.NAME.SPLIT( ,0)}</th>
+							<td>{COUNT(CLIENT_37_LEVEL_1,CLIENT_37_LEVEL_1)}</td>
+							<td>{AVG(CLIENT_37_LEVEL_1.PERCENT_SCORE).ROUND(2)}%</td>
+							{|LOOP|CLIENT_37_LEVEL_1.PROPERTIES(FILTERSET=type|eq|major_sectional_percent_score;NAME|ne|Sec 3(score): Branch Experience,SORT=ORDER_NUM)}
+								<td>{AVG(CLIENT_37_LEVEL_1.PROPERTIES.VALUE).ROUND(2)}%</td>
+							{/|LOOP|}
+
+																																		#end             
+					</tr>
+						{/|LOOP|}																										
+                																														#Close Location Loop
+                	{/|LOOP|}																											
+                																														#Close MM Loop
+	{/|LOOP|}																															
+                																														#Close Region Loop
+  				<br><br>
+	    	</tbody>
+</table>
+{/|NESTED|}

@@ -1,0 +1,86 @@
+<div class="clear"></div>
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+  {DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+  {|VANISHIF|DATATYPES.SHOW_DATATYPE.TOTAL_COUNT}
+    <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+  {/|VANISHIF|}
+  
+  {|SHOWIF|DATATYPES.SHOW_DATATYPE.TOTAL_COUNT}
+  
+  #loop our percent score properties, sorted in order
+  {|LOOP|DATATYPES.SHOW_DATATYPE.PROPERTIES(FILTERSET=type|eq|major_sectional_percent_score;type|eq|minor_sectional_percent_score|OR,SORT=ORDER_NUM)}
+  
+    <h2 class='score-title'>
+      #this will strip off the Sec# (score): part of our score titles
+      {PROPERTIES.NAME.SPLIT(:,1)}
+      
+      #this compensates for the fact that the overall score doesn't have a colon
+      {PROPERTIES.NAME.SPLIT(:,1)?:|EVALTAG(PROPERTIES.NAME)|}
+      
+       </h2> 
+  
+    #generate a crosstab table for each property
+    {|CROSSTAB|}
+    <div>
+      #crosstab location groups against month-year
+      {|LOOP|CROSSTAB.CLIENT_559_GROUP(SORT=NAME,LIMIT=1)}
+        {|SHOWIF|LOOP.ISFIRST}
+        <table id='data-table' class='data'>
+          <thead>
+            <tr>
+              <th class="group-header typehead" rowspan="2">{DATATYPES.SHOW_DATATYPE.CLIENT_559_GROUP.NAME}</th>
+              
+              #show a header for each month-year
+              #sorting descending will trend backward in time              
+              #we filter by WITH_BLANKS_IN_RANGE to catch empty months, but only if they're within the range
+              #of existing data
+              {|LOOP|CLIENT_559_GROUP.MONTH_YEAR(SORT=ORDER_NUM|DESC,LIMIT=6,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+                <th class="month-header" colspan="2">{MONTH_YEAR.NAME}</th>
+              {/|LOOP|}
+            </tr>
+            <tr>
+              #display score/change headers for each month-year
+              {|LOOP|CLIENT_559_GROUP.MONTH_YEAR(SORT=ORDER_NUM|DESC,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+                <th>Score</th>
+                <th>Change</th>
+              {/|LOOP|}
+            </tr>
+          </thead>
+          <tbody>
+        {/|SHOWIF|}
+            <tr>
+               <th>Company</th> 
+     #         <th>{CLIENT_559_GROUP.NAME}</th>       
+              {|LOOP|CLIENT_559_GROUP.MONTH_YEAR}
+              
+                #here we loop our properties again, but since we're filtering property id by the ID
+                #of the property from the outer loop, we actually only have one property
+                {|LOOP|MONTH_YEAR.PROPERTIES(FILTER=PROPERTY_ID|eq||EVALTAG(PROPERTIES.PROPERTY_ID)|)}
+                
+                  #display the average for this month-year and location group
+                 # <td>{AVG(MONTH_YEAR.PROPERTIES.VALUE).ROUND(2)}</td>
+                <td>{AVG(MONTH_YEAR.PROPERTIES.VALUE,MONTH_YEAR).ROUND(2)}</td>
+              
+                  #display a cell that indicates change via a css class
+                  #here, we're comparing the current score to the previous score (using NEXT because we're trending backwards)
+                  #we use whether this difference is greater than, less than, or equal to zero to set our class
+                  <td class="score-change {CALC(AVG(MONTH_YEAR.PROPERTIES.VALUE,MONTH_YEAR) - NEXT(AVG(MONTH_YEAR.PROPERTIES.VALUE,MONTH_YEAR)))>0?score-change-positive}
+                        {CALC(AVG(MONTH_YEAR.PROPERTIES.VALUE,MONTH_YEAR) - NEXT(AVG(MONTH_YEAR.PROPERTIES.VALUE,MONTH_YEAR)))=NULL?score-change-neutral}
+                        {CALC(AVG(MONTH_YEAR.PROPERTIES.VALUE,MONTH_YEAR) - NEXT(AVG(MONTH_YEAR.PROPERTIES.VALUE,MONTH_YEAR)))<0?score-change-negative}">{CALC(AVG(MONTH_YEAR.PROPERTIES.VALUE,MONTH_YEAR) - NEXT(AVG(MONTH_YEAR.PROPERTIES.VALUE,MONTH_YEAR))).ROUND(2)}</td>
+                {/|LOOP|}
+              {/|LOOP|}
+            </tr>
+        {|VANISHIF|LOOP.HASNEXT}
+          </tbody>
+        </table>
+        {/|VANISHIF|}
+      {/|LOOP|}
+    </div>
+    {/|CROSSTAB|}
+   
+  {/|LOOP|}
+  {/|SHOWIF|}
+</div>

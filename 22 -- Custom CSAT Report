@@ -1,0 +1,564 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+{DATATYPES.DEFAULT_DATE_FILTERS}
+
+#Location Selector	
+#	<div>
+#    	<label>Select a Location</label>
+#        {DATATYPES.SHOW_DATATYPE.CLIENT_336_LEVEL_1_SELECTOR(SORT=NAME,FILTER=NAME|likewild|Amaize).INPUT}
+#	</div>
+<div>Select a Location:
+        
+        # This is the same as the HTML our regular selectors build!
+        # You can substitute the name of the group you want, or use your browser's html inspector to double-check what the normal one is doing.
+        <select class="k_select"
+        	name="DATATYPES___SHOW_DATATYPE___CLIENT_336_LEVEL_1_SELECTOR" 
+        	id="DATATYPES___SHOW_DATATYPE___CLIENT_336_LEVEL_1_SELECTOR"
+        >
+            # Don't forget to add an 'all' option!
+        	<option value="">-- all --</option>
+            
+          #  {|RESULT|}
+            # Hiding options without data is your call, but if you do make sure you use the KEEP_ONLY_FILTERS=NONE,
+            # otherwise this filter will limit its own options!
+         #   {|LOOP|RESULT.CLIENT_336_LEVEL_1(SORT=NAME,NO_BLANKS,KEEP_ONLY_FILTERS=NONE)}
+            	
+               # <option value="{CLIENT_336_LEVEL_1.ID}" 
+            		# This makes it so that we'll keep the option we selected when we reload the page.
+            	#	{DATATYPES.SHOW_DATATYPE.CLIENT_336_LEVEL_1_SELECTOR.ID=|EVALTAG(CLIENT_336_LEVEL_1.ID)|?selected}
+            	#>
+                    # Regular Display
+                    #{CLIENT_336_LEVEL_1.NAME}
+                    
+                    # Without the (user-side) location ID.
+                    # {CLIENT_336_LEVEL_1.NAME_ONLY}
+                    
+                    # With some string operation applied to all of our options.
+                    # (In this case, only showing the first word)
+             #        {CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}
+                    
+                    # Making an exception for a specific option.
+                    # (This gets hard if we're altering a whole lot of options, though.)
+                    #{|SHOWIF|CLIENT_336_LEVEL_1.ID=197215}Altered Amaize Davie Label{/|SHOWIF|}
+                    #{|VANISHIF|CLIENT_336_LEVEL_1.ID=197215}{CLIENT_336_LEVEL_1.NAME}{/|VANISHIF|}
+            #	</option>
+            #{/|LOOP|}
+           # {/|RESULT|}
+            
+            # If all else fails you can define options manually -- or even hardcode all of your options if you have to.
+            <option value="197215" 
+            	{DATATYPES.SHOW_DATATYPE.CLIENT_336_LEVEL_1_SELECTOR.ID=197215?selected}
+            >
+                Davie
+            </option>
+            <option value="197215" 
+            	{DATATYPES.SHOW_DATATYPE.CLIENT_336_LEVEL_1_SELECTOR.ID=197215?selected}
+            >
+                Doral
+            </option>
+        </select>
+     </div>
+
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+<div class='results'>
+{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+{/|VANISHIF|}
+    
+#Location Selector
+    
+#A#{|SHOWIF|DATATYPES.SHOW_DATATYPE.CLIENT_336_LEVEL_1_SELECTOR.ID=|EVALTAG(DATATYPES.CLIENT_336_LEVEL_1)|}
+#A#This one ^^ shows All with both stores but not individual locations
+
+#B#{|SHOWIF|DATATYPES.SHOW_DATATYPE.CLIENT_336_LEVEL_1_SELECTOR.ID}
+#B#This one ^^ shows individual locations but not all locations
+
+{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	<div>
+
+#Overall Satisfaction        
+	<div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_51_ID|gte|4}
+		<h2>Overall satisfaction on the visit</h2>
+				<table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_61_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_61_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#Quality of Service
+	<div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_71_ID|gte|4}
+		<h2>Quality of service</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_81_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_81_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#Speed of Service      
+    <div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_91_ID|gte|4}
+		<h2>Speed of Service</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_101_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_101_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#Quality of Food
+	<div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_111_ID|gte|4}
+		<h2>Quality of Food</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_121_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_121_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#Cleanliness of the Restaurant
+    <div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_131_ID|gte|4}
+		<h2>Cleanliness of the Restaurant</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_141_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_141_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#Music in the Restaurant     
+    <div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_151_ID|gte|4}
+		<h2>Music in the Restaurant</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_161_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_161_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#Temperature of the Restaurant        
+    <div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_171_ID|gte|4}
+		<h2>Temperature of the Restaurant</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_181_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_181_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#Mercadito        
+    <div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_421_ID|gte|4}
+		<h2>Mercadito</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_431_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_431_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#Restaurant Look and Feel        
+    <div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_191_ID|gte|4}
+		<h2>Restaurant Look and Feel</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_201_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_201_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#Noise in the Restaurant       
+    <div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_211_ID|gte|4}
+		<h2>Noise in the Restaurant</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_221_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_221_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#Order Taking Process        
+    <div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_231_ID|gte|4}
+		<h2>Order Taking Process</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_241_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_241_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#HOW LIKELY TO RETURN TO THE RESTAURANT        
+    <div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_271_ID|gte|3}
+		<h2>HOW LIKELY TO RETURN TO THE RESTAURANT</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_281_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_281_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#HOW LIKELY TO RECOMMEND TO FRIENDS OR RELATIVES       
+    <div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_291_ID|gte|3}
+		<h2>HOW LIKELY TO RECOMMEND TO FRIENDS OR RELATIVES</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_301_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_301_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#HOW COULD THE NEXT VISIT BE BETTER        
+    <div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_311_VALUE|ne||EVALCONST(NULL)|}
+		<h2>HOW COULD THE NEXT VISIT BE BETTER</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_311_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_311_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+#TEAM MEMBER PROVIDING EXCELLENT SERVICE        
+    <div>
+{|RESULT|FILTER=CLIENT_336_SURVEY_3245_QUESTION_321_ID|eq|1}
+		<h2>TEAM MEMBER PROVIDING EXCELLENT SERVICE</h2>
+        <table class='data'>
+				{|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_336_SURVEY_3245_QUESTION_331_VALUE|ne||EVALCONST(NULL)|)}
+{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+						<th class="store">{|SORT_TOGGLE|CLIENT_336_LEVEL_1.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th class="grade">{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+						<th class="month">{|SORT_TOGGLE|JOB_DATE}Date{/|SORT_TOGGLE|}</th>
+						<th class="link">Link to Shop</th>
+						<th class="answer">Responses</th>
+					</tr>
+				</thead>
+			<tbody>
+{/|SHOWIF|}
+					<tr>
+						<th>{DATAPOINTS.CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}</th>
+						<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+						<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">View Shop</a></td>
+						<td>{DATAPOINTS.CLIENT_336_SURVEY_3245_QUESTION_331_VALUE}</td>
+					</tr>
+{|VANISHIF|LOOP.HASNEXT}
+			</tbody>
+				</table>
+{/|VANISHIF|}
+				{/|LOOP|}
+{/|RESULT|}
+	</div>
+        
+#Location selector
+{/|SHOWIF|}
+
+	</div>   
+{/|SHOWIF|}
+	</div>

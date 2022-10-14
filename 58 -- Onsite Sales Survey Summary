@@ -1,0 +1,76 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+  {DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+  {|VANISHIF|DATATYPES.SHOW_DATATYPE.TOTAL_COUNT}
+    <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+  {/|VANISHIF|}
+  
+  {|SHOWIF|DATATYPES.SHOW_DATATYPE.TOTAL_COUNT}
+  {|CROSSTAB|}  
+	  <table>
+        <thead>
+          <tr><th></th>
+            <th>Responses</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr><td></td><td></td>
+          	<th>All Locations</th>
+          	{|LOOP|DATATYPES.SHOW_DATATYPE.CLIENT_434_LEVEL_1.MEMBERS(SORT=ORDER_NUM)}
+#Displays the Location Names				
+            	<th>{MEMBERS.NAME_ONLY}</th>
+            {/|LOOP|}
+          </tr>
+        </thead>
+        <tbody>
+  		{|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_multichoice,SORT=ORDER_NUM)}
+        	<tr>
+#Display Question Text                
+            	<th>{GROUPS.NAME}</th>
+          	</tr>
+            	{|LOOP|CROSSTAB.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM)}
+					{|SHOWIF|LOOP.ISFIRST}
+            		<tr>
+                        <td></td>
+                        <td>Score</td>
+#Avg percent score per question overall
+                        {|LOOP|DYNAMIC_GROUP.PROPERTIES(FILTER=property_id|eq||EVALTAG(GROUPS.ID)|_percent)}
+                        	<td>{AVG(DYNAMIC_GROUP.PROPERTIES.VALUE,OVERALL).ROUND(2)}%</td>
+                        {/|LOOP|}
+#Loop to show avg scores for each location for each question 
+                        #Why isn't question 4 populating...
+                        {|LOOP|DYNAMIC_GROUP.CLIENT_434_LEVEL_1(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM)}
+							{|LOOP|CLIENT_434_LEVEL_1.PROPERTIES(FILTER=property_id|eq||EVALTAG(GROUPS.ID)|_percent)}
+                        		<td>{AVG(CLIENT_434_LEVEL_1.PROPERTIES.VALUE,CLIENT_434_LEVEL_1).ROUND(2)}%</td>
+                        	{/|LOOP|}                      
+                    	{/|LOOP|}
+            		</tr>
+            		{/|SHOWIF|}
+            
+# OK-This row pulls the answer option name, avg answer score overall, then the loop of percentages for each answer option.      		
+            		<tr>
+                    	<th></th>
+     		    		<th>{DYNAMIC_GROUP.NAME}</th>
+                        <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP,DYNAMIC_GROUP), COUNT(DYNAMIC_GROUP,OVERALL)).ROUND(2)}%</td>
+                        
+# OK-This loop runs to pull the percentage each answer option was used per location.  It works.                        
+                   	{|LOOP|DYNAMIC_GROUP.CLIENT_434_LEVEL_1(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM)}
+	                   	<td>{PERCENTAGE(COUNT(CLIENT_434_LEVEL_1,CLIENT_434_LEVEL_1,DYNAMIC_GROUP), COUNT(CLIENT_434_LEVEL_1,CLIENT_434_LEVEL_1)).ROUND(2)}%</td>
+                    {/|LOOP|}    
+          			</tr>
+					{|VANISHIF|LOOP.HASNEXT}
+            		<tr>
+# This works to pull overall score and number of shops, but is after each question.                        
+#					    <td>Overall: {AVG(DYNAMIC_GROUP.PERCENT_SCORE,OVERALL).ROUND(2)}%</td>
+#                    	<td>Shops: {COUNT(DYNAMIC_GROUP.PERCENT_SCORE,OVERALL)}</td>
+					</tr>
+            		{/|VANISHIF|}
+          		{/|LOOP|}
+          	{/|LOOP|}
+          </tbody>
+	</table>
+  {/|CROSSTAB|}
+  {/|SHOWIF|}
+</div>

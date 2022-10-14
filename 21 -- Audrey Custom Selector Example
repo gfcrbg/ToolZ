@@ -1,0 +1,71 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+
+	<div>Regular Selector: {DATATYPES.SHOW_DATATYPE.CLIENT_336_LEVEL_1_SELECTOR.INPUT}</div>
+
+	<div>Custom Selector:
+        
+        # This is the same as the HTML our regular selectors build!
+        # You can substitute the name of the group you want, or use your browser's html inspector to double-check what the normal one is doing.
+        <select class="k_select"
+        	name="DATATYPES___SHOW_DATATYPE___CLIENT_336_LEVEL_1_SELECTOR" 
+        	id="DATATYPES___SHOW_DATATYPE___CLIENT_336_LEVEL_1_SELECTOR"
+        >
+            # Don't forget to add an 'all' option!
+        	<option value="">-- all --</option>
+            
+            {|RESULT|}
+            # Hiding options without data is your call, but if you do make sure you use the KEEP_ONLY_FILTERS=NONE,
+            # otherwise this filter will limit its own options!
+            {|LOOP|RESULT.CLIENT_336_LEVEL_1(SORT=NAME,NO_BLANKS,KEEP_ONLY_FILTERS=NONE)}
+            	
+                <option value="{CLIENT_336_LEVEL_1.ID}" 
+            		# This makes it so that we'll keep the option we selected when we reload the page.
+            		{DATATYPES.SHOW_DATATYPE.CLIENT_336_LEVEL_1_SELECTOR.ID=|EVALTAG(CLIENT_336_LEVEL_1.ID)|?selected}
+            	>
+                    # Regular Display
+                    {CLIENT_336_LEVEL_1.NAME}
+                    
+                    # Without the (user-side) location ID.
+                    # {CLIENT_336_LEVEL_1.NAME_ONLY}
+                    
+                    # With some string operation applied to all of our options.
+                    # (In this case, only showing the first word)
+                    # {CLIENT_336_LEVEL_1.NAME.SPLIT( ,1)}
+                    
+                    # Making an exception for a specific option.
+                    # (This gets hard if we're altering a whole lot of options, though.)
+                    #{|SHOWIF|CLIENT_336_LEVEL_1.ID=197215}Altered Amaize Davie Label{/|SHOWIF|}
+                    #{|VANISHIF|CLIENT_336_LEVEL_1.ID=197215}{CLIENT_336_LEVEL_1.NAME}{/|VANISHIF|}
+            	</option>
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            # If all else fails you can define options manually -- or even hardcode all of your options if you have to.
+            <option value="197215" 
+            	{DATATYPES.SHOW_DATATYPE.CLIENT_336_LEVEL_1_SELECTOR.ID=197215?selected}
+            >
+                Hardcoded Amaize Davie Option
+            </option>
+        </select>
+     </div>
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	<table>
+        <tr>
+            <th>ID</th>
+            <th>Location</th>
+            <th>Count</th>
+        </tr>
+        {|RESULT|}
+        {|LOOP|RESULT.CLIENT_336_LEVEL_1}
+        <tr>
+            <td>{CLIENT_336_LEVEL_1.ID}</td>
+            <td>{CLIENT_336_LEVEL_1.NAME}</td>
+            <td>{COUNT(CLIENT_336_LEVEL_1)}</td>
+        </tr>
+        {/|LOOP|}
+        {/|RESULT|}
+    </table>
+</div>

@@ -1,0 +1,48 @@
+<div><h2 align="center">Sales Mystery Shop vs Video Score Comparison</h2></div>
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+	<div>
+    	<label>Select a {DATATYPES.SHOW_DATATYPE.CLIENT_37_LEVEL_2.NAME}</label>
+        {DATATYPES.SHOW_DATATYPE.CLIENT_37_LEVEL_2_SELECTOR(SORT=NAME).INPUT}
+	</div>
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|DATATYPES.SHOW_DATATYPE.CLIENT_37_LEVEL_2_SELECTOR.ID}
+	
+		{|CROSSTAB|FILTERSET=CLIENT_37_SURVEY_ID|eq|1373;CLIENT_37_SURVEY_ID|eq|1374|OR}
+		<div>
+			{|LOOP|CROSSTAB.CLIENT_37_LEVEL_1(SORT=NAME,NO_BLANKS)}
+				{|SHOWIF|LOOP.ISFIRST}
+				<table class='data'>
+					<thead class='header-row'>
+						<tr>
+							<th>Branch</th>
+							{|LOOP|CLIENT_37_LEVEL_1.CLIENT_37_SURVEY(FILTERSET=ID|eq|1373;ID|eq|1374|OR,SORT=NAME,WITH_BLANKS)}
+								<th>Count</th>
+                            	<th>{CLIENT_37_SURVEY.NAME}</th>
+							{/|LOOP|}
+						</tr>
+					</thead>
+					<tbody>
+				{/|SHOWIF|}
+						<tr>
+							<th>{CLIENT_37_LEVEL_1.NAME}</th>				
+							{|LOOP|CLIENT_37_LEVEL_1.CLIENT_37_SURVEY}
+	                            <td>{COUNT(CLIENT_37_SURVEY)}</td>
+								<td>{AVG(CLIENT_37_SURVEY.PERCENT_SCORE).ROUND(2)}</td>
+							{/|LOOP|}
+						</tr>
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|CROSSTAB|}
+	{/|SHOWIF|}
+</div>

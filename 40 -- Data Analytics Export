@@ -1,0 +1,353 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|RESULT|}
+		<div>
+			<table class='data'>
+				{|LOOP|RESULT.DATAPOINTS}
+					{|SHOWIF|LOOP.ISFIRST}
+						<thead>
+							<tr>
+                                <th>Job ID</th>
+								<th>Date</th>
+								<th>Site</th>
+                                <th>Section</th>
+                                <th>Question Text</th>
+                                <th>Question #</th>
+                                <th>Score</th>
+                                <th>Region</th>
+							</tr>
+						</thead>
+						<tbody>
+					{/|SHOWIF|}
+                    
+#Clump for Q71
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Property Exterior</td>
+<td>1. Was the Main ID/gas price sign structure clean and well maintained?</td>
+<td>1</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_71_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_71_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q81
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Property Exterior</td>
+<td>2. Was the Main ID/Gas price sign operational and illuminated?</td>
+<td>2</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_81_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_81_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q151
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Property Exterior</td>
+<td>3. Was the parking lot, building exterior, and perimeter landscaping clean and well maintained?</td>
+<td>3</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_151_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_151_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q181
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Property Exterior</td>
+<td>4. Was the canopy fascia clean and well maintained?</td>
+<td>4</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_181_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_181_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q211
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Property Exterior</td>
+<td>5. If visiting after dark, were all fueling area lights illuminated?</td>
+<td>5</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_211_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_211_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q241
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Property Exterior</td>
+<td>6. If visiting after dark, were all exterior building lights and perimeter lights illuminated?</td>
+<td>6</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_241_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_241_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+                            
+#Clump for Q271
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Property Exterior</td>
+<td>7. If present, were all On Site Advertising (OSA) signs current, related to on site offerings, and not attached under the Main ID sign?</td>
+<td>7</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_271_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_271_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q301
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Gas</td>
+<td>8. Were all pump elements clean and free from damage, peeling paint, rust, and graffiti?</td>
+<td>8</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_301_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_301_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q321
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Gas</td>
+<td>9. If NO, which pump numbers did not meet standards for pump cleanliness?</td>
+<td>9</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_321_VALUE=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_321_VALUE)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q341
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Gas</td>
+<td>10. Were all pumps/dispensers operational and functioning correctly and not out of order?</td>
+<td>10</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_341_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_341_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q361
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Gas</td>
+<td>11. Were the card readers/pin pads/screens functional at the pumps?</td>
+<td>11</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_361_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_361_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q411
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Gas</td>
+<td>12. Was the canopy under decking and columns clean and well maintained?</td>
+<td>12</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_411_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_411_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q441
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Gas</td>
+<td>13. Were fueling area islands and curbs clean and well maintained?</td>
+<td>13</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_441_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_441_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q471
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Gas</td>
+<td>14. Were customer supplies and trash receptacles available?</td>
+<td>14</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_471_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_471_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q521
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Store  - Restrooms</td>
+<td>15. Was the restroom available, clean, and free from damage and clutter?</td>
+<td>15</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_521_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_521_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q531
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Store  - Restrooms</td>
+<td>16. Were the restroom fixtures operational, clean, and free from damage?</td>
+<td>16</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_531_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_531_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q541
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Store  - Restrooms</td>
+<td>17. If available, were additional fixtures operational, clean, and free from damage?</td>
+<td>17</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_541_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_541_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q551
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Store  - Restrooms</td>
+<td>18. Was the restroom stocked with supplies?</td>
+<td>18</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_551_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_551_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q601
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Store  - Customer Service</td>
+<td>19. Did a staff member offer a greeting during the visit?</td>
+<td>19</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_601_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_601_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q621
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Store  - Customer Service</td>
+<td>20. Was the staff attentive and friendly throughout the interaction?</td>
+<td>20</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_621_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_621_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q631
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Store  - Customer Service</td>
+<td>21. Was the transaction accurate and fast?</td>
+<td>21</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_631_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_631_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q651
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Store  - Customer Service</td>
+<td>22. Was the staff member in clean attire with a Global/XTRA or brand logo?</td>
+<td>22</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_651_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_651_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q671
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Store  - Customer Service</td>
+<td>23. Was the staff member wearing a professional name tag displaying the employee name?</td>
+<td>23</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_671_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_671_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q691
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Store  - Convenience Store</td>
+<td>24. Was the Convenience Store clean and neat in appearance?</td>
+<td>24</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_691_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_691_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q711
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Store  - Convenience Store</td>
+<td>25. Was the checkout area clean and neat in appearance?</td>
+<td>25</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_711_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_711_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+
+#Clump for Q731
+<tr>
+<td>{DATAPOINTS.DATAPOINT_ID}</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_1_VALUE}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_1.NAME.SPLIT( ,2)}</td>
+<td>Store  - Convenience Store</td>
+<td>26. Are GLOBAL fleet card applications available and present?</td>
+<td>26</td>
+<td>{DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_731_PERCENT=|EVALCONST(NULL)|?NA:|EVALTAG(DATAPOINTS.CLIENT_815_SURVEY_4793_QUESTION_731_PERCENT)|}</td>
+<td>{DATAPOINTS.CLIENT_815_LEVEL_2.NAME}</td>
+</tr>
+                            
+		
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|RESULT|}
+	{/|SHOWIF|}
+</div>

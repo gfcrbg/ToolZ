@@ -1,0 +1,94 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+
+	<div>
+    <label>{DATATYPES.SHOW_DATATYPE.CLIENT_94_LEVEL_2.NAME}</label>
+  	{DATATYPES.SHOW_DATATYPE.CLIENT_94_LEVEL_2_SELECTOR.INPUT}  
+	</div>
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+
+		{|RESULT|}
+		<div id="data-table">
+      <h3>Shops above location average by 10% or more</h3>
+			{|LOOP|RESULT.DATAPOINTS(SORT=TRENDING_TIMESTAMP)}
+      	{|SHOWIF|LOOP.ISFIRST}
+          <table class='data'>
+            <thead>
+              <tr>
+                <th>{|SORT_TOGGLE|ID}ID{/|SORT_TOGGLE|}</th>
+                <th>{|SORT_TOGGLE|TRENDING_TIMESTAMP}Date{/|SORT_TOGGLE|}</th>
+                <th>{|SORT_TOGGLE|PERCENT_SCORE}Overall Score{/|SORT_TOGGLE|}</th>
+                <th>{|SORT_TOGGLE|CLIENT_94_LEVEL_1.NAME}Location{/|SORT_TOGGLE|}</th>
+                <th>{|SORT_TOGGLE|AVG(DATAPOINTS.PERCENT_SCORE,CLIENT_94_LEVEL_1)}Location Average{/|SORT_TOGGLE|}</th>
+                <th>{|SORT_TOGGLE|CALC(DATAPOINTS.PERCENT_SCORE - AVG(DATAPOINTS.PERCENT_SCORE,CLIENT_94_LEVEL_1))}Difference from Average{/|SORT_TOGGLE|}</th>
+                <th>View Shop</th>
+              </tr>
+            </thead>
+            <tbody>
+        {/|SHOWIF|}  	
+          	#only display if the score difference is greater than or equal to 10
+          	{|SHOWIF|CALC(DATAPOINTS.PERCENT_SCORE - AVG(DATAPOINTS.PERCENT_SCORE,CLIENT_94_LEVEL_1))>=10}
+            <tr>
+              <th>{DATAPOINTS.ID}</th>             
+              <td>{DATAPOINTS.TRENDING_TIMESTAMP.FORMATTED(m/d/Y)}</td>
+              <td>{DATAPOINTS.PERCENT_SCORE}</td>
+              <td>{PREV(DATAPOINTS.PERCENT_SCORE)} is the prev one</td>                
+              <td>{PREV(DATAPOINTS.PERCENT_SCORE)} is the prev 1</td>                
+              <td>{DATAPOINTS.CLIENT_94_LEVEL_1.NAME}</td>
+              <td>{AVG(DATAPOINTS.PERCENT_SCORE,CLIENT_94_LEVEL_1).NUMBERFORMAT(2)}</td>
+              <td>{CALC(DATAPOINTS.PERCENT_SCORE - AVG(DATAPOINTS.PERCENT_SCORE,CLIENT_94_LEVEL_1)).NUMBERFORMAT(2)}</td>
+
+              #link to shop in SASSIE
+              <td><a href="http://www.sassieshop.com/2su/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view</a></td>
+            </tr>
+            {/|SHOWIF|}
+					{/|LOOP|}
+				</tbody>
+			</table>
+
+      <h3>Shops below location average by 10% or more</h3>
+			<table class='data'>
+        {|LOOP|RESULT.DATAPOINTS(SORT=TRENDING_TIMESTAMP)}
+          {|SHOWIF|LOOP.ISFIRST}
+            <table class='data'>
+              <thead>
+                <tr>
+                  <th>{|SORT_TOGGLE|ID}ID{/|SORT_TOGGLE|}</th>
+                  <th>{|SORT_TOGGLE|TRENDING_TIMESTAMP}Date{/|SORT_TOGGLE|}</th>
+                  <th>{|SORT_TOGGLE|PERCENT_SCORE}Overall Score{/|SORT_TOGGLE|}</th>
+                  <th>{|SORT_TOGGLE|CLIENT_94_LEVEL_1.NAME}Location{/|SORT_TOGGLE|}</th>
+                  <th>{|SORT_TOGGLE|AVG(DATAPOINTS.PERCENT_SCORE,CLIENT_94_LEVEL_1)}Location Average{/|SORT_TOGGLE|}</th>
+                  <th>{|SORT_TOGGLE|CALC(DATAPOINTS.PERCENT_SCORE - AVG(DATAPOINTS.PERCENT_SCORE,CLIENT_94_LEVEL_1))}Difference from Average{/|SORT_TOGGLE|}</th>
+                  <th>View Shop</th>
+                </tr>
+              </thead>
+              <tbody>
+          {/|SHOWIF|} 
+
+          	#only display if the score difference is greater than or equal to -10
+          	{|SHOWIF|CALC(DATAPOINTS.PERCENT_SCORE - AVG(DATAPOINTS.PERCENT_SCORE,CLIENT_94_LEVEL_1))<=-10}
+            <tr>
+              <th>{DATAPOINTS.ID}</th>             <td>{DATAPOINTS.TRENDING_TIMESTAMP.FORMATTED(m/d/Y)}</td>
+              <td>{DATAPOINTS.PERCENT_SCORE}</td>
+              <td>{DATAPOINTS.CLIENT_94_LEVEL_1.NAME}</td>
+              <td>{AVG(DATAPOINTS.PERCENT_SCORE,CLIENT_94_LEVEL_1).NUMBERFORMAT(2)}</td>
+              <td>{CALC(DATAPOINTS.PERCENT_SCORE - AVG(DATAPOINTS.PERCENT_SCORE,CLIENT_94_LEVEL_1)).NUMBERFORMAT(2)}</td>
+
+              #link to shop in SASSIE
+              <td><a href="http://www.sassieshop.com/2su/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view</a></td>
+            </tr>
+            {/|SHOWIF|}
+					{/|LOOP|}
+				</tbody>
+			</table>
+		</div>
+		{/|RESULT|}
+	{/|SHOWIF|}
+</div>

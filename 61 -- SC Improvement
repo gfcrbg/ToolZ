@@ -1,0 +1,57 @@
+<div><h2 align="center">Year over Year Averages</h2></div>
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|DATATYPES.SHOW_DATATYPE}
+		{|CROSSTAB|FILTERSET=LEVEL_1_ACTIVE_ID|eq|1;CLIENT_224_LOCGROUPSET_70_ID|eq|294}
+    		<div>
+
+                {|LOOP|CROSSTAB.CLIENT_224_LEVEL_1(SORT=CALC(POS(AVG(YEAR.PERCENT_SCORE),2)-POS(AVG(YEAR.PERCENT_SCORE),1))|DESC)}    
+    	        {|SHOWIF|LOOP.ISFIRST}
+		        	<table class='data'>				
+		        	  	<thead class='header-row'>
+							<tr>
+            	                <th></th>
+								{|LOOP|CLIENT_224_LEVEL_1.YEAR(SORT=NAME,WITH_BLANKS)}
+            	    	            <th id="year" colspan="3">{YEAR.NAME}</th>
+                                {/|LOOP|}
+		                    </tr>
+                            <tr>
+                                <th>Sales Consultant</th>
+                                {|LOOP|CLIENT_224_LEVEL_1.YEAR(SORT=NAME,WITH_BLANKS)}
+            	    	            <th>Number of Shops</th>
+                                	<th>Avg Score</th>
+                                	<th>Difference</th>
+                                {/|LOOP|}
+                                	
+                            </tr>
+		    	        </thead>
+                    	<tbody>
+                {/|SHOWIF|} 
+					       	<tr>
+	                	        <th>{CLIENT_224_LEVEL_1.NAME}</th>
+		                        {|LOOP|CLIENT_224_LEVEL_1.YEAR(SORT=NAME|ASC,CROSSTAB_FILTER=WITH_BLANKS_IN_RANGE)}
+                                	<td>{COUNT(YEAR)}</td>
+        	     	 	 	      	<td>{AVG(YEAR.PERCENT_SCORE).ROUND(2)}</td>
+                                	<td class="score-change 
+										{CALC(AVG(YEAR.PERCENT_SCORE)-PREV(AVG(YEAR.PERCENT_SCORE))).ROUND(2)>0?score-change-positive}
+										{CALC(AVG(YEAR.PERCENT_SCORE)-PREV(AVG(YEAR.PERCENT_SCORE))).ROUND(2)=0?score-change-neutral}
+										{CALC(AVG(YEAR.PERCENT_SCORE)-PREV(AVG(YEAR.PERCENT_SCORE))).ROUND(2)<0?score-change-negative}
+										">{CALC(AVG(YEAR.PERCENT_SCORE)-PREV(AVG(YEAR.PERCENT_SCORE))).ROUND(2)}</td>
+								{/|LOOP|} 	 
+	                        </tr>
+						{|VANISHIF|LOOP.HASNEXT}
+						</tbody>                
+					</table>
+                		{/|VANISHIF|}
+			{/|LOOP|}
+            </div>
+		{/|CROSSTAB|}
+	{/|SHOWIF|}
+</div>

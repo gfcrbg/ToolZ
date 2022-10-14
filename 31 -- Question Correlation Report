@@ -1,0 +1,274 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+	<div>
+	<table class=filters>
+        <tr>
+            <td></td>
+            <td>Show</td>
+            <td>Filter</td>
+        <tr>
+            <td>Entire Company</td>
+            <td><input type=checkbox name=misc_vars___show_entire_company {MISC_VARS.SHOW_ENTIRE_COMPANY?checked}></td>
+            <td></td>
+     #   <tr>
+     #       <td>{DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_4.NAME}:</td>
+     #       <td><input type=checkbox name=misc_vars___show_level_4 {MISC_VARS.SHOW_LEVEL_4?checked}></td>
+     #       <td>{DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_4_SELECTOR.INPUT}
+     #   </tr>
+        <tr>
+            <td>{DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_3.NAME}</td>
+            <td><input type=checkbox name=misc_vars___show_level_3 {MISC_VARS.SHOW_LEVEL_3?checked}></td>
+            <td>{DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_3_SELECTOR.INPUT}
+        </tr>
+        <tr>
+            <td>{DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_2.NAME}</td>
+            <td><input type=checkbox name=misc_vars___show_level_2 {MISC_VARS.SHOW_LEVEL_2?checked}></td>
+            <td>{DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_2_SELECTOR.INPUT}
+        </tr>
+        <tr>
+            <td>{DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_1.NAME}</td>
+            <td><input type=checkbox name=misc_vars___show_level_1 {MISC_VARS.SHOW_LEVEL_1?checked}></td>
+            <td>{DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_1_SELECTOR.INPUT}
+        </tr>
+        <tr>
+            <td>{DATATYPES.SHOW_DATATYPE.CLIENT_201_GROUP.NAME}</td>
+            <td></td>
+            <td>{DATATYPES.SHOW_DATATYPE.CLIENT_201_GROUP_SELECTOR.INPUT}
+        </tr>
+	</table>
+    </div>
+	<div>
+        Show Day of Week <input type=checkbox name=misc_vars___show_day {MISC_VARS.SHOW_DAY?checked}>
+    	<br>Show Time of Day <input type=checkbox name=misc_vars___show_time {MISC_VARS.SHOW_TIME?checked}>
+    </div>
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+{|VANISHIF|MISC_VARS.SHOW_DAY||MISC_VARS.SHOW_TIME}
+		<div class='ui-state-highlight no-data'><p>Please select 'Show Day of Week' or 'Show Time of Day'</p></div>
+{/|VANISHIF|}
+{|SHOWIF|MISC_VARS.SHOW_DAY||MISC_VARS.SHOW_TIME}
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	<table class=data>
+    <thead>
+    <tr>
+        <th></th>
+        {|SHOWIF|MISC_VARS.SHOW_DAY}
+        	<th class=q_label colspan=21>{DATATYPES.SHOW_DATATYPE.CLIENT_201_SURVEY_2915_QUESTION_2941.NAME}</th>
+        {/|SHOWIF|}
+        {|SHOWIF|MISC_VARS.SHOW_TIME}
+        	<th class=q_label colspan=12>{DATATYPES.SHOW_DATATYPE.CLIENT_201_SURVEY_2915_QUESTION_2741.NAME}</th>
+        {/|SHOWIF|}
+    </tr>
+    <tr>
+        <th rowspan=2>Subdivision Name</th>
+        {|SHOWIF|MISC_VARS.SHOW_DAY}
+        	{|LOOP|DATATYPES.SHOW_DATATYPE.CLIENT_201_SURVEY_2915_QUESTION_2941.PLAIN_GROUP_MEMBERS(SORT=ORDER_NUM)}
+        	<th class=q_label colspan=3>{PLAIN_GROUP_MEMBERS.NAME}</th>
+        	{/|LOOP|}
+        {/|SHOWIF|}
+        {|SHOWIF|MISC_VARS.SHOW_TIME}
+            {|LOOP|DATATYPES.SHOW_DATATYPE.CLIENT_201_SURVEY_2915_QUESTION_2741.PLAIN_GROUP_MEMBERS(SORT=ORDER_NUM)}
+            <th class=q_label colspan=3>{PLAIN_GROUP_MEMBERS.NAME}</th>
+            {/|LOOP|}
+        {/|SHOWIF|}
+    </tr>
+    <tr>
+        {|SHOWIF|MISC_VARS.SHOW_DAY}
+            {|LOOP|DATATYPES.SHOW_DATATYPE.CLIENT_201_SURVEY_2915_QUESTION_2941.PLAIN_GROUP_MEMBERS(SORT=ORDER_NUM)}
+            <th class=percent_score>%&nbspScore</th>
+            <th class=num_evals>#&nbspEvals</th>
+            <th class=percent_evals>%&nbspEvals</th>
+            {/|LOOP|}
+        {/|SHOWIF|}
+        {|SHOWIF|MISC_VARS.SHOW_TIME}
+            {|LOOP|DATATYPES.SHOW_DATATYPE.CLIENT_201_SURVEY_2915_QUESTION_2741.PLAIN_GROUP_MEMBERS(SORT=ORDER_NUM)}
+            <th class=percent_score>%&nbspScore</th>
+            <th class=num_evals>#&nbspEvals</th>
+            <th class=percent_evals>%&nbspEvals</th>
+            {/|LOOP|}
+        {/|SHOWIF|}
+    </tr>
+    </thead>
+    <tbody>
+    
+    ## Entire Company ##
+    {|SHOWIF|MISC_VARS.SHOW_ENTIRE_COMPANY}
+    <tr>
+        <td>Entire Company</td>
+        
+        {|SHOWIF|MISC_VARS.SHOW_DAY}
+        {|RESULT|KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP}
+        {|LOOP|RESULT.CLIENT_201_SURVEY_2915_QUESTION_2941(SORT=ORDER_NUM,WITH_BLANKS)}
+        	<td class=percent_score>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941)?|EVALTAG(AVG(CLIENT_201_SURVEY_2915_QUESTION_2941.PERCENT_SCORE).ROUND)|%:--}</td>
+        	<td class=num_evals>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941)}</td>
+        	<td class=percent_evals>{PERCENTAGE(COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941),COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941,OVERALL)).ROUND}%</td>
+        {/|LOOP|}
+        {/|RESULT|}
+        {/|SHOWIF|}
+        
+        {|SHOWIF|MISC_VARS.SHOW_TIME}
+        {|RESULT|KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP}
+        {|LOOP|RESULT.CLIENT_201_SURVEY_2915_QUESTION_2741(SORT=ORDER_NUM,WITH_BLANKS)}
+        	<td class=percent_score>{AVG(CLIENT_201_SURVEY_2915_QUESTION_2741.PERCENT_SCORE).ROUND}%</td>
+        	<td class=num_evals>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741)}</td>
+        	<td class=percent_evals>{PERCENTAGE(COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741),COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741,OVERALL)).ROUND}%</td>
+        {/|LOOP|}
+        {/|RESULT|}
+        {/|SHOWIF|}
+    </tr>  
+    {/|SHOWIF|}
+        
+    
+        
+    ## Level 4 - Region ##
+    #{|SHOWIF|MISC_VARS.SHOW_LEVEL_4}
+   	#<tr class=highlight>
+    #    <td colspan=34>{DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_4.GROUP.NAME(SORT=NAME)}</td> 
+    #</tr>
+    #{|LOOP|DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_4.MEMBERS}
+    #<tr>
+    #    <td>{MEMBERS.NAME}</td>
+        
+    #    {|SHOWIF|MISC_VARS.SHOW_DAY}
+    #    {|RESULT|FILTER=CLIENT_201_LEVEL_4_ID|eq||EVALTAG(MEMBERS.GROUP_MEMBER_ID)|,KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP}
+    #    {|LOOP|RESULT.CLIENT_201_SURVEY_2915_QUESTION_2941(SORT=ORDER_NUM,WITH_BLANKS)}
+    #    	<td class=percent_score>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941)?|EVALTAG(AVG(CLIENT_201_SURVEY_2915_QUESTION_2941.PERCENT_SCORE).ROUND)|%:--}</td>
+    #    	<td class=num_evals>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941)}</td>
+    #    	<td class=percent_evals>{PERCENTAGE(COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941),COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941,OVERALL)).ROUND}%</td>
+    #    {/|LOOP|}
+    #    {/|RESULT|}
+    #    {/|SHOWIF|}
+        
+    #    {|SHOWIF|MISC_VARS.SHOW_TIME}
+    #    {|RESULT|FILTER=CLIENT_201_LEVEL_4_ID|eq||EVALTAG(MEMBERS.GROUP_MEMBER_ID)|,KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP}
+    #    {|LOOP|RESULT.CLIENT_201_SURVEY_2915_QUESTION_2741(SORT=ORDER_NUM,WITH_BLANKS)}
+    #    	<td class=percent_score>{AVG(CLIENT_201_SURVEY_2915_QUESTION_2741.PERCENT_SCORE).ROUND}%</td>
+    #    	<td class=num_evals>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741)}</td>
+    #    	<td class=percent_evals>{PERCENTAGE(COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741),COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741,OVERALL)).ROUND}%</td>
+    #    {/|LOOP|}
+    #    {/|RESULT|}
+    #    {/|SHOWIF|}
+    #</tr>
+        
+    # End of LEVEL.MEMBERS
+    #{/|LOOP|}
+    #{/|SHOWIF|}
+        
+    
+    ## Level 3 - Market Manager ##
+    {|SHOWIF|MISC_VARS.SHOW_LEVEL_3}
+   	<tr class=highlight>
+        <td colspan=34>{DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_3.GROUP.NAME}</td> 
+    </tr>
+    {|LOOP|DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_3.MEMBERS(SORT=NAME)}
+    <tr>
+        <td>{MEMBERS.NAME}</td>
+        
+        {|SHOWIF|MISC_VARS.SHOW_DAY}
+        {|RESULT|FILTER=CLIENT_201_LEVEL_3_ID|eq||EVALTAG(MEMBERS.GROUP_MEMBER_ID)|,KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP}
+        {|LOOP|RESULT.CLIENT_201_SURVEY_2915_QUESTION_2941(SORT=ORDER_NUM,WITH_BLANKS)}
+        	<td class=percent_score>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941)?|EVALTAG(AVG(CLIENT_201_SURVEY_2915_QUESTION_2941.PERCENT_SCORE).ROUND)|%:--}</td>
+        	<td class=num_evals>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941)}</td>
+        	<td class=percent_evals>{PERCENTAGE(COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941),COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941,OVERALL)).ROUND}%</td>
+        {/|LOOP|}
+        {/|RESULT|}
+        {/|SHOWIF|}
+        
+        {|SHOWIF|MISC_VARS.SHOW_TIME}
+        {|RESULT|FILTER=CLIENT_201_LEVEL_3_ID|eq||EVALTAG(MEMBERS.GROUP_MEMBER_ID)|,KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP}
+        {|LOOP|RESULT.CLIENT_201_SURVEY_2915_QUESTION_2741(SORT=ORDER_NUM,WITH_BLANKS)}
+        	<td class=percent_score>{AVG(CLIENT_201_SURVEY_2915_QUESTION_2741.PERCENT_SCORE).ROUND}%</td>
+        	<td class=num_evals>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741)}</td>
+        	<td class=percent_evals>{PERCENTAGE(COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741),COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741,OVERALL)).ROUND}%</td>
+        {/|LOOP|}
+        {/|RESULT|}
+        {/|SHOWIF|}
+    </tr>
+        
+    # End of LEVEL.MEMBERS
+    {/|LOOP|}
+    {/|SHOWIF|}
+        
+        
+    ## Level 2 - Area ##
+   	{|SHOWIF|MISC_VARS.SHOW_LEVEL_2}
+   	<tr class=highlight>
+        <td colspan=34>{DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_2.GROUP.NAME}</td> 
+    </tr>
+    {|LOOP|DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_2.MEMBERS(SORT=NAME)}
+    <tr>
+        <td>{MEMBERS.NAME}</td>
+        
+        {|SHOWIF|MISC_VARS.SHOW_DAY}
+        {|RESULT|FILTER=CLIENT_201_LEVEL_2_ID|eq||EVALTAG(MEMBERS.GROUP_MEMBER_ID)|,KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP}
+        {|LOOP|RESULT.CLIENT_201_SURVEY_2915_QUESTION_2941(SORT=ORDER_NUM,WITH_BLANKS)}
+        	<td class=percent_score>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941)?|EVALTAG(AVG(CLIENT_201_SURVEY_2915_QUESTION_2941.PERCENT_SCORE).ROUND)|%:--}</td>
+        	<td class=num_evals>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941)}</td>
+        	<td class=percent_evals>{PERCENTAGE(COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941),COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941,OVERALL)).ROUND}%</td>
+        {/|LOOP|}
+        {/|RESULT|}
+        {/|SHOWIF|}
+        
+        {|SHOWIF|MISC_VARS.SHOW_TIME}
+        {|RESULT|FILTER=CLIENT_201_LEVEL_2_ID|eq||EVALTAG(MEMBERS.GROUP_MEMBER_ID)|,KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP}
+        {|LOOP|RESULT.CLIENT_201_SURVEY_2915_QUESTION_2741(SORT=ORDER_NUM,WITH_BLANKS)}
+        	<td class=percent_score>{AVG(CLIENT_201_SURVEY_2915_QUESTION_2741.PERCENT_SCORE).ROUND}%</td>
+        	<td class=num_evals>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741)}</td>
+        	<td class=percent_evals>{PERCENTAGE(COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741),COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741,OVERALL)).ROUND}%</td>
+        {/|LOOP|}
+        {/|RESULT|}
+        {/|SHOWIF|}
+    </tr>
+        
+    # End of LEVEL.MEMBERS
+    {/|LOOP|}
+    {/|SHOWIF|}
+        
+        
+    ## Level 1 - Location ##
+    {|SHOWIF|MISC_VARS.SHOW_LEVEL_1}
+   	<tr class=highlight>
+        <td colspan=34>{DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_1.GROUP.NAME}</td> 
+    </tr>
+    {|LOOP|DATATYPES.SHOW_DATATYPE.CLIENT_201_LEVEL_1.MEMBERS(SORT=NAME)}
+    <tr>
+        <td>{MEMBERS.NAME}</td>
+        
+        {|SHOWIF|MISC_VARS.SHOW_DAY}
+        {|RESULT|FILTER=CLIENT_201_LEVEL_1_ID|eq||EVALTAG(MEMBERS.GROUP_MEMBER_ID)|,KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP}
+        {|LOOP|RESULT.CLIENT_201_SURVEY_2915_QUESTION_2941(SORT=ORDER_NUM,WITH_BLANKS)}
+        	<td class=percent_score>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941)?|EVALTAG(AVG(CLIENT_201_SURVEY_2915_QUESTION_2941.PERCENT_SCORE).ROUND)|%:--}</td>
+        	<td class=num_evals>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941)}</td>
+        	<td class=percent_evals>{PERCENTAGE(COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941),COUNT(CLIENT_201_SURVEY_2915_QUESTION_2941,OVERALL)).ROUND}%</td>
+        {/|LOOP|}
+        {/|RESULT|}
+        {/|SHOWIF|}
+        
+        {|SHOWIF|MISC_VARS.SHOW_TIME}
+        {|RESULT|FILTER=CLIENT_201_LEVEL_1_ID|eq||EVALTAG(MEMBERS.GROUP_MEMBER_ID)|,KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP}
+        {|LOOP|RESULT.CLIENT_201_SURVEY_2915_QUESTION_2741(SORT=ORDER_NUM,WITH_BLANKS)}
+        	<td class=percent_score>{AVG(CLIENT_201_SURVEY_2915_QUESTION_2741.PERCENT_SCORE).ROUND}%</td>
+        	<td class=num_evals>{COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741)}</td>
+        	<td class=percent_evals>{PERCENTAGE(COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741),COUNT(CLIENT_201_SURVEY_2915_QUESTION_2741,OVERALL)).ROUND}%</td>
+        {/|LOOP|}
+        {/|RESULT|}
+        {/|SHOWIF|}
+    </tr>
+        
+    # End of LEVEL.MEMBERS
+    {/|LOOP|}    
+    {/|SHOWIF|}
+        
+        
+    </tbody>
+    </table>
+	
+    # End of COUNT(DATATYPES.SHOW_DATATYPE)
+	{/|SHOWIF|}
+</div>
+# End of SHOW_DAY OR SHOW_TIME
+{/|SHOWIF|}

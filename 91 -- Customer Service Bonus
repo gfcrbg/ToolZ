@@ -1,0 +1,62 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+  {DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+  {|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+  <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+  {/|VANISHIF|}
+  
+  {|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+  
+  {|RESULT|FILTER=PERCENT_SCORE|gte|80}
+  <table class='data'>
+      <thead>
+      		<tr>
+                <th>{|SORT_TOGGLE|CLIENT_65_LEVEL_3.NAME}Region{/|SORT_TOGGLE|}</th>
+                <th>{|SORT_TOGGLE|CLIENT_65_LEVEL_2.NAME}District{/|SORT_TOGGLE|}</th>
+                <th>{|SORT_TOGGLE|CLIENT_65_LEVEL_1.NAME}Store #{/|SORT_TOGGLE|}</th>
+                <th>{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+                <th>Date</th>
+                <th>Old Team Members Recorded</th>
+                <th>Tame Member 1 Name</th>
+                <th>Tame Member 1 Employee #</th>
+                <th>Tame Member 2 Name</th>
+                <th>Tame Member 2 Employee #</th>
+                <th>Tame Member 3 Name</th>
+                <th>Tame Member 3 Employee #</th>
+                <th>Tame Member 4 Name</th>
+                <th>Tame Member 5 Employee #</th>
+                <th>Date Modified</th>
+      </thead> 
+      <tbody>
+      {|LOOP|RESULT.DATAPOINTS(SORT=CLIENT_65_LEVEL_3.NAME)}
+      <tr>
+          	<td>{DATAPOINTS.CLIENT_65_LEVEL_3.NAME}</td>
+          	<td>{DATAPOINTS.CLIENT_65_LEVEL_2.NAME}</td>
+          	<td>{DATAPOINTS.CLIENT_65_LEVEL_1.NAME}</td>
+            <td>{DATAPOINTS.PERCENT_SCORE}%</td>
+            <td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+			<td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_1211_VALUE}</td>
+#employee 1
+	        <td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_1791_VALUE}</td>
+          	<td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_1801_VALUE}</td>
+#employee 2
+	        <td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_1841_VALUE}</td>
+          	<td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_1811_VALUE}</td>
+#employee 3
+	        <td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_1851_VALUE}</td>
+          	<td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_1821_VALUE}</td>
+#employee 4
+	        <td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_1861_VALUE}</td>
+          	<td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_1831_VALUE}</td>
+          
+			<td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_22_VALUE}</td>          
+
+          </tr>
+    {/|LOOP|}
+  {/|RESULT|}
+	  </tbody>        
+  </table>    
+  {/|SHOWIF|}
+</div>

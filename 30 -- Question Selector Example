@@ -1,0 +1,59 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+
+	# An ad-hoc selector! When we submit the page, we'll be passing it a value for MISC_VARS.SHOW_QUESTION_ID!
+	# The input name is lowercase, and uses three underscores in place of a period.
+	<select name="misc_vars___show_question_id">
+        
+    # We're showing multichoice questions in this example! Toolz CANNOT mix question types when doing this sort of thing.
+    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_multichoice,SORT=ORDER_NUM,NO_BLANKS)}
+        <option 
+        	# The ID we're passing to the Misc Var.
+        	value="{GROUPS.ID}" 
+        	# This makes sure that the input keeps our selection when we submit the page.
+        	{GROUPS.ID=|EVALTAG(MISC_VARS.SHOW_QUESTION_ID)|?selected} 
+        >
+            {GROUPS.NAME}
+        </option>
+    {/|LOOP|}
+        
+    </select>
+
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    
+    <table class="data">
+    # First, grab the group we're looking at! 
+    # We need to |EVALTAG()| the Misc Var because it exists outside the group, and we're plugging it into a filter.
+    {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=ID|eq||EVALTAG(MISC_VARS.SHOW_QUESTION_ID)|)}
+        
+    # The question name!
+    <tr> <th colspan=2>{GROUPS.NAME}</th> </tr>
+        
+    # Now loop through our options. More in-depth examples of this pattern can be found here:
+    # https://toolzdocs.wordpress.com/template-api/advanced-topics/group-looping/
+	{|RESULT|}
+    {|LOOP|RESULT.DYNAMIC_GROUP(GROUP_ID=|EVALTAG(GROUPS.ID)|,SORT=ORDER_NUM,WITH_BLANKS)}
+    <tr>
+		<td>{DYNAMIC_GROUP.NAME}</td>
+        <td>{PERCENTAGE(COUNT(DYNAMIC_GROUP),COUNT(DYNAMIC_GROUP,OVERALL)).ROUND}%</td>
+#        <td>{DYNAMIC_GROUP.POINTS}</td>
+    </tr>
+	{/|LOOP|}
+    {/|RESULT|}
+        
+        
+    
+    # End of DATATYPES.SHOW_DATATYPE.GROUPS
+    {/|LOOP|}
+    </table>
+    
+    # End of COUNT(DATATYPES.SHOW_DATATYPE)
+	{/|SHOWIF|}
+</div>

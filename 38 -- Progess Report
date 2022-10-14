@@ -1,0 +1,182 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|RESULT|}
+		<div>
+			<table class='data'>
+#Actually looping the shops				
+                {|LOOP|RESULT.DATAPOINTS}
+					{|SHOWIF|LOOP.ISFIRST}
+					{/|SHOWIF|}
+					   <tr>
+                           <td colspan=3>In-Store Customer Service Expectations Feedback Form</td>
+                       </tr>
+                       <tr>
+                         <th colspan=2>Associate: {DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_51_VALUE}</th>
+                         <th>Score: {DATAPOINTS.PERCENT_SCORE}%</th>
+                       </tr>
+                       <tr>
+                         <th>Store: {DATAPOINTS.CLIENT_439_LEVEL_1.NAME.SPLIT(Music,1)}</th>
+                           <th></th>
+						 <th>Shop # {DATAPOINTS.DATAPOINT_ID}</th>
+					   </tr>
+                   	   <tr>
+                        	<td colspan=3><b>Goal:</b> Increase sales & customer service through clear expectations on using the George's Music selling process. 
+								<br>Items that are listed with an "N" were not performed during the Mystery shop.
+								<br>The Managers are accountable to see that each associate is using the selling process with every customer.  
+								<br>Reinforce the areas where the selling steps were used and commit to getting immediate change on the steps that were not. </td>
+                        </tr>
+                            </table>
+            <table class='data'>
+                	<col width="50">
+                	<col width="20">
+                	<col width="150">
+#This is the line of Answer: Question from the spreadsheet.  
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_111.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Acknowledge customers within 10 seconds of them entering the store</td>
+                        </tr>
+#This is the end of the line, pal.
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_161_SCORE=3?Yes:No}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Approach customers within 2 minutes of them being in the store</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_171.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Greet customers with a smile and a handshake</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_181.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Get the customer's name first</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_191.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Offer your name to the customer</td>
+                        </tr>                           
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_221.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Build rapport to get to know the customer</td>
+                        </tr>          
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_251.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Establish purpose by asking what brought them in the store</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_281.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Start qualifying by asking "What did you have in mind?"</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_291.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Continue qualifying by asking "What else?" and "Tell me more" or "Anything else?"</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_311.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Did the associate get the customer's budget?</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_331.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Ask/suggest additional items that they may need (During qualifying)</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_351.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Repeat the needs to make sure you understand what the customer wants</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_371.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Ask permission to show the customer the product</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_391.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Ask the customer if they felt the product met their needs.</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_441.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Ask the customer if they'd like to purchase the product (Ask for the sale)</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_451.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Make attempts to overcome objections</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_531.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Introduce the customer to another associate and/or the manager</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_541.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Ask to get the customer's name and phone number if you qualify them and they do not buy</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_631.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Offered a promotional flyer</td>
+                        </tr>
+                        <tr>
+                            <td>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_641.NAME}</td>
+                            <td>[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]</td>
+                            <td>Service was</td>
+                        </tr>    
+                        <tr>
+                        	<td colspan=3>ID:761-Other Comments:
+                            <br>{DATAPOINTS.CLIENT_439_SURVEY_3473_QUESTION_761_VALUE}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan=3><center>We have read and agree to the above expectations. We will insure that our associates will use our 7-step selling process 
+                                <br>with each customer interaction to ensure that we are giving consistent, high-quality service to all customers.</center>
+                            </td>
+                        </tr>
+                </table>
+            	<table class='data'>
+                        <tr>
+                            <td><center>_________________________</center></td>
+                            <td><center>_______________</center></td>
+                        </tr>
+                        <tr>
+                            <td><center>Associate</center></td>
+                            <td><center>Date</center></td>
+                        </tr>
+                        <tr>
+                            <td><center>_________________________</center></td>
+                            <td><center>_______________</center></td>
+                        </tr>
+                        <tr>
+                            <td><center>Manager</center></td>
+                            <td><center>Date</center></td>
+                        </tr> 
+                        <tr id="pages">
+                            <td colspan=3><center>Please fax to Retail Support after reviewing and signing, and put this copy in the Managers' file.</center></td>
+                        </tr>   
+				{|VANISHIF|LOOP.HASNEXT}
+				</table> 
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|RESULT|}
+	{/|SHOWIF|}
+</div>

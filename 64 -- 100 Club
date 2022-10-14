@@ -1,0 +1,74 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|RESULT|FILTER=PERCENT_SCORE|gte|100}
+		<div>
+			<table class='data'>
+				{|LOOP|RESULT.DATAPOINTS}
+					{|SHOWIF|LOOP.ISFIRST}
+						<thead>
+							<tr>
+								<th>Evaluation ID</th>
+								<th>Client Survey Name</th>
+                                <th>Evalutation Date</th>
+								<th>Evaluation Score</th>
+                                <th>Customer Service</th>
+                                <th>Phone Call</th>
+                                <th>Store ID</th>
+                                <th>Store Name</th>
+                                <th>Store Address 1</th>
+                                <th>Store Address 2</th>
+                                <th>Store City</th>
+                                <th>Store State</th>
+                                <th>Country</th>
+                                <th>Store Zip</th>
+                                <th>DSM</th>
+                                <th>RSM</th>
+                                <th>Store Mgr</th>
+                                <th>Sales Associate Name: Or physical description (if no name badge)</th>
+                                <th>Sales Associate at the Register name or physical description</th>
+                                <th>Phone Associate Name</th>
+                                
+							</tr>
+						</thead>
+						<tbody>
+					{/|SHOWIF|}
+					<tr>
+						<td>{DATAPOINTS.DATAPOINT_ID}</td>
+                        <td>{DATAPOINTS.CLIENT_464_SURVEY.NAME}</td>
+						<td>{DATAPOINTS.JOB_DATE}</td>
+						<td>{DATAPOINTS.PERCENT_SCORE}</td>
+                        <td>{DATAPOINTS.CLIENT_464_SURVEY_4815_SECTION_1_SCORE}</td>
+                        <td>{DATAPOINTS.CLIENT_464_SURVEY_4815_SECTION_2_SCORE}</td>
+                        <td>{DATAPOINTS.CLIENT_464_LEVEL_1.NAME.SPLIT( ,0)}</td>
+                        <td>{DATAPOINTS.CLIENT_464_LEVEL_1.NAME.SPLIT( ,1)}</td>
+                        <td>{DATAPOINTS.LEVEL_1_STREET_ADDRESS}</td>
+                        <td>{DATAPOINTS.LEVEL_1_STREET_ADDRESS_2}</td>
+                        <td>{DATAPOINTS.LEVEL_1_CITY}</td>
+                        <td>{DATAPOINTS.CLIENT_464_STATE.NAME.SPLIT(,,0)}</td>
+                        <td>{DATAPOINTS.CLIENT_464_STATE.NAME.SPLIT(,,1)}</td>
+                        <td>{DATAPOINTS.LEVEL_1_POSTAL_CODE}</td>
+                        <td>{DATAPOINTS.CLIENT_464_MANAGER_LEVEL_2.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_464_MANAGER_LEVEL_3.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_464_MANAGER_LEVEL_1.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_464_SURVEY_4815_QUESTION_21_VALUE}</td>
+                        <td>{DATAPOINTS.CLIENT_464_SURVEY_4815_QUESTION_51_VALUE}</td>
+                        <td>{DATAPOINTS.CLIENT_464_SURVEY_4815_QUESTION_331_VALUE}</td>
+					</tr>
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+			{/|LOOP|}
+		</div>
+		{/|RESULT|}
+	{/|SHOWIF|}
+</div>

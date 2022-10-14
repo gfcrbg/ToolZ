@@ -1,0 +1,40 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+  {DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+  {|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+  <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+  {/|VANISHIF|}
+  
+  {|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+  
+  {|RESULT|FILTER=PERCENT_SCORE|gte|85}
+  <table class='data'>
+      <thead>
+      		<tr>
+                <th>{|SORT_TOGGLE|CLIENT_65_LEVEL_3.NAME}Region{/|SORT_TOGGLE|}</th>
+                <th>{|SORT_TOGGLE|CLIENT_65_LEVEL_2.NAME}District{/|SORT_TOGGLE|}</th>
+                <th>{|SORT_TOGGLE|CLIENT_65_LEVEL_1.NAME}Store #{/|SORT_TOGGLE|}</th>
+                <th>{|SORT_TOGGLE|PERCENT_SCORE}Score{/|SORT_TOGGLE|}</th>
+                <th>Date</th>
+                <th>Team Members Recorded</th>
+                <th>Date Modified</th>
+      </thead> 
+      <tbody>
+      {|LOOP|RESULT.DATAPOINTS(SORT=CLIENT_65_LEVEL_3.NAME)}
+      <tr>
+          	<td>{DATAPOINTS.CLIENT_65_LEVEL_3.NAME}</td>
+          	<td>{DATAPOINTS.CLIENT_65_LEVEL_2.NAME}</td>
+          	<td>{DATAPOINTS.CLIENT_65_LEVEL_1.NAME}</td>
+            <td>{DATAPOINTS.PERCENT_SCORE}%</td>
+            <td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+			<td>{DATAPOINTS.CLIENT_65_SURVEY_3122_QUESTION_712_VALUE}</td>
+			<td>{DATAPOINTS.CLIENT_65_SURVEY_3122_QUESTION_22_VALUE}</td>                    
+      </tr>
+    {/|LOOP|}
+  {/|RESULT|}
+	  </tbody>        
+  </table>    
+  {/|SHOWIF|}
+</div>

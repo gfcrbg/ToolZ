@@ -1,0 +1,1637 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+<table>
+    <tr>
+        <td>Start Date:</td>
+        <td>{DATATYPES.REPORT_CONFIG.TRENDING_DATE_AFTER.INPUT}</td>
+        <td>End Date:</td>
+        <td> {DATATYPES.REPORT_CONFIG.TRENDING_DATE_BEFORE.INPUT}</td>
+    </tr>
+    <tr>
+        <td>Location:</td>
+        <td>{DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR(SORT=NAME).INPUT}
+            # {DATATYPES.SHOW_DATATYPE.CLIENT_92_LOCGROUPSET_61_SELECTOR(SORT=ORDER_NUM).INPUT}
+            
+        </td>
+        <td></td><td></td>
+    </tr>
+</table>
+{DATATYPES.CONTROLS_END}
+{/|SHOWIF|}
+
+
+<div class='results'>
+    {|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    <div class='ui-state-highlight no-data'><p>No data was found to display for location - {DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR}</p></div>
+    {/|VANISHIF|}
+    
+    {|SHOWIF|DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR.ID<1}
+    <div class='ui-state-highlight no-data'><p style="float:center;">Please select a Location.</p></div>
+    {/|SHOWIF|}
+    
+    
+    {|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+    {|SHOWIF|DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR.ID>1}
+    <br/>
+    <div>
+        {|RESULT|}
+        {|LOOP|RESULT.CLIENT_92_LEVEL_1(SORT=ORDER_NUM)}
+        {|LOOP|CLIENT_92_LEVEL_1.MONTH_YEAR(SORT=ORDER_NUM|DESC,LIMIT=1)}
+        <div style="font-size:14px;"><b>CURRENT SHOP: {AVG(MONTH_YEAR.PERCENT_SCORE)}%</b></div>
+        {/|LOOP|}
+        {/|LOOP|}
+        {/|RESULT|}
+    </div>
+    <br>
+    <div style="background-color:#6495ED;font-weight:bold;width:100%;color:white;vertical-align:middle;">EVALUATION TRENDING GRAPH</div>
+    <table>
+        <tbody>
+            <tr><td style="text-align:center;"> <br/>
+                {|GRAPH|}
+                graph/t/l
+                /w/600
+                /h/300
+                /k0/{DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR.FUSIONSAFE}
+                /k1/Menards%20Market
+                /k2/Menards%20Overall
+                /k3/HD-Lowes%20in%20Market
+                /n/Evaluation%20Trending
+                /r/0,100
+                /bgc/f5f5dc
+                #Store
+                /d0/,
+                {|RESULT|KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP;CLIENT_92_LEVEL_1_ID}
+                {|LOOP|RESULT.CLIENT_92_LEVEL_1(SORT=ORDER_NUM)}
+                {|LOOP|CLIENT_92_LEVEL_1.MONTH_OF_YEAR(SORT=ORDER_NUM,RESULT_FILTER=WITH_BLANKS)}
+                {AVG(MONTH_OF_YEAR.PERCENT_SCORE)=|EVALCONST(NULL)|?0:|EVALTAG(AVG(MONTH_OF_YEAR.PERCENT_SCORE).ROUND)|}
+                {LOOP.HASNEXT?,}
+                {/|LOOP|}
+                {/|LOOP|}
+                {/|RESULT|}
+                #Region
+                /d1/,
+                {|RESULT|}
+                {|LOOP|RESULT.CLIENT_92_LEVEL_3(KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP,LIMIT=1)}
+                {|LOOP|CLIENT_92_LEVEL_3.MONTH_OF_YEAR(SORT=ORDER_NUM,RESULT_FILTER=WITH_BLANKS)}
+                {AVG(MONTH_OF_YEAR.PERCENT_SCORE,MONTH_OF_YEAR)=|EVALCONST(NULL)|?0:|EVALTAG(AVG(MONTH_OF_YEAR.PERCENT_SCORE,MONTH_OF_YEAR).ROUND)|}
+                {LOOP.HASNEXT?,}
+                {/|LOOP|}
+                {/|LOOP|}
+                {/|RESULT|}
+                #Company
+                /d2/,
+                {|RESULT|}
+                {|LOOP|RESULT.CLIENT_92_LEVEL_1(KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP,LIMIT=1)}
+                {|LOOP|CLIENT_92_LEVEL_1.MONTH_OF_YEAR(SORT=ORDER_NUM,RESULT_FILTER=WITH_BLANKS)}
+                {AVG(MONTH_OF_YEAR.PERCENT_SCORE,MONTH_OF_YEAR)=|EVALCONST(NULL)|?0:|EVALTAG(AVG(MONTH_OF_YEAR.PERCENT_SCORE,MONTH_OF_YEAR).ROUND)|}
+                {LOOP.HASNEXT?,}
+                {/|LOOP|}
+                {/|LOOP|}
+                {/|RESULT|}
+                #COMPETITIVE REGION
+                /d3/,
+                {|RESULT|}
+                {|LOOP|RESULT.CLIENT_92_LOCGROUPSET_61(SORT=ORDER_NUM,KEEP_ONLY_FILTERS=TRENDING_TIMESTAMP;CLIENT_92_LEVEL_3_ID,LIMIT=1)}
+                {|LOOP|CLIENT_92_LOCGROUPSET_61.MONTH_OF_YEAR(SORT=ORDER_NUM,RESULT_FILTER=WITH_BLANKS)}
+                {AVG(MONTH_OF_YEAR.PERCENT_SCORE,MONTH_OF_YEAR)=|EVALCONST(NULL)|?0:|EVALTAG(AVG(MONTH_OF_YEAR.PERCENT_SCORE,MONTH_OF_YEAR).ROUND)|}
+                {LOOP.HASNEXT?,}
+                {/|LOOP|}
+                {/|LOOP|}
+                {/|RESULT|} 
+                
+                /c/0085D0,569E1C,ADCF00,FFD321
+                /l/,  {|RESULT|}
+                {|LOOP|RESULT.MONTH_OF_YEAR(SORT=ORDER_NUM,RESULT_FILTER=WITH_BLANKS)}
+                {MONTH_OF_YEAR.NAME.SUBSTR(0,3).URLENCODE}{LOOP.HASNEXT?,}
+                {/|LOOP|}
+                ?apikey={CONFIG.PDF_API_KEY}
+                {/|GRAPH|}
+                {/|RESULT|}
+                <br/></td></tr>
+        </tbody>
+    </table>
+    <table style="border :1px solid black;">
+        <tbody><div>Shop Date:</div>
+            {|RESULT|}
+            <tr>
+                {|LOOP|RESULT.DATAPOINTS}
+                <td style="border :1px solid black;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2661_VALUE}</td>
+                {/|LOOP|}
+            </tr>
+            {/|RESULT|}
+        </tbody>
+    </table>
+    #Average 6 shops
+    <br/>
+    <div style="background-color:#6495ED;font-weight:bold;width:100%;color:white;vertical-align:middle;">Sales Process - Average 6 Shops</div>
+    <br/>  <table class='data' style="border :1px solid black;">
+    <thead>
+        <tr></tr>
+        <tr style="border :1px solid black;">
+            <th style="border :1px solid black;">Section</th>
+            
+            <th style="border :1px solid black;"><div>{DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR}</div></th>
+            <th style="border :1px solid black;">Menards Market</th>
+            <th style="border :1px solid black;">Menards Overall</th>
+            <th style="border :1px solid black;">HD/Lowes in Market</th>
+        </tr>
+    </thead>
+    <tbody style="border :1px solid black;">
+        #now we put back in our location filter, so that we only get the one the user selected
+        {|RESULT|KEEP_ONLY_FILTERS=NONE}
+        {|LOOP|RESULT.CLIENT_92_LEVEL_1(SORT=NAME,FILTER=ID|eq||EVALTAG(DATATYPES.SHOW_DATATYPE.CLIENT_92_LEVEL_1_SELECTOR.ID)|)}
+        <tr style="border :1px solid black;">
+            <td style="border :1px solid black;">Greeting</td>
+            
+            
+            #location score
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_20_SCORE).ROUND}%</td>
+            
+            #score for that location's market
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_20_SCORE, CLIENT_92_LEVEL_3).ROUND}%</td>
+            
+            #score for entire company
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_20_SCORE, OVERALL).ROUND}%</td>
+            
+            #score for location's competitor region
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_20_SCORE, CLIENT_92_LOCGROUPSET_61).ROUND}%</td>
+        </tr>
+        <tr>
+            <td style="border :1px solid black;">Qualifying</td>
+            
+            
+            #location score
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_21_SCORE).ROUND}%</td>
+            
+            #score for that location's market
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_21_SCORE, CLIENT_92_LEVEL_3).ROUND}%</td>
+            
+            #score for entire company
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_21_SCORE, OVERALL).ROUND}%</td>
+            
+            #score for location's competitor region
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_21_SCORE, CLIENT_92_LOCGROUPSET_61).ROUND}%</td>
+        </tr>
+        <tr style="border :1px solid black;">
+            <td style="border :1px solid black;">Presenting</td>
+            
+            
+            #location score
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_22_SCORE).ROUND}%</td>
+            
+            #score for that location's market
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_22_SCORE, CLIENT_92_LEVEL_3).ROUND}%</td>
+            
+            #score for entire company
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_22_SCORE, OVERALL).ROUND}%</td>
+            
+            #score for location's competitor region
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_22_SCORE, CLIENT_92_LOCGROUPSET_61).ROUND}%</td>
+        </tr>
+        <tr style="border :1px solid black;">
+            <td style="border :1px solid black;">Closing</td>
+            
+            
+            #location score
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_23_SCORE).ROUND}%</td>
+            
+            #score for that location's market
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_23_SCORE, CLIENT_92_LEVEL_3).ROUND}%</td>
+            
+            #score for entire company
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_23_SCORE, OVERALL).ROUND}%</td>
+            
+            #score for location's competitor region
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_23_SCORE, CLIENT_92_LOCGROUPSET_61).ROUND}%</td>
+        </tr>
+        
+        <tr>
+            <td style="border :1px solid black;">Follow Up</td>
+            
+            
+            #location score
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_24_SCORE).ROUND}%</td>
+            
+            #score for that location's market
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_24_SCORE, CLIENT_92_LEVEL_3).ROUND}%</td>
+            
+            #score for entire company
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_24_SCORE, OVERALL).ROUND}%</td>
+            
+            #score for location's competitor region
+            <td style="border :1px solid black;">{AVG(CLIENT_92_LEVEL_1.CLIENT_92_SURVEY_2660_SECTION_24_SCORE, CLIENT_92_LOCGROUPSET_61).ROUND}%</td>
+        </tr>
+        {/|LOOP|}
+        {/|RESULT|}
+    </tbody>
+    </table>
+    
+    
+    <br/>
+    #store appearance
+    
+    <div style="background-color:#6495ED;font-weight:bold;width:100%;color:white;vertical-align:middle;">Store Appearance - Current Shop</div>
+    <br/><table>
+    <tbody>
+        <tr><td colspan="6"></tr>
+        <tr><td colspan="6"></tr>
+        <tr>
+            <td width="10%"></td>
+            <td style="color:black;font-weight:bold;text-align:center;" class="storeappearance">Score</td>
+            <td style="color:black;font-weight:bold;text-align:center;" class="storeappearance">This Shop</td>
+            <td style="color:black;font-weight:bold;text-align:center;" class="storeappearance">Last Shop</td>
+            <td style="color:black;font-weight:bold;text-align:center;" class="storeappearance">Change</td>
+            <td width="10%"></td>
+        </tr>
+        
+        <tr>
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+            <td></td>
+            <td style="text-align:center;" class="storeappearance">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_1_ACTUAL_POINTS} of {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_1_POSSIBLE_POINTS}</td>
+            {/|LOOP|}
+            {/|RESULT|}
+            {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(LIMIT=1,SORT=ORDER_NUM,FILTER=type|eq|question_for_section_1)}
+            {|RESULT|}
+            {|LOOP|RESULT.MONTH_YEAR(LIMIT=1,SORT=ORDER_NUM|DESC,RESULT_FILTER=WITH_BLANKS_IN_RANGE)}
+            <td style="text-align:center;" class="storeappearance">{AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_1_SCORE)=|EVALCONST(NULL)|?0:|EVALTAG(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_1_SCORE).ROUND)|}%</td>
+            
+            <td style="text-align:center;" class="storeappearance">{NEXT(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_1_SCORE))=|EVALCONST(NULL)|?0:|EVALTAG(NEXT(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_1_SCORE)).ROUND)|}%</td>
+            <td style="text-align:center;" class="storeappearance"> {|SHOWIF|NEXT(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_1_SCORE),1)=|EVALCONST(NULL)|}
+                <div style="color:green">{AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_1_SCORE).ROUND}%</div>
+                {/|SHOWIF|} 
+                {|SHOWIF|NEXT(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_1_SCORE))}
+                <div class="{CALC(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_1_SCORE)-NEXT(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_1_SCORE)))>0?green:red}">
+                    {CALC((AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_1_SCORE))-(NEXT(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_1_SCORE)))).ROUND}%</div>
+                {/|SHOWIF|}
+            </td>
+            {/|LOOP|}
+            {/|RESULT|}
+            {/|LOOP|}
+        </tr>
+    </tbody></table>
+    #IMPROVEMENT for store appearance
+    <table><tbody> 
+        {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_1,SORT=ORDER_NUM)}
+        #<th>Greeting</th>
+        {|RESULT|}
+        {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_51.NAME=No&&GROUPS.ID=client_92_survey_2660_question_51}
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%">Improvement Needed:</th>
+            <td>{GROUPS.NAME.SUBSTR(2,700)}</td>
+            <td width="10%"></td>
+        </tr>
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%"></th>
+            <td style="font-style:italic">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1721_VALUE}</td>
+            <td width="10%"></td>
+        </tr>
+        
+        {/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_61.NAME=No&&GROUPS.ID=client_92_survey_2660_question_61}
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%">Improvement Needed:</th>
+            <td>{GROUPS.NAME.SUBSTR(2,700)}</td>
+            <td width="10%"></td>
+        </tr>
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%"></th>
+            <td style="font-style:italic">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1731_VALUE}</td>
+            <td width="10%"></td>
+        </tr>
+        
+        {/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_71.NAME=No&&GROUPS.ID=client_92_survey_2660_question_71}
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%">Improvement Needed:</th>
+            <td>{GROUPS.NAME.SUBSTR(2,700)}</td>
+            <td width="10%"></td>
+        </tr>
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%"></th>
+            <td style="font-style:italic">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1741_VALUE}</td>
+            <td width="10%"></td>
+        </tr>
+        
+        {/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1701.NAME=No&&GROUPS.ID=client_92_survey_2660_question_1701}
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%">Improvement Needed:</th>
+            <td>{GROUPS.NAME.SUBSTR(2,700)}</td>
+            <td width="10%"></td>
+        </tr>
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%"></th>
+            <td style="font-style:italic">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1751_VALUE}</td>
+            <td width="10%"></td>
+        </tr>
+        {/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1711.NAME=No&&GROUPS.ID=client_92_survey_2660_question_1711}
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%">Improvement Needed:</th>
+            <td>{GROUPS.NAME.SUBSTR(2,700)}</td>
+            <td width="10%"></td>
+        </tr>
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%"></th>
+            <td style="font-style:italic">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1761_VALUE}</td>
+            <td width="10%"></td>
+        </tr>
+        {/|SHOWIF|}
+        {/|LOOP|}
+        {/|RESULT|}
+        {/|LOOP|} 
+        </tbody></table>
+    
+    #Sales Process
+    <br/><br/><br/><br/> <br/><br/><br/><br/><br/><br/><br/><br/> <br/><br/>
+    <div style="background-color:#6495ED;font-weight:bold;width:100%;color:white;vertical-align:middle;">Sales Process - Current Shop</div>
+    <br>
+    <table style="border :1px solid black;"  >
+        <tbody>
+            <tr>
+                <th style="border :1px solid black;"></th>
+                #{|LOOP|DATATYPES.SHOW_DATATYPE.PROPERTIES(LIMIT=9,FILTER=type|eq|minor_sectional_percent_score)}
+                <th style="border :1px solid black;" width="10%">Building Materials</th>
+                <th style="border :1px solid black;"  width="10%">Hardware/Seasonal</th>
+                <th style="border :1px solid black;"  width="10%">Electrical/Lighting</th>
+                <th style="border :1px solid black;"  width="10%">Millwork</th>
+                <th style="border :1px solid black;"  width="10%">Cabinets & Appliances</th>
+                <th style="border :1px solid black;"  width="10%">Wall-Covering</th>
+                <th style="border :1px solid black;"  width="10%">Plumbing</th>
+                <th style="border :1px solid black;"  width="10%">Flooring</th>
+                <th style="border :1px solid black;"  width="10%">Garden Center</th>
+                
+                #{/|LOOP|}
+                <th style="border :1px solid black;"  width="10%"> Store </th>
+            </tr>
+            #Greeting
+            
+            <tr width="10%" style="border :1px solid black;"> 
+                <th style="border :1px solid black;" >Greeting</th>
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_18,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2431}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2431.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2431.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_16,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2271}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2271.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2271.NAME)|}
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_11,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_281}   
+                
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_281.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_281.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_17,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2351}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2351.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2351.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_15,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2191}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2191.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2191.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_14,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2111}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2111.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2111.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_12,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_1951}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1951.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1951.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_13,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2031}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2031.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2031.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_19,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2511}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2511.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2511.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                #store-Greeting
+                
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_20_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_20_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_20_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_20_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_20_SCORE=100?hm3}">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_20_SCORE}%
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                
+            </tr>
+            
+            #Qualifying
+            <tr width="10%" style="border :1px solid black;"> 
+                <th style="border :1px solid black;" >Qualifying</th>
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_18,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2451}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2451.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2451.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_16,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2291}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2291.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2291.NAME)|}
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_11,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_321}   
+                
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_321.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_321.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_17,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2371}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2371.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2371.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_15,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2211}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2211.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2211.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_14,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2131}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2131.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2131.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_12,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_1971}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1971.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1971.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_13,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2051}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2051.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2051.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_19,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2521}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2521.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2521.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                #store-Qualifying
+                
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_21_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_21_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_21_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_21_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_21_SCORE=100?hm3}">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_21_SCORE}%
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+            </tr>
+            
+            #Presenting
+            <tr width="10%" style="border :1px solid black;"> 
+                <th style="border :1px solid black;" >Presenting</th>
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_18,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2461}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2461.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2461.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_16,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2301}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2301.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2301.NAME)|}
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_11,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_1891}   
+                
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1891.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1891.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_17,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2381}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2381.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2381.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_15,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2221}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2221.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2221.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_14,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2141}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2141.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2141.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_12,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_1981}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1981.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1981.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_13,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2061}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2061.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2061.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_19,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2541}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2541.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2541.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                #store-Presenting
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_22_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_22_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_22_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_22_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_22_SCORE=100?hm3}">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_22_SCORE}%
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+            </tr>
+            
+            #Closing 
+            
+            <tr width="10%" style="border :1px solid black;"> 
+                <th style="border :1px solid black;" >Closing</th>
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_18,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2471}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2471.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2471.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_16,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2311}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2311.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2311.NAME)|}
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_11,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_1901}   
+                
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1901.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1901.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_17,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2391}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2391.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2391.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_15,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2231}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2231.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2231.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_14,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2151}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2151.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2151.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_12,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_1991}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1991.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1991.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_13,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2071}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2071.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2071.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_19,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2551}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2551.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2551.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                #store-Closing
+                
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_23_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_23_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_23_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_23_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_23_SCORE=100?hm3}">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_23_SCORE}%
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+            </tr>
+            
+            #Follow Up
+            <tr width="10%" style="border :1px solid black;"> 
+                <th style="border :1px solid black;" >Followup</th>
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_18,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2481}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2481.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2481.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_16,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2321}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2321.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2321.NAME)|}
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_11,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_1911}   
+                
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1911.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1911.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_17,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2401}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2401.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2401.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_15,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2241}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2241.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2241.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_14,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2161}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2161.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2161.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_12,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2001}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2001.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2001.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_13,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2081}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2081.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2081.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_19,SORT=ORDER_NUM)}
+                {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_2561}   
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2561.NAME=|EVALCONST(NULL)|?-:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2561.NAME)|}
+                    
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|SHOWIF|} 
+                {/|LOOP|} 
+                
+                #store-Followup
+                
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_24_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_24_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_24_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_24_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_24_SCORE=100?hm3}">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_24_SCORE}%
+                </td>
+                {/|LOOP|}
+                {/|RESULT|}
+            </tr>
+            
+            
+            
+            #Team Member
+            <tr width="10%">
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <th style="border :1px solid black;" >Team Member </th>
+                <td style="border :1px solid black;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2641_VALUE}</td>
+                <td style="border :1px solid black;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2621_VALUE}</td>
+                <td style="border :1px solid black;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2571_VALUE}</td>
+                <td style="border :1px solid black;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2631_VALUE}</td>
+                <td style="border :1px solid black;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2611_VALUE}</td>
+                <td style="border :1px solid black;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2601_VALUE}</td>
+                <td style="border :1px solid black;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2581_VALUE}</td>
+                <td style="border :1px solid black;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2591_VALUE}</td>
+                <td style="border :1px solid black;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2651_VALUE}</td>
+                <td style="border :1px solid black;">-</td>
+                {/|LOOP|}
+                {/|RESULT|}
+            </tr>
+            
+            
+            
+            #summary     
+            <tr width=10%>
+                <th style="border :1px solid black;"> Summary </th>
+                #Building
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+               
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_18_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_18_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_18_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_18_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_18_SCORE=100?hm3}">
+        {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_18_SCORE=|EVALCONST(NULL)|?0:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_18_SCORE)|}%
+                  </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                
+                
+                #Hardware
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_16_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_16_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_16_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_16_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_16_SCORE=100?hm3}">
+                    {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_16_SCORE=|EVALCONST(NULL)|?0:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_16_SCORE)|}%
+                </td>         
+                {/|LOOP|}
+                {/|RESULT|}
+                
+                
+                #Electrical              
+                    {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                      <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_11_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_11_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_11_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_11_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_11_SCORE=100?hm3}">
+        {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_11_SCORE=|EVALCONST(NULL)|?0:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_11_SCORE)|}%
+                  </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                
+                
+                #Millwork
+                
+				      {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_17_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_17_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_17_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_17_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_17_SCORE=100?hm3}">
+        {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_17_SCORE=|EVALCONST(NULL)|?0:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_17_SCORE)|}%
+                  </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                
+                #Cabinets
+               {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_15_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_15_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_15_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_15_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_15_SCORE=100?hm3}">
+        {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_15_SCORE=|EVALCONST(NULL)|?0:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_15_SCORE)|}%
+                  </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                
+                #Wall Covering
+                   {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_14_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_14_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_14_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_14_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_14_SCORE=100?hm3}">
+        {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_14_SCORE=|EVALCONST(NULL)|?0:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_14_SCORE)|}%
+                  </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                
+                #plumbing
+                    {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_12_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_12_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_12_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_12_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_12_SCORE=100?hm3}">
+        {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_12_SCORE=|EVALCONST(NULL)|?0:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_12_SCORE)|}%
+                  </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                
+                
+                #Floring
+                     {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_13_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_13_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_13_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_13_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_13_SCORE=100?hm3}">
+        {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_13_SCORE=|EVALCONST(NULL)|?0:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_13_SCORE)|}%
+                  </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                
+                
+                #Garden center
+                   {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_19_SCORE<69?hm1}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_19_SCORE>70&&DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_19_SCORE<89?hm2}
+{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_19_SCORE>90||DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_19_SCORE=100?hm3}">
+        {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_19_SCORE=|EVALCONST(NULL)|?0:|EVALTAG(DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_19_SCORE)|}%
+                  </td>
+                {/|LOOP|}
+                {/|RESULT|}
+                
+                
+                
+                #overall score
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td style="border :1px solid black;" class="
+{CALC((DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_20_SCORE + DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_21_SCORE + DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_22_SCORE +DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_23_SCORE+DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_24_SCORE)/(5))<69?hm1}
+{CALC((DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_20_SCORE + DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_21_SCORE + DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_22_SCORE +DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_23_SCORE+DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_24_SCORE)/(5))>70&&CALC((DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_20_SCORE + DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_21_SCORE + DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_22_SCORE +DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_23_SCORE+DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_24_SCORE)/(5))<89?hm2} 
+{CALC((DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_20_SCORE + DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_21_SCORE + DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_22_SCORE +DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_23_SCORE+DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_24_SCORE)/(5))>90||CALC((DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_20_SCORE + DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_21_SCORE + DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_22_SCORE +DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_23_SCORE+DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_24_SCORE)/(5))=100?hm3}">   
+                    {CALC((DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_20_SCORE + DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_21_SCORE + DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_22_SCORE +DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_23_SCORE+DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_24_SCORE)/(5))}%
+                </td>	
+                {/|LOOP|}
+                {/|RESULT|}
+            </tr>
+        </tbody>
+    </table>                
+    
+    
+    #Checkout Service Section
+    <div style="background-color:#6495ED;font-weight:bold;width:100%;color:white;vertical-align:middle;">Checkout Service-Current Shop</div>
+    <table>
+        <tbody>
+            <tr><td colspan="6"></tr>
+            <tr><td colspan="6"></tr>
+            <tr>
+                <td width="10%"></td>
+                <td style="color:black;font-weight:bold;text-align:center;" class="checkoutservice">Score</td>
+                <td style="color:black;font-weight:bold;text-align:center;" class="checkoutservice">This Shop</td>
+                <td style="color:black;font-weight:bold;text-align:center;" class="checkoutservice">Last Shop</td>
+                <td style="color:black;font-weight:bold;text-align:center;" class="checkoutservice">Change</td>
+                <td width="10%"></td>
+            </tr>
+            <tr>
+                {|RESULT|}
+                {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+                <td></td>
+                <td style="text-align:center;" class="checkoutservice">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_3_ACTUAL_POINTS} of {DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_3_POSSIBLE_POINTS}</td>
+                {/|LOOP|}
+                {/|RESULT|}
+                
+                {|LOOP|DATATYPES.SHOW_DATATYPE.PROPERTIES(LIMIT=1,FILTERSET=type|eq|major_sectional_percent_score,SORT=ORDER_NUM)}
+                {|RESULT|}
+                {|LOOP|RESULT.MONTH_YEAR(LIMIT=1,SORT=ORDER_NUM|DESC,RESULT_FILTER=WITH_BLANKS_IN_RANGE)}
+                <td style="text-align:center;" class="checkoutservice">{AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_3_SCORE)=|EVALCONST(NULL)|?0:|EVALTAG(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_3_SCORE).ROUND)|}%</td>
+                {/|LOOP|}
+                {/|RESULT|}
+                
+                {|RESULT|}
+                {|LOOP|RESULT.MONTH_YEAR(LIMIT=1,SORT=ORDER_NUM|DESC,RESULT_FILTER=WITH_BLANKS_IN_RANGE)}
+                <td style="text-align:center;" class="checkoutservice">{NEXT(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_3_SCORE),1)=|EVALCONST(NULL)|?0:|EVALTAG(NEXT(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_3_SCORE),1).ROUND)|}%</td>
+                <td  style="text-align:center;" class="checkoutservice">
+                    {|SHOWIF|NEXT(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_3_SCORE),1)=|EVALCONST(NULL)|}
+                    <div style="color:green">{AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_3_SCORE).ROUND}%</div>
+                    {/|SHOWIF|} 
+                    {|SHOWIF|NEXT(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_3_SCORE))}
+                    <div class="{CALC(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_3_SCORE)-NEXT(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_3_SCORE)))>0?green:red}">
+                        {CALC((AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_3_SCORE))-(NEXT(AVG(MONTH_YEAR.CLIENT_92_SURVEY_2660_SECTION_3_SCORE)))).ROUND}%</div>
+                    {/|SHOWIF|}
+                </td><td></td>
+                {/|LOOP|}
+                {/|RESULT|}
+                {/|LOOP|}
+            </tr>
+        </tbody></table>
+    
+    #IMPROVEMENT section of checkout SERVICE
+    
+    
+    <table><tbody> 
+        {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_3,SORT=ORDER_NUM)}
+        #<th>Greeting</th>
+        {|RESULT|}
+        {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_171.NAME=No&&GROUPS.ID=client_92_survey_2660_question_171}
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%">Improvement Needed with Checkout Service:</th>
+            <td>{GROUPS.NAME.SUBSTR(2,7000)}</td>
+            <td width="10%"></td>
+        </tr>
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%"></th>
+            <td style="font-style:italic">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1781_VALUE}</td>
+            <td width="10%"></td>
+        </tr>
+        
+        {/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_181.NAME=No&&GROUPS.ID=client_92_survey_2660_question_181}
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%">Improvement Needed with Checkout Service:</th>
+            <td>{GROUPS.NAME.SUBSTR(2,7000)}</td>
+            <td width="10%"></td>
+        </tr>
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%"></th>
+            <td style="font-style:italic">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1771_VALUE}</td>
+            <td width="10%"></td>
+        </tr>
+        
+        {/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1841.NAME=No&&GROUPS.ID=client_92_survey_2660_question_1841}
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%">Improvement Needed with Checkout Service:</th>
+            <td>{GROUPS.NAME.SUBSTR(2,7000)}</td>
+            <td width="10%"></td>
+        </tr>
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%"></th>
+            <td style="font-style:italic">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1851_VALUE}</td>
+            <td width="10%"></td>
+        </tr>
+        
+        {/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1861.NAME=No&&GROUPS.ID=client_92_survey_2660_question_1861}
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%">Improvement Needed with Checkout Service:</th>
+            <td>{GROUPS.NAME.SUBSTR(2,7000)}</td>
+            <td width="10%"></td>
+        </tr>
+        <tr>
+            <th width="10%"></th> 
+            <th style="font-size:14px;" width="30%"></th>
+            <td style="font-style:italic">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1871_VALUE}</td>
+            <td width="10%"></td>
+        </tr>
+        {/|SHOWIF|}
+        
+        {/|LOOP|}
+        {/|RESULT|}
+        {/|LOOP|} 
+        </tbody></table>
+    
+    
+    #GENERAL SECTION 
+    <div style="background-color:#6495ED;font-weight:bold;width:100%;color:white;vertical-align:middle;">General - Current Shop</div>
+    <br>
+    <table><tbody>
+        
+        {|LOOP|DATATYPES.SHOW_DATATYPE.GROUPS(FILTER=type|eq|question_for_section_4,SORT=ORDER_NUM)}
+        {|SHOWIF|GROUPS.ID=client_92_survey_2660_question_231||client_92_survey_2660_question_241||client_92_survey_2660_question_191||client_92_survey_2660_question_201||client_92_survey_2660_question_1831|||client_92_survey_2660_question_251|}   
+        #<th>General</th>
+        {|RESULT|}
+        {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_231.NAME=Yes}
+        <tr>
+            <th width="10%"></th> 
+            <td>1. The shopper did receive a minimum of one business card from an assisting Team Member.</td>
+        </tr>
+        {/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_231.NAME=No}
+        <tr><th width="10%"></th> 
+             # <td>{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1821_VALUE}</td>
+           <td>1. The shopper did not receive a minimum of one business card from an assisting Team Member.</td>
+        </tr>{/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_241.NAME=No}
+        <tr><th width="10%"></th> 
+           # <td>{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_1811_VALUE}</td>
+            <td>2. The shopper was not given the correct information on how to pick up a Buy Online, Pick up at Store order .</td>
+        </tr>{/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_241.NAME=Yes}
+        <tr><th width="10%"></th> 
+            <td>2. The shopper was given the correct information on how to pick up a Buy Online, Pick up at Store order. </td>
+        </tr>{/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_191.NAME=Yes}
+        <tr><th width="10%"></th> 
+            <td>3. The shopper made the following comments regarding your Garden Center: <br/>
+                <i>Plants were stocked but the flowers were beginning to dry out and die.</i></td>
+        </tr> {/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_191.NAME=No}
+        <tr> <th width="10%"></th> 
+            <td>3. The shopper did not visit the Garder Center.</td>
+        </tr>{/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_201.NAME=No}
+        <tr> <th width="10%"></th> 
+            <td>4. The Outside Yard was not shopped.</td>
+        </tr> {/|SHOWIF|}
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_201.NAME=Yes}
+        <tr><th width="10%"></th> 
+            <td>4. The Outside Yard was shopped.</td>
+        </tr> {/|SHOWIF|}
+        
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_201.NAME=Yes}
+        <tr><th width="10%"></th> 
+            <td>4. The Outside Yard was shopped.</td>
+        </tr> {/|SHOWIF|}
+        
+        {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_251_VALUE}
+        <tr> <th width="10%"></th> 
+            <td>5. The shopper made the following comments regarding how likely they are to return to your store and or recommend your store to friends and family based off their experience: <br/>
+			<i>{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_251_VALUE}</i>
+               </td>
+        </tr>  
+        {/|SHOWIF|}
+        
+        
+        {/|LOOP|}
+        {/|RESULT|}
+        {/|SHOWIF|} 
+        {/|LOOP|}             
+        </tbody></table>
+    <br/>
+    
+    
+    
+    #GOOD JOB
+    <div style="background-color:#6495ED;font-weight:bold;width:100%;color:white;vertical-align:middle;">Team Members Who did a Good job</div> 
+    <br/>   
+    <table style="border:1px solid black;">
+        <tbody>
+            
+            <tr style="border:1px solid black;">
+                <td style="color:#8A2BE2;text-align:center;"><u>Team Member Name</u></td>
+                <td style="color:#8A2BE2;text-align:center;"><u>Team Member Score</u></td>
+            </tr>
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_18_SCORE=100}
+            <tr>
+                <td style="text-align:center;" >{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2641_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_18_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}  
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_16_SCORE=100}
+            <tr >
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2621_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_16_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)} 
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_11_SCORE=100}
+            <tr>
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2571_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_11_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)} 
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_17_SCORE=100}
+            <tr>
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2631_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_17_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)} 
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_15_SCORE=100}
+            <tr>
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2611_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_15_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)} 
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_14_SCORE=100}
+            <tr >
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2601_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_14_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)} 
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_12_SCORE=100}
+            <tr >
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2581_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_12_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)} 
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_13_SCORE=100}
+            <tr>
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2591_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_13_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_19_SCORE=100}
+            <tr >
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2651_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_19_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            
+            {/|LOOP|}
+            {/|RESULT|}
+            
+        </tbody>
+    </table>
+    
+    #BAD jOB
+    <div style="background-color:#6495ED;font-weight:bold;width:100%;color:white;vertical-align:middle;">Team Members Who Need Coaching</div> 
+    <br/>   
+    <table style="border:1px solid black;">
+        <tbody>
+            
+            <tr style="border:1px solid black;">
+                <td style="color:#8A2BE2;text-align:center;"><u>Team Member Name</u></td>
+                <td style="color:#8A2BE2;text-align:center;"><u>Team Member Score</u></td>
+            </tr>
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_18_SCORE<100}
+            <tr>
+                <td style="text-align:center;" >{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2641_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_18_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}  
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_16_SCORE<100}
+            <tr >
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2621_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_16_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)} 
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_11_SCORE<100}
+            <tr>
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2571_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_11_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)} 
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_17_SCORE<100}
+            <tr>
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2631_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_17_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)} 
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_15_SCORE<100}
+            <tr>
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2611_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_15_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)} 
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_14_SCORE<100}
+            <tr >
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2601_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_14_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)} 
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_12_SCORE<100}
+            <tr >
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2581_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_12_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)} 
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_13_SCORE<100}
+            <tr>
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2591_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_13_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            {/|LOOP|}
+            {/|RESULT|}
+            
+            {|RESULT|}
+            {|LOOP|RESULT.DATAPOINTS(LIMIT=1)}
+            {|SHOWIF|DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_19_SCORE<100}
+            <tr >
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_QUESTION_2651_VALUE}</td>    
+                <td style="text-align:center;">{DATAPOINTS.CLIENT_92_SURVEY_2660_SECTION_19_SCORE}</td>
+            </tr> 
+            {/|SHOWIF|}
+            
+            {/|LOOP|}
+            {/|RESULT|}
+            
+        </tbody>
+    </table>
+    
+    
+    {/|SHOWIF|}
+    {/|SHOWIF|}
+</div>

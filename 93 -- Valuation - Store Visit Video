@@ -1,0 +1,73 @@
+<div id="no-nav-placeholder" class="presto-eval-logo"></div>
+      <div class="response-containertp">
+
+<h1>&nbsp Items pawned</h1>
+      <div class="response-container">
+
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+  {DATATYPES.DEFAULT_DATE_FILTERS} 
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+</div>
+<div class='results'>
+  {|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+  <div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+  {/|VANISHIF|}
+  
+  {|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+  
+  <div class="response-container">
+    
+  {|RESULT|}
+    {|LOOP|RESULT.DATAPOINTS(SORT=JOB_DATE|DESC,FILTER=CLIENT_65_SURVEY_3099_QUESTION_1241_VALUE|ne||EVALCONST(NULL)|)}
+           
+    {|SHOWIF|LOOP.ISFIRST}
+					<table class='data'>
+						<thead>
+							<tr>
+								<th>{|SORT_TOGGLE|JOB_DATE.FORMATTED(n/d/y)}Date{/|SORT_TOGGLE|}</th>
+                                <th>{|SORT_TOGGLE|CLIENT_65_LEVEL_1.NAME}Store #</th>
+                                <th>{|SORT_TOGGLE|CLIENT_65_LEVEL_2.NAME}District</th>
+                                <th>{|SORT_TOGGLE|CLIENT_65_LEVEL_3.NAME}Region</th>  
+								<th>{|SORT_TOGGLE|CLIENT_65_SURVEY_3099_QUESTION_1261.NAME}Pawn Item{/|SORT_TOGGLE|}</th>                              
+								<th>{|SORT_TOGGLE|CLIENT_65_SURVEY_3099_QUESTION_1241_VALUE}Other Item{/|SORT_TOGGLE|}</th>
+								<th>{|SORT_TOGGLE|CLIENT_65_SURVEY_3099_QUESTION_841_VALUE}Amount Offered{/|SORT_TOGGLE|}</th>
+								<th>{|SORT_TOGGLE|CLIENT_65_SURVEY_3099_QUESTION_831_VALUE}Internal Value{/|SORT_TOGGLE|}</th>                                
+                                <th>Score</th>
+                                <th>Greeting</th>
+                                <th>Loan Transaction</th>
+                                <th>Sales Transaction</th>
+                                <th>Closing (Thanking the Customer)</th>
+                                <th>Physical Environment</th>
+                                
+							</tr>
+						</thead>
+						<tbody>
+				{/|SHOWIF|}
+					<tr>
+						<td>{DATAPOINTS.JOB_DATE.FORMATTED(n/d/y)}</td>
+                        <td>{DATAPOINTS.CLIENT_65_LEVEL_1.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_65_LEVEL_2.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_65_LEVEL_3.NAME}</td>                    
+   	                    <td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_1261.NAME}</td>
+                        	<td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_1241_VALUE}</td>
+						<td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_841_VALUE}</td> 
+						<td>{DATAPOINTS.CLIENT_65_SURVEY_3099_QUESTION_831_VALUE}</td>                         
+                        <td>{DATAPOINTS.PERCENT_SCORE}</td>                    
+                        <td>{DATAPOINTS.CLIENT_65_SURVEY_3099_SECTION_1_SCORE}</td>                    
+                        <td>{DATAPOINTS.CLIENT_65_SURVEY_3099_SECTION_2_SCORE}</td>                    
+                        <td>{DATAPOINTS.CLIENT_65_SURVEY_3099_SECTION_3_SCORE}</td>                    
+                        <td>{DATAPOINTS.CLIENT_65_SURVEY_3099_SECTION_4_SCORE}</td>                    
+                        <td>{DATAPOINTS.CLIENT_65_SURVEY_3099_SECTION_5_SCORE}</td>                                           
+					</tr>
+				{|VANISHIF|LOOP.HASNEXT}
+					</tbody>
+				</table>
+				{/|VANISHIF|}
+    {/|LOOP|}
+  {/|RESULT|}
+</div>    
+    
+
+           
+  {/|SHOWIF|}</div>
+</div>

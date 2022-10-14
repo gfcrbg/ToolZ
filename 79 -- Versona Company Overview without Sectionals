@@ -1,0 +1,119 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+{|NESTED|}
+<table class="data">
+
+  {|LOOP|NESTED.CLIENT_435_LEVEL_4(SORT=NAME)}
+  	{LOOP.ISFIRST?:|VANISH|}
+    	<thead>
+        	<tr class="header-row">
+				<th>Territory</th>
+	            <th>RVP/ZONE</th>
+				<th>DM</th>
+        	    <th># Shops</th>
+            	<th>Store</th>
+	            <th>City</th>
+    	        <th>State</th>
+        	    <th>Shop Date</th>
+            	<th>Overall Score</th>
+	            <th>Total Points</th>
+	        </tr>
+      </thead>
+#END of Header
+
+      <tbody>     
+    {/LOOP.ISFIRST?:|VANISH|}    
+      		<tr>
+	    		<th>{CLIENT_435_LEVEL_4.NAME}</th>
+	            <td></td>
+    	        <td></td>
+        	    <th>{COUNT(CLIENT_435_LEVEL_4,CLIENT_435_LEVEL_4)}</th>                    
+	        	<td></td>
+	    	    <td></td>
+    	    	<td></td>
+	    	    <td></td>
+    	    	<td>{AVG(CLIENT_435_LEVEL_4.PERCENT_SCORE,CLIENT_435_LEVEL_4).ROUND(2)}%</td>            
+	        	<td>{SUM(CLIENT_435_LEVEL_4.POINTS,CLIENT_435_LEVEL_4)}</td>          
+			</tr>     
+          
+	{|LOOP|CLIENT_435_LEVEL_4.CLIENT_435_LEVEL_3(SORT=NAME)}   
+#THIS FLAGS THE REGION NAMES for the Javascript show/hide funtion
+            <tr class="region" id="{CLIENT_435_LEVEL_3.NAME.SPLIT( ,1)}">
+            	<td></td>
+	            <th>{CLIENT_435_LEVEL_3.NAME}</th>
+    	  		{|LOOP|CLIENT_435_LEVEL_3.CLIENT_435_LEVEL_2(SORT=NAME)}
+      				{LOOP.ISFIRST?:|VANISH|}
+		  				<td></td>
+			    	    <th>{COUNT(CLIENT_435_LEVEL_3,CLIENT_435_LEVEL_3)}</th>                    
+          				<td></td>
+					    <td></td>
+				        <td></td>
+        	  			<td></td>
+		    	        <td>{AVG(CLIENT_435_LEVEL_2.PERCENT_SCORE,CLIENT_435_LEVEL_3).ROUND(2)}%</td>            
+          				<td>{SUM(CLIENT_435_LEVEL_2.POINTS,CLIENT_435_LEVEL_3)}</td>            
+    	    </tr>
+  				    {/LOOP.ISFIRST?:|VANISH|}             
+
+#THIS FLAGS THE AREA (District) NAMES for the Javascript show/hide funtion        
+#          	<tr class="area-{CLIENT_435_LEVEL_3.NAME.SPLIT( ,1)}" id={CLIENT_435_LEVEL_2.NAME.SPLIT( ,0)}>
+#            	<th></th>
+#			    <td></td>  
+#		        <th>{CLIENT_435_LEVEL_2.NAME}</th>
+#                <th>{COUNT(CLIENT_435_LEVEL_2,CLIENT_435_LEVEL_2)}</th>
+#            	<th></th>
+#	            <th></th>
+#    	        <th></th>
+#        	    <th></th>
+#            	<td>{AVG(CLIENT_435_LEVEL_2.PERCENT_SCORE,CLIENT_435_LEVEL_2).ROUND(2)}%</td>
+#	            <td>{SUM(CLIENT_435_LEVEL_2.POINTS,CLIENT_435_LEVEL_2)}</td>                 
+#    	    </tr>
+          
+#THIS FLAGS THE LOACTION NAMES for the Javascript show/hide funtion                  
+   			{|LOOP|CLIENT_435_LEVEL_2.CLIENT_435_LEVEL_1(SORT=NAME)}            
+	 	    	{|LOOP|CLIENT_435_LEVEL_1.DATAPOINTS(SORT=TRENDING_TIMESTAMP|DESC)}            
+			        <tr class="location-{CLIENT_435_LEVEL_2.NAME.SPLIT( ,0)}">
+            			<th></th>
+			            <th></th>
+			            <th></th>
+			            <td>{COUNT(CLIENT_435_LEVEL_1,CLIENT_435_LEVEL_1)}</td>
+			            <td>{DATAPOINTS.CLIENT_435_LEVEL_1.NAME.SPLIT( ,0)}</td>
+						<td>{DATAPOINTS.LEVEL_1_CITY}</td>
+						<td>{DATAPOINTS.CLIENT_435_STATE.NAME.SPLIT(,,0)}</td>
+			            <td>{DATAPOINTS.TRENDING_TIMESTAMP.FORMATTED(l, F j, Y)}</td>           
+			            <td>{DATAPOINTS.PERCENT_SCORE}%</td>
+			            <td>{DATAPOINTS.POINTS}</td>              
+			        </tr>       
+#end datapoints loop
+        		{/|LOOP|} 
+
+#end level_1 loop
+
+			{/|LOOP|} 
+          	<tr class="area-{CLIENT_435_LEVEL_3.NAME.SPLIT( ,1)}" id={CLIENT_435_LEVEL_2.NAME.SPLIT( ,0)}>
+            	<th></th>
+			    <td></td>  
+		        <th>{CLIENT_435_LEVEL_2.NAME}</th>
+                <th>{COUNT(CLIENT_435_LEVEL_2,CLIENT_435_LEVEL_2)}</th>
+            	<th></th>
+	            <th></th>
+    	        <th></th>
+        	    <th></th>
+            	<th>{AVG(CLIENT_435_LEVEL_2.PERCENT_SCORE,CLIENT_435_LEVEL_2).ROUND(2)}%</th>
+	            <th>{SUM(CLIENT_435_LEVEL_2.POINTS,CLIENT_435_LEVEL_2)}</th>
+    	    </tr>
+
+
+#end level 2 loop
+		{/|LOOP|}
+#end level 3 loop
+	{/|LOOP|} 
+
+#end level 4 loop          
+{/|LOOP|}
+
+      </tbody>
+</table>
+{/|NESTED|}

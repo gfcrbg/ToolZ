@@ -1,0 +1,216 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+
+
+
+   			{DATATYPES.SHOW_DATATYPE.CLIENT_501_LEVEL_1.NAME}
+            <input type=checkbox name=misc_vars___show_level_1 {MISC_VARS.SHOW_LEVEL_1?checked}></td>
+            #{DATATYPES.SHOW_DATATYPE.CLIENT_501_LEVEL_1_SELECTOR.INPUT}
+                <select class="k_select"
+        			name="DATATYPES___SHOW_DATATYPE___CLIENT_501_LEVEL_1_SELECTOR" 
+        			id="DATATYPES___SHOW_DATATYPE___CLIENT_501_LEVEL_1_SELECTOR"
+        		>
+        		<option value="">-- all --</option>
+            
+            	{|NESTED|}
+            		{|LOOP|NESTED.CLIENT_501_LEVEL_1(SORT=NAME_ONLY,NO_BLANKS,KEEP_ONLY_FILTERS=NONE)}           	
+                		<option value="{CLIENT_501_LEVEL_1.ID}" 
+            				{DATATYPES.SHOW_DATATYPE.CLIENT_501_LEVEL_1_SELECTOR.ID=|EVALTAG(CLIENT_501_LEVEL_1.ID)|?selected}
+            			>
+                    		{CLIENT_501_LEVEL_1.NAME_ONLY}
+            			</option>
+            		{/|LOOP|}
+            	{/|NESTED|}
+        	</select>
+
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+	
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+
+
+
+#entire company
+{|SHOWIF|MISC_VARS.SHOW_ENTIRE_COMPANY}
+{|RESULT|}
+<div>
+	<table>
+		{|LOOP|RESULT.DATAPOINTS(SORT=ID)}
+			{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+            	        <th>{|SORT_TOGGLE|CLIENT_501_LEVEL_3.NAME}District{/|SORT_TOGGLE|}</th>
+                	    <th>{|SORT_TOGGLE|CLIENT_501_LEVEL_2.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th>{|SORT_TOGGLE|CLIENT_501_LEVEL_1.NAME_ONLY}Employee{/|SORT_TOGGLE|}</th>
+	                    <th>{|SORT_TOGGLE|CLIENT_501_SURVEY.NAME}Position{/|SORT_TOGGLE|}</th>
+						<th>{|SORT_TOGGLE|JOB_DATE}Month{/|SORT_TOGGLE|}</th>
+        	            <th>{|SORT_TOGGLE|PERCENT_SCORE}Grade{/|SORT_TOGGLE|}</th>
+            	        <th>Link</th>
+					</tr>
+				</thead>
+	    		<tbody>     
+			{/|SHOWIF|}																								                                
+                	<tr>
+						<td>{DATAPOINTS.CLIENT_501_LEVEL_3.NAME}</td>
+						<td>{DATAPOINTS.CLIENT_501_LEVEL_2.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_501_LEVEL_1.NAME_ONLY}</td>
+                        <td>{DATAPOINTS.CLIENT_501_SURVEY.NAME}</td>
+                        <td>{DATAPOINTS.JOB_DATE.FORMATTED(F, Y)}</td>
+                        <td class="grade-{DATAPOINTS.PERCENT_SCORE}">{DATAPOINTS.PERCENT_SCORE=100?A}{DATAPOINTS.PERCENT_SCORE=50?B}{DATAPOINTS.PERCENT_SCORE=0?C}</td>
+                       	<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a></td>
+                    </tr>    
+                {/|LOOP|}																											              																													
+            <br><br>
+	    </tbody>
+	</table>
+{/|RESULT|}
+{/|SHOWIF|}
+
+#level 3
+{|SHOWIF|MISC_VARS.SHOW_LEVEL_3}
+{|RESULT|}
+<div>
+	<table>
+		{|LOOP|RESULT.DATAPOINTS(SORT=ID)}
+			{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+            	        <th>{|SORT_TOGGLE|CLIENT_501_LEVEL_3.NAME}District{/|SORT_TOGGLE|}</th>
+                	    <th>{|SORT_TOGGLE|CLIENT_501_LEVEL_2.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th>{|SORT_TOGGLE|CLIENT_501_LEVEL_1.NAME_ONLY}Employee{/|SORT_TOGGLE|}</th>
+	                    <th>{|SORT_TOGGLE|CLIENT_501_SURVEY.NAME}Position{/|SORT_TOGGLE|}</th>
+						<th>{|SORT_TOGGLE|JOB_DATE}Month{/|SORT_TOGGLE|}</th>
+        	            <th>{|SORT_TOGGLE|PERCENT_SCORE}Grade{/|SORT_TOGGLE|}</th>
+            	        <th>Link</th>
+					</tr>
+				</thead>
+	    		<tbody>     
+			{/|SHOWIF|}																								                                
+                	<tr>
+						<td>{DATAPOINTS.CLIENT_501_LEVEL_3.NAME}</td>
+						<td>{DATAPOINTS.CLIENT_501_LEVEL_2.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_501_LEVEL_1.NAME_ONLY}</td>
+                        <td>{DATAPOINTS.CLIENT_501_SURVEY.NAME}</td>
+                        <td>{DATAPOINTS.JOB_DATE.FORMATTED(F, Y)}</td>
+                        <td class="grade-{DATAPOINTS.PERCENT_SCORE}">{DATAPOINTS.PERCENT_SCORE=100?A}{DATAPOINTS.PERCENT_SCORE=50?B}{DATAPOINTS.PERCENT_SCORE=0?C}</td>
+                       	<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a></td>
+                    </tr>    
+                {/|LOOP|}																											              																													
+            <br><br>
+	    </tbody>
+	</table>
+{/|RESULT|}
+{/|SHOWIF|}
+
+#level 2
+{|SHOWIF|MISC_VARS.SHOW_LEVEL_2}
+{|RESULT|}
+<div>
+	<table>
+		{|LOOP|RESULT.DATAPOINTS(SORT=ID)}
+			{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+            	        <th>{|SORT_TOGGLE|CLIENT_501_LEVEL_3.NAME}District{/|SORT_TOGGLE|}</th>
+                	    <th>{|SORT_TOGGLE|CLIENT_501_LEVEL_2.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th>{|SORT_TOGGLE|CLIENT_501_LEVEL_1.NAME_ONLY}Employee{/|SORT_TOGGLE|}</th>
+	                    <th>{|SORT_TOGGLE|CLIENT_501_SURVEY.NAME}Position{/|SORT_TOGGLE|}</th>
+						<th>{|SORT_TOGGLE|JOB_DATE}Month{/|SORT_TOGGLE|}</th>
+        	            <th>{|SORT_TOGGLE|PERCENT_SCORE}Grade{/|SORT_TOGGLE|}</th>
+            	        <th>Link</th>
+					</tr>
+				</thead>
+	    		<tbody>     
+			{/|SHOWIF|}																								                                
+                	<tr>
+						<td>{DATAPOINTS.CLIENT_501_LEVEL_3.NAME}</td>
+						<td>{DATAPOINTS.CLIENT_501_LEVEL_2.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_501_LEVEL_1.NAME_ONLY}</td>
+                        <td>{DATAPOINTS.CLIENT_501_SURVEY.NAME}</td>
+                        <td>{DATAPOINTS.JOB_DATE.FORMATTED(F, Y)}</td>
+                        <td class="grade-{DATAPOINTS.PERCENT_SCORE}">{DATAPOINTS.PERCENT_SCORE=100?A}{DATAPOINTS.PERCENT_SCORE=50?B}{DATAPOINTS.PERCENT_SCORE=0?C}</td>
+                       	<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a></td>
+                    </tr>    
+                {/|LOOP|}																											              																													
+            <br><br>
+	    </tbody>
+	</table>
+{/|RESULT|}
+{/|SHOWIF|}
+    
+#level 1
+{|SHOWIF|MISC_VARS.SHOW_LEVEL_1}
+{|RESULT|}
+<div>
+	<table>
+		{|LOOP|RESULT.DATAPOINTS(SORT=ID)}
+			{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+            	        <th>{|SORT_TOGGLE|CLIENT_501_LEVEL_3.NAME}District{/|SORT_TOGGLE|}</th>
+                	    <th>{|SORT_TOGGLE|CLIENT_501_LEVEL_2.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th>{|SORT_TOGGLE|CLIENT_501_LEVEL_1.NAME_ONLY}Employee{/|SORT_TOGGLE|}</th>
+	                    <th>{|SORT_TOGGLE|CLIENT_501_SURVEY.NAME}Position{/|SORT_TOGGLE|}</th>
+						<th>{|SORT_TOGGLE|JOB_DATE}Month{/|SORT_TOGGLE|}</th>
+        	            <th>{|SORT_TOGGLE|PERCENT_SCORE}Grade{/|SORT_TOGGLE|}</th>
+            	        <th>Link</th>
+					</tr>
+				</thead>
+	    		<tbody>     
+			{/|SHOWIF|}																								                                
+                	<tr>
+						<td>{DATAPOINTS.CLIENT_501_LEVEL_3.NAME}</td>
+						<td>{DATAPOINTS.CLIENT_501_LEVEL_2.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_501_LEVEL_1.NAME_ONLY}</td>
+                        <td>{DATAPOINTS.CLIENT_501_SURVEY.NAME}</td>
+                        <td>{DATAPOINTS.JOB_DATE.FORMATTED(F, Y)}</td>
+                        <td class="grade-{DATAPOINTS.PERCENT_SCORE}">{DATAPOINTS.PERCENT_SCORE=100?A}{DATAPOINTS.PERCENT_SCORE=50?B}{DATAPOINTS.PERCENT_SCORE=0?C}</td>
+                       	<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a></td>
+                    </tr>    
+                {/|LOOP|}																											              																													
+            <br><br>
+	    </tbody>
+	</table>
+{/|RESULT|}
+{/|SHOWIF|}    
+
+#position
+{|SHOWIF|MISC_VARS.SHOW_SURVEY}
+{|RESULT|}
+<div>
+	<table>
+		{|LOOP|RESULT.DATAPOINTS(SORT=ID)}
+			{|SHOWIF|LOOP.ISFIRST}
+				<thead>
+					<tr>
+            	        <th>{|SORT_TOGGLE|CLIENT_501_LEVEL_3.NAME}District{/|SORT_TOGGLE|}</th>
+                	    <th>{|SORT_TOGGLE|CLIENT_501_LEVEL_2.NAME}Store{/|SORT_TOGGLE|}</th>
+						<th>{|SORT_TOGGLE|CLIENT_501_LEVEL_1.NAME_ONLY}Employee{/|SORT_TOGGLE|}</th>
+	                    <th>{|SORT_TOGGLE|CLIENT_501_SURVEY.NAME}Position{/|SORT_TOGGLE|}</th>
+						<th>{|SORT_TOGGLE|JOB_DATE}Month{/|SORT_TOGGLE|}</th>
+        	            <th>{|SORT_TOGGLE|PERCENT_SCORE}Grade{/|SORT_TOGGLE|}</th>
+            	        <th>Link</th>
+					</tr>
+				</thead>
+	    		<tbody>     
+			{/|SHOWIF|}																								                                
+                	<tr>
+						<td>{DATAPOINTS.CLIENT_501_LEVEL_3.NAME}</td>
+						<td>{DATAPOINTS.CLIENT_501_LEVEL_2.NAME}</td>
+                        <td>{DATAPOINTS.CLIENT_501_LEVEL_1.NAME_ONLY}</td>
+                        <td>{DATAPOINTS.CLIENT_501_SURVEY.NAME}</td>
+                        <td>{DATAPOINTS.JOB_DATE.FORMATTED(F, Y)}</td>
+                        <td class="grade-{DATAPOINTS.PERCENT_SCORE}">{DATAPOINTS.PERCENT_SCORE=100?A}{DATAPOINTS.PERCENT_SCORE=50?B}{DATAPOINTS.PERCENT_SCORE=0?C}</td>
+                       	<td><a href="http://realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}" target="_blank">view shop</a></td>
+                    </tr>    
+                {/|LOOP|}																											              																													
+            <br><br>
+	    </tbody>
+	</table>
+{/|RESULT|}
+{/|SHOWIF|}     
+    
+{/|SHOWIF|}

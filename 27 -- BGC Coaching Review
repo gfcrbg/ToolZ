@@ -1,0 +1,79 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+		{|NESTED|}
+		<div>
+			<table class='data'>
+				<thead>
+					<tr>
+						<th>District</th>
+						<th>Location Name</th>
+                        #<th>Shop Count</th>
+						#<th>Job ID</th>
+                        #<th>Shop Score</th>
+                        #<th>Shop Date</th>
+                        <th>Date Finalized</th>
+                        #<th>Date Typed</th>
+                        <th>Game Plan Submission Date</th>
+                        <th>Game Plan Completion %</th>
+                        <th>Shop Link</th>
+					</tr>
+				</thead>
+				<tbody>
+			{|LOOP|NESTED.CLIENT_641_LEVEL_2(SORT=NAME)}
+				<tr>
+					<th>{CLIENT_641_LEVEL_2.NAME}</th>
+						<th></th>
+					#<th>{COUNT(CLIENT_641_LEVEL_2,CLIENT_641_LEVEL_2)}</th>
+					#	<th></th>
+                   # <th>{AVG(CLIENT_641_LEVEL_2.PERCENT_SCORE,CLIENT_641_LEVEL_2).ROUND(2)}%</th>
+					#	<th></th>
+						<th></th>
+						<th></th>
+						#<th></th>
+    					<th></th>
+	                   	<th></th>
+				</tr>
+				{|LOOP|CLIENT_641_LEVEL_2.CLIENT_641_LEVEL_1(SORT=NAME)}
+					#<tr>
+					#	<td></td>
+					#	<td>{CLIENT_641_LEVEL_1.NAME}</td>
+					#	<td>{COUNT(CLIENT_641_LEVEL_1)}</td>
+                    #    <td></td>
+                    #	<td>{AVG(CLIENT_641_LEVEL_1.PERCENT_SCORE,CLIENT_641_LEVEL_1).ROUND(2)}%</td>
+                    #	<td></td>
+                    #	<td></td>
+                    #	<td></td>
+                    #	<td></td>
+					#</tr>
+       				{|LOOP|CLIENT_641_LEVEL_1.DATAPOINTS(SORT=TRENDING_TIMESTAMP)}
+						<tr>
+                    		<td></td>
+                    		<td>{DATAPOINTS.CLIENT_641_LEVEL_1.NAME}</td>
+                        #    <td></td>
+                        #	<td>{DATAPOINTS.DATAPOINT_ID}</td>
+                        #	<td>{DATAPOINTS.PERCENT_SCORE}%</td>
+					 	# 	<td>{DATAPOINTS.CLIENT_641_SURVEY_4428_QUESTION_1_VALUE}</td>
+                        	<td>{DATAPOINTS.CLIENT_641_SURVEY_4428_QUESTION_1321_VALUE}</td>
+                        #	<td>{DATAPOINTS.CLIENT_641_SURVEY_4428_QUESTION_1731_VALUE}</td>
+                            <td>{DATAPOINTS.CLIENT_641_SURVEY_4428_QUESTION_22_VALUE}</td>
+                            <td>{DATAPOINTS.CLIENT_641_SURVEY_4428_SECTION_30_SCORE}</td>                            
+                            <td><a href="http://www.realitybasedreports.com/clients/ClientShopView.php?JobID={DATAPOINTS.ID}&access={DATAPOINTS.JOB_ACCESS_CODE}">View</a></td>
+                    	</tr>
+                    {/|LOOP|}
+				{/|LOOP|}
+			{/|LOOP|}
+				</tbody>
+			</table>
+		</div>
+		{/|NESTED|}
+	{/|SHOWIF|}
+</div>

@@ -1,0 +1,145 @@
+<div class='toolz-results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+        <div class='graph'>
+            <div id='toolz-my-graph-stripesdragon1471534724106' class='toolz-graph-regular'>
+                {|HIGHCHARTS|}
+                {
+                    "chart": {
+                    "type": "pie",
+                    
+                    #graphs should not be larger than 370 wide
+                    "width": 370,                    
+                    
+                    #graphs on regular widgets should not be larger than 220 high
+                    #graphs on wide widgets can be larger
+                    "height": 220,
+                    "plotBorderWidth": 1,
+                    
+                    #internet explorer 8 does not render transparent backgrounds
+                    "backgroundColor": "{IE8?white:transparent}"
+                },
+                "title": {
+                   "text": "Average Sectional Scores"
+                },
+                "yAxis": {
+                    "title": 
+                    {
+                        "text": ""
+                    },
+                    "min": 0,
+                    "max": 100
+                },
+                "xAxis": 
+                {
+                    "type": "category",
+                    "labels":
+                    {
+                        "step": 1
+                    }
+                },
+                "legend": 
+                {
+                    "enabled": false
+                },
+                "credits": 
+                {
+                    "enabled": false
+                },
+                "plotOptions": 
+                {
+                    "bar": 
+                    {
+                        "animation": false
+                    }
+                },
+                
+                #setup a series for our sectional scores
+                "series": [
+                    {
+                        "name": "Sections",
+                        "colorByPoint": true,
+                        {|RESULT|}
+                            "data": [{|LOOP|RESULT.CLIENTS(SORT=NAME)}
+                
+                                #loop all sectional score properties
+                                {|LOOP|CLIENTS.PROPERTIES(FILTER=type|eq|major_sectional_percent_score,SORT=ORDER_NUM)}
+                                {
+                                    #label with section name
+                                    "name":"{PROPERTIES.NAME.SPLIT(:,1).CLIP(15,DOTS).HC_SAFE_STRING}",
+                    
+                                    #value is the average sectional score
+                                    #we show 0 for null values because it appears HighCharts has issues with nulls in drilldowns
+                                    "y": {AVG(CLIENTS.PROPERTIES.VALUE)=|EVALCONST(NULL)|?0:|EVALTAG(AVG(CLIENTS.PROPERTIES.VALUE).ROUND)|}
+                    
+                                   	{|VANISHIF|AVG(CLIENTS.PROPERTIES.VALUE)=|EVALCONST(NULL)|}
+                                        #drilldown into the series w/ our section ID
+                                        #only show drilldowns for sections with scores
+                                        ,
+                                        {|SHOWIF|PROPERTIES.PROPERTY_ID.SPLIT(_,2)=master}
+                                        	"drilldown":"question_for_section_{PROPERTIES.PROPERTY_ID.SPLIT(_,6)}"
+                                        {/|SHOWIF|}
+                                        {|VANISHIF|PROPERTIES.PROPERTY_ID.SPLIT(_,2)=master}
+                                        	"drilldown":"question_for_section_{PROPERTIES.PROPERTY_ID.SPLIT(_,5)}"
+                                        {/|VANISHIF|}
+                					{/|VANISHIF|}
+                                }{LOOP.HASNEXT?,}  
+                                {/|LOOP|}
+                            {/|LOOP|}]
+                        {/|RESULT|}
+                    }
+                ],
+                "drilldown":{
+                
+                    #position our "back to sections" button
+                    "drillUpButton":
+                    {
+                        "relativeTo": "spacingBox",
+                        "position":
+                        {
+                            "y": 25
+                        }
+                    },
+                    
+                    #this is a separate 'result' block so the dynamic tag looping we're doing doesn't interfere
+                    #with the query for the specific properties above
+                    
+                    {|RESULT|}
+                    "series":[
+                        #create a drilldown series for every section
+                        {|LOOP|DATATYPES.SHOW_DATATYPE.TAGS(FILTER=type|likewild|question_for_section,SORT=TAG_VALUE)}
+                        {
+                            "name": "Average Score",
+                
+                            #use the tag as the series ID, so we know where to drilldown from
+                            "id":"{TAGS.TAG_VALUE}",
+                
+                            "data": [{|LOOP|RESULT.CLIENTS(SORT=NAME)}
+                
+                                #loop the questions within the section, and get their percent scores
+                                {|LOOP|CLIENTS.PROPERTIES(FILTERSET=type|eq|question_percent_score;type|eq||EVALTAG(TAGS.TAG_VALUE)|,SORT=ORDER_NUM)}
+                                {
+                                      #label with the question text
+                                      "name":"{PROPERTIES.NAME.SPLIT(:,1).CLIP(15,DOTS).HC_SAFE_STRING}",
+                
+                                      #the value is the average question score
+                                      "y": {AVG(CLIENTS.PROPERTIES.VALUE).ROUND.HC_SAFE_NUMBER}
+                                }{LOOP.HASNEXT?,}  
+                                {/|LOOP|}
+                          {/|LOOP|}]
+                    }{LOOP.HASNEXT?,}  
+                    {/|LOOP|}
+                ]    
+                {/|RESULT|}  
+            }
+           }
+           {/|HIGHCHARTS|}
+            </div>
+		</div>	
+	{/|SHOWIF|}
+    
+    <div class='toolz-data-last-updated'>Data last updated: {DATATYPES.SHOW_DATATYPE.DATA_LAST_UPDATED.FORMATTED(n/j/y g:i a)}</div>
+</div>

@@ -1,0 +1,92 @@
+{|SHOWIF|OUTPUT_MODE=|EVALCONST(KNICKERS_OUTPUT_STANDARD)|}{DATATYPES.CONTROLS_START}
+	{DATATYPES.DEFAULT_DATE_FILTERS}
+{DATATYPES.CONTROLS_END}{/|SHOWIF|}
+
+<div class='results'>
+	{|VANISHIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+		<div class='ui-state-highlight no-data'><p>No data was found to display</p></div>
+	{/|VANISHIF|}
+	
+	{|SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)}
+	
+	<table class="data">
+    {|NESTED|}
+        
+    # Loop our levels first, since the survey always needs to be the innermost loop.. 
+    {|LOOP|NESTED.CLIENT_389_GROUP(SORT=NAME)}
+    {|LOOP|CLIENT_389_GROUP.CLIENT_389_LEVEL_1}    
+    
+    # A more specific variant of LOOP.INDEX! This will hide the Level 2 rows if we're in the middle of a Level 1 set.
+   	{|SHOWIF|CLIENT_389_LEVEL_1.INDEX=1}
+    # And this will hide the header row if we're in the middle of the Level 2 set.
+    {|SHOWIF|CLIENT_389_GROUP.INDEX=1}
+        
+        
+    ## Header Row ##
+    <tr>
+        <th></th>
+        <th></th>
+        <th colspan=2 style="text-align:center;">New</th>
+        <th colspan=2 style="text-align:center;">Used</th>        
+  	</tr>
+    <tr>
+    	<td></td>
+        <td>Shop Type:</td>
+        # Make sure we loop WITH_BLANKS, because the NESTED structure won't leave placeholder cells the way CROSSTAB will!
+        # If we want to do specific surveys, we should use FILTERSET=ID|EQ|1001;ID|EQ|1002|AND
+        {|LOOP|CLIENT_389_LEVEL_1.CLIENT_389_SURVEY(SORT=NAME,WITH_BLANKS)}
+        	<td>{CLIENT_389_SURVEY.NAME}</td>
+        {/|LOOP|}
+    <tr>
+        <th>Overall Average</th>
+        <th></th>
+        {|LOOP|CLIENT_389_LEVEL_1.CLIENT_389_SURVEY(SORT=NAME,WITH_BLANKS)}
+        	<th>{AVG(CLIENT_389_SURVEY.PERCENT_SCORE,CLIENT_389_SURVEY).ROUND(2)}%</th>
+        {/|LOOP|}
+    </tr>        
+    # End of CLIENT_389_GROUP.INDEX=1
+    {/|SHOWIF|}
+
+        
+    ## Level 2 Row ##
+    <tr>
+        <th>Franchise - {CLIENT_389_GROUP.NAME}</th>
+        <th></th>
+        
+        # Loop surveys; Use the same options as above, since Toolz can act weird if you omit them.
+        {|LOOP|CLIENT_389_LEVEL_1.CLIENT_389_SURVEY(SORT=NAME,WITH_BLANKS)}
+        	# Make sure the aggregate context is 'survey & level 2'
+        	# The 'count' conditional prints a % or a -- depending on whether or not this survey/level combination has any scores.
+        	<th>
+                {AVG(CLIENT_389_SURVEY.PERCENT_SCORE,CLIENT_389_SURVEY,CLIENT_389_GROUP).ROUND(2)}{COUNT(CLIENT_389_SURVEY.PERCENT_SCORE,CLIENT_389_SURVEY,CLIENT_389_GROUP)?%:--}
+        	</th>
+        {/|LOOP|}
+    </tr>
+    # End of CLIENT_389_LEVEL_1.INDEX=1
+    {/|SHOWIF|}
+        
+    ## Level 1 Row ##
+    <tr>
+        <td>Location - {CLIENT_389_LEVEL_1.NAME.SPLIT( ,0)}</td>
+        <td>{CLIENT_389_LEVEL_1.NAME.SPLIT( ,1)} {CLIENT_389_LEVEL_1.NAME.SPLIT( ,2)} {CLIENT_389_LEVEL_1.NAME.SPLIT( ,3)} {CLIENT_389_LEVEL_1.NAME.SPLIT( ,4)} {CLIENT_389_LEVEL_1.NAME.SPLIT( ,5)}</td>
+		
+        # Loop surveys; Use the same options as above, since Toolz can act weird if you omit them.
+        {|LOOP|CLIENT_389_LEVEL_1.CLIENT_389_SURVEY(SORT=NAME,WITH_BLANKS)}
+        
+            # Make sure the aggregate context is 'survey & level 1'
+        	<td>
+                {AVG(CLIENT_389_SURVEY.PERCENT_SCORE,CLIENT_389_SURVEY,CLIENT_389_LEVEL_1).ROUND(2)}{COUNT(CLIENT_389_SURVEY,CLIENT_389_SURVEY,CLIENT_389_LEVEL_1)?%:--}
+        	</td>
+        {/|LOOP|}
+    </tr>
+        
+    # End of CLIENT_389_LEVEL_1
+    {/|LOOP|}
+    # End of CLIENT_389_GROUP
+    {/|LOOP|}
+    {/|NESTED|}
+    </table>
+	
+    # End of |SHOWIF|COUNT(DATATYPES.SHOW_DATATYPE)
+	{/|SHOWIF|}
+</div>
